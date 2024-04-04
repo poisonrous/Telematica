@@ -37,8 +37,11 @@ public class Principal {
 		//vista2.arrancar();
 		//vista4.arrancar();
 		//vista5.arrancar();
-		vista1.arrancar();
-
+		//vista1.arrancar();
+		IEvento vista7 = new VEvento();
+		CEvento controlador6 = new CEvento(vista7);
+		vista7.setControlador(controlador6);
+		vista7.arrancar();
 	}
 
 }
