@@ -45,6 +45,14 @@ public class OModelo {
 		
 	}
 
+	public void cambiarContrasena(String usuario, String actualcon, String nuevacon){
+		int op = 0;
+		BdConex bd = new BdConex();
+		op = bd.ejecutar("UPDATE contrasenna SET contrasennaCo = '"+nuevacon+"' WHERE CedulaUs = '"+usuario+"' AND contrasennaCo = '"+actualcon+"'");
+		if(op>0)  JOptionPane.showMessageDialog(null,"Contraseña cambiada con éxito.");
+		else JOptionPane.showMessageDialog(null,"Contraseña incorrecta.");
+	}
+
 	public String getUsuario() {
 		// TODO Auto-generated method stub
 		return cconsu.getUsuario();

@@ -14,7 +14,6 @@ public interface ICambioContrasena {
 	public int getIdContrasena();
 	public String getContrasenaActual();
 	public String getNuevaContrasena();
-	public String getConfirmarContrasena();
 	public String verificarContrasena(String contrasena);
 	public String cambiarContrasena();
 	public String getUsuario();

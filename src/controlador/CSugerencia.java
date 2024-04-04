@@ -1,4 +1,5 @@
 package controlador;
+import modelo.OModelo;
 import vista.ISugerencia;
 import vista.IIniciarSesion;
 import modelo.MSugerencia;
@@ -10,11 +11,11 @@ import java.awt.event.ActionListener;
 
 public class CSugerencia implements ActionListener {
     private ISugerencia vista;
-    private IIniciarSesion vistaIniciarSesion;
+    private OModelo usuario;
 
-    public CSugerencia(ISugerencia vista, IIniciarSesion vistaIniciarSesion) {
+    public CSugerencia(ISugerencia vista, OModelo usuario) {
         this.vista = vista;
-        this.vistaIniciarSesion = vistaIniciarSesion;
+        this.usuario = usuario;
     }
 
 
@@ -26,8 +27,8 @@ public class CSugerencia implements ActionListener {
           //  MSugerencia mSugerencia = new MSugerencia();
             MCrudSugerencia mCrudSugerencia = new MCrudSugerencia();
          //   mCrudSugerencia.crearSugerencia(vista.getTitulo(), vista.getDetalles(), vistaIniciarSesion.getUsuario());
-            if( mCrudSugerencia.crearSugerencia(vistaIniciarSesion.getUsuario(),vista.getTitulo(), vista.getDetalles())>0) {
-                MSugerencia resultado = (MSugerencia) mCrudSugerencia.buscarSugerencia(vistaIniciarSesion.getUsuario(),vista.getTitulo(), vista.getDetalles());
+            if( mCrudSugerencia.crearSugerencia(usuario.getUsuario(),vista.getTitulo(), vista.getDetalles())>0) {
+                MSugerencia resultado = (MSugerencia) mCrudSugerencia.buscarSugerencia(usuario.getUsuario(),vista.getTitulo(), vista.getDetalles());
                 vista.mostrarResultado(resultado.getNombre(),resultado.getApellido(), resultado.getTelefono(), resultado.getCorreo(), resultado.getTitulo(), resultado.getDescripcion(), resultado.getFecha());
                 JOptionPane.showMessageDialog(null, "Sugerencia enviada");
             }
