@@ -7,14 +7,14 @@ import java.util.Vector;
 
 
 public class Servicio {
-    private String idServicio, nombreServicio, horarioServicio, ubicacionServicio, estaatusServicio;
+    private String idServicio, nombreServicio, horarioServicio, ubicacionServicio, estatusServicio;
 
     public Servicio(String idServicio, String nombreServicio, String horarioServicio, String ubicacionServicio, String estaatusServicio) {
         this.idServicio = idServicio;
         this.nombreServicio = nombreServicio;
         this.horarioServicio = horarioServicio;
         this.ubicacionServicio = ubicacionServicio;
-        this.estaatusServicio = estaatusServicio;
+        this.estatusServicio = estaatusServicio;
     }
 
     public Servicio() {
@@ -57,11 +57,11 @@ public class Servicio {
     }
 
     public String getEstatusServicio() {
-        return estaatusServicio;
+        return estatusServicio;
     }
 
     public void setEstatusServicio(String estaatusServicio) {
-        this.estaatusServicio = estaatusServicio;
+        this.estatusServicio = estaatusServicio;
     }
 
     @Override

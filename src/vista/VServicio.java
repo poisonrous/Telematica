@@ -54,6 +54,7 @@ public class VServicio extends JFrame implements ActionListener, IServicio{
             }
         });
         cServicio.setActionCommand(IServicio.SELECCION);
+        cServicio.addActionListener(this);
       //  cServicio.addItem("Otro");
         pPrincipal.add(cServicio, reglas);
         tHorario = new JTextField(20);
@@ -86,6 +87,8 @@ public class VServicio extends JFrame implements ActionListener, IServicio{
         if (cServicio.getSelectedItem().toString().equals("Otro")){
             tNombre.setVisible(true);
             cServicio.setVisible(false);
+        } else {
+            controlador.actionPerformed(e);
         }
     }
     }
@@ -107,6 +110,9 @@ public class VServicio extends JFrame implements ActionListener, IServicio{
         if(cServicio.getSelectedItem().toString().equals("Otro")){
             tNombre.setVisible(true);
             cServicio.setVisible(false);
+            tHorario.setText("");
+            tUbicacion.setText("");
+            rbActivo.setSelected(true);
         } else {
             tNombre.setVisible(false);
         }

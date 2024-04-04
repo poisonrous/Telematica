@@ -21,51 +21,114 @@ public class VSugerencia extends JFrame implements ActionListener, ISugerencia, 
     private JButton bEnviar, bImprimir;
 
     public VSugerencia() {
-        super("Envío de sugerencia");
-        this.setSize(400, 550);
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        super("Envío de sugerencias");
+        this.setSize(800, 650);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
+
+
+        JPanel pTitulo = new JPanel();
+        pTitulo.setBackground(new Color(255, 255, 255));
+        JLabel lTitulo = new JLabel("TELECOMUNÍCATE", JLabel.CENTER);
+        lTitulo.setFont(new Font("Roboto", Font.BOLD, 16));
+        lTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+
+        pTitulo.add(lTitulo);
+        this.add(pTitulo, BorderLayout.NORTH);
+
+        JPanel pBotones = new JPanel();
+        pBotones.setBackground(new Color(255, 255, 255));
+
+        bEnviar = new JButton("Enviar");
+        bEnviar.setFont(new Font("Open Sans", Font.PLAIN, 15));
+        bEnviar.setForeground(Color.WHITE);
+        bEnviar.setBackground(new Color(0, 125, 254));
+        bEnviar.setActionCommand(ENVIAR);
+        bEnviar.addActionListener(this);
+        pBotones.add(bEnviar);
+
+        this.add(pBotones, BorderLayout.SOUTH);
+
+        //CENTRO
 
         pPrincipal = new JPanel(new GridBagLayout());
         GridBagConstraints reglas = new GridBagConstraints();
+        pPrincipal.setBackground(new Color(255, 255, 255));
+        pPrincipal.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 2));
+
+
+        JPanel pIconMe = new JPanel();
+        pIconMe.setBackground(new Color(255, 255, 255));
+        reglas.gridy = 0;
+        reglas.weighty= 1.0;
+        reglas.gridheight=1;
+        JLabel lImagenMe = new JLabel();
+        lImagenMe.setSize(30, 25);
+        ImageIcon icon = new ImageIcon("media/megaphone.png");
+        Icon iconoMe = new ImageIcon(icon.getImage().getScaledInstance(lImagenMe.getWidth(), lImagenMe.getHeight(), Image.SCALE_DEFAULT));
+        lImagenMe.setIcon(iconoMe);
+        pIconMe.add(lImagenMe);
+        JLabel lTipo = new JLabel("Envía tus sugerencias");
+        lTipo.setFont(new Font("Roboto", Font.BOLD, 16));
+        pIconMe.add(lTipo);
+        pPrincipal.add(pIconMe, reglas);
+
+
+
+        reglas.gridy = 1;
+        reglas.weighty= 1.0;
+        reglas.anchor = GridBagConstraints.WEST;
+        JLabel lTituloPublicacion = new JLabel("Título:");
+        lTituloPublicacion.setFont(new Font("Open Sans", Font.BOLD, 14));
+        pPrincipal.add(lTituloPublicacion, reglas);
+
+        reglas.gridy = 2;
+        reglas.weighty= 1.0;
+        tfTitulo = new JTextField();
+        tfTitulo.setPreferredSize(new Dimension(200, 35));
+        tfTitulo.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
+        pPrincipal.add(tfTitulo, reglas);
+
+
+        reglas.gridy = 3;
+        reglas.weighty= 1.0;
+        reglas.anchor = GridBagConstraints.WEST;
+        JLabel lInformacion = new JLabel("Descripción:");
+        lInformacion.setFont(new Font("Open Sans", Font.BOLD, 14));
+        pPrincipal.add(lInformacion, reglas);
+
+        reglas.gridy = 4;
+        reglas.weighty= 1.0;
+        taDescripcion = new JTextArea();
+        taDescripcion.setPreferredSize(new Dimension(220, 200));
+        taDescripcion.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        taDescripcion.setLineWrap(true);
+        taDescripcion.setWrapStyleWord(true);
+        pPrincipal.add(taDescripcion, reglas);
+
+
+        JPanel pImagen = new JPanel();
+        pImagen.setBackground(new Color(255, 255, 255));
+
 
         reglas.gridx = 1;
         reglas.gridy = 1;
-        reglas.insets = new Insets(10, 10, 10, 10);
+        reglas.gridwidth = 1;
+        reglas.gridheight = 5;
 
-        JLabel lTitulo = new JLabel("Sistema Telemática");
-        lTitulo.setFont(new Font("Arial", Font.BOLD, 16));
-        lTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-        pPrincipal.add(lTitulo, reglas);
+        reglas.anchor = GridBagConstraints.EAST;
 
-        JLabel lTipo = new JLabel("Envía tus sugerencias");
-        lTipo.setFont(new Font("Arial", Font.BOLD, 14));
-        reglas.gridy = 2;
-        pPrincipal.add(lTipo, reglas);
 
-        JLabel lTituloSugerencia = new JLabel("Título:");
-        reglas.gridy = 3;
-        pPrincipal.add(lTituloSugerencia, reglas);
 
-        tfTitulo = new JTextField();
-        tfTitulo.setPreferredSize(new Dimension(200, 30));
-        reglas.gridy = 4;
-        pPrincipal.add(tfTitulo, reglas);
-
-        JLabel lInformacion = new JLabel("Aporta más información:");
-        reglas.gridy = 5;
-        pPrincipal.add(lInformacion, reglas);
-
-        taDescripcion = new JTextArea();
-        taDescripcion.setPreferredSize(new Dimension(200, 100)); //pensar cómo hacer que salte de línea y no se extienda indefinidamente
-        reglas.gridy = 6;
-        pPrincipal.add(taDescripcion, reglas);
-
-        bEnviar = new JButton("Enviar");
-        bEnviar.setActionCommand(ISugerencia.ENVIAR);
-        bEnviar.setPreferredSize(new Dimension(100, 30));
-        reglas.gridy = 7;
-        pPrincipal.add(bEnviar, reglas);
+        JLabel lImagen = new JLabel();
+        lImagen.setSize(500, 450);
+        ImageIcon imagen = new ImageIcon("media/recurso2.jpg");
+        Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(lImagen.getWidth(), lImagen.getHeight(), Image.SCALE_DEFAULT));
+        lImagen.setIcon(icono);
+        pImagen.add(lImagen);
+        pPrincipal.add (pImagen, reglas);
 
         this.add(pPrincipal);
 

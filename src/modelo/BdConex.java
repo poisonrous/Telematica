@@ -12,7 +12,7 @@ public class BdConex {
 	private static PreparedStatement ps;
 	private static ResultSet rs;
 	final String DRIVER = "com.mysql.jdbc.Driver";
-	final String URL = "jdbc:mysql://localhost:3306/prueba";
+	final String URL = "jdbc:mysql://localhost:3306/prueba2";
 	final String USUARIO = "root";
 	final String CLAVE = "767254632";
 

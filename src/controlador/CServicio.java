@@ -26,7 +26,7 @@ public class CServicio implements ActionListener {
                if (vista.getNombreServicio().length() == 0 || vista.getHorarioServicio().length() == 0 || vista.getUbicacionServicio().length() == 0){
                    JOptionPane.showMessageDialog(null, "Uno o más de los campos están vacíos.");
                }else{
-                   modelo.crearServicio(vista.getNombreServicio(), vista.getHorarioServicio(), vista.getUbicacionServicio());
+                   modelo.crearServicio(vista.getNombreServicio(), vista.getHorarioServicio(), vista.getUbicacionServicio(), vista.getEstatusServicio());
                }
            } else {
                if (vista.getNombreServicio().length() == 0 || vista.getHorarioServicio().length() == 0 || vista.getUbicacionServicio().length() == 0){
@@ -36,12 +36,9 @@ public class CServicio implements ActionListener {
                }
            }
         } else if (comando.equals(IServicio.SELECCION)){
-            if (vista.getNombreServicio().length() == 0){
-                JOptionPane.showMessageDialog(null, "Debe seleccionar un servicio.");
-            }else{
                 Servicio servicio = modelo.buscarServicio(vista.getNombreServicio());
                 vista.mostrarServicio(servicio.getHorarioServicio(), servicio.getUbicacionServicio(), servicio.getEstatusServicio());
-            }
+            //}
         }
     }
     public void cargarServicio(IServicio vista){
