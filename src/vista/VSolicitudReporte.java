@@ -1,7 +1,9 @@
 package vista;
 
+import controlador.CSolicitudCurso;
 import controlador.CSolicitudReporte;
 import modelo.BdConex;
+import vista.ISolicitudReporte;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +13,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import static java.awt.GridBagConstraints.REMAINDER;
 
 public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
 
@@ -169,7 +173,7 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
     @Override
     public void llamar(String idSo) {
         BdConex bd= new BdConex();
-        this.rs2= bd.consultar("SELECT usuario.NombresUs, solicitud.idSo, solicitud.cedula, tiposolicitud.tipoSo, solicitud.descripcion, solicitud.estado, asignatura.NombreAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.tipo = tiposolicitud.idTiSo LEFT JOIN materia ON solicitud.materia = materia.idMA LEFT JOIN asignatura ON materia.idAs = asignatura.idAs LEFT JOIN usuario ON solicitud.cedula = usuario.CedulaUs WHERE idSo= '"+idSo+ "';");
+        this.rs2= bd.consultar("SELECT usuario.NombresUs, solicitud.IdSo, solicitud.cedulaEs, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs LEFT JOIN usuario ON solicitud.cedulaEs = usuario.CedulaUs WHERE IdSo= '"+idSo+ "';");
     }
     //, asignatura.idAs, NombreAs,  asignatura, materia, and asignatura.idAs = materia.idAs and materia.idMa = solicitud.materia
     @Override
@@ -181,14 +185,14 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
         try {   rs2.first();
             System.out.println(rs2.getString("NombresUs"));
         lNombre.setText(rs2.getString("NombresUs"));
-        lCedula.setText(rs2.getString("cedula"));
-        lTipo.setText(rs2.getString("tipoSo"));
-        if(rs2.getString("estado").equals("1")) lEstado.setText("Resuelta");
-            else lEstado.setText("Pendiente");
-        if(rs2.getString("NombreAs")!=null) tDescripcion.setText(rs2.getString("NombreAs"));
+        lCedula.setText(rs2.getString("CedulaEs"));
+        lTipo.setText(rs2.getString("TipoTiSo"));
+        //if(rs2.getString("estado").equals("1")) lEstado.setText("Resuelta");
+            /*else*/ lEstado.setText(rs2.getString("EstadoSo"));
+        if(rs2.getString("NombreAsignaturaAs")!=null) tDescripcion.setText(rs2.getString("NombreAsignaturaAs"));
         else tDescripcion.setText(rs2.getString("descripcion"));
-        if(rs2.getString("estado").equals("1")) cEstado.setSelectedItem("Resuelta");
-            else cEstado.setSelectedItem("Pendiente");
+        //if(rs2.getString("EstadoSo").equals("1")) cEstado.setSelectedItem("Resuelta");
+            /*  else*/ cEstado.setSelectedItem(rs2.getString("EstadoSo"));
             this.setVisible(true);
 } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -196,8 +200,7 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
     }
     @Override
     public String getEstado() {
-        if(cEstado.getSelectedItem().equals("Resuelta")) return "1";
-        else return "0";
+       return (String) cEstado.getSelectedItem();
     }
 
     @Override

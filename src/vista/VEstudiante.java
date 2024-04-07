@@ -17,6 +17,7 @@ public class VEstudiante extends JFrame {
     private OModelo usuario;
     private JButton bSolicitud, bServicios, bCartelera, bEventos, bSugerencias, bPublicacion, bContrasena;
     private JPanel pPrincipal;
+    private JScrollPane spPrincipal;
     private JToolBar tbMenu;
 
     public VEstudiante(OModelo usuario, ICartelera cartelera, ISolicitud solicitud, IServicios servicios, IEventos eventos, ISugerencia sugerencia, IPublicacion publicacion, ICambioContrasena cambioContrasena) {
@@ -24,7 +25,14 @@ public class VEstudiante extends JFrame {
         this.setSize(1000, 800);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        spPrincipal = new JScrollPane();
+        spPrincipal.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        spPrincipal.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        spPrincipal.setBounds(0, 0, 800, 800);
+
         pPrincipal = new JPanel();
+
+        spPrincipal.setViewportView(pPrincipal);
 
         JPanel datosUsuario = new JPanel();
         datosUsuario.add(new JLabel(usuario.getNombres() + " " + usuario.getApellidos()));
@@ -104,6 +112,6 @@ public class VEstudiante extends JFrame {
         this.add(pPantalla);*/
 
         this.add(tbMenu, BorderLayout.WEST);
-        this.add(pPrincipal, BorderLayout.CENTER);
+        this.add(spPrincipal, BorderLayout.CENTER);
     }
 }

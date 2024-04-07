@@ -20,7 +20,7 @@ import controlador.CSolicitud;
 import modelo.BdConex;
 import modelo.Materia;
 
-public class VSolicitud extends JFrame implements ActionListener, ISolicitud, Printable {
+public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Printable {
 
     private JButton bEnviar, bImprimir;
     public JRadioButton rbAula, rbAcademico, rbInfraestructura, rbProfesor,rbDocente,rbAcoso, rbOtro;
@@ -31,10 +31,10 @@ public class VSolicitud extends JFrame implements ActionListener, ISolicitud, Pr
     private JLabel lNombre, lTelefono, lCorreo, lTipoS, lDescripcion, lFecha;
     public VSolicitud(){
 
-        super("Envío de Problemáticas");
+       /* super("Envío de Problemáticas");
         this.setSize(850, 680);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);*/
         
         
        
@@ -265,46 +265,46 @@ public class VSolicitud extends JFrame implements ActionListener, ISolicitud, Pr
         reglasDatos.gridx = 0;
         reglasDatos.gridy = 2;
         reglas.insets = new Insets(0, 0, 10, 0);
-        JLabel lNombre = new JLabel("Nombre: ");
+        JLabel lNombre2 = new JLabel("Nombre: ");
         
-        lNombre.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
-        lNombre.setFont(new Font("Open Sans", Font.BOLD, 14));
-       	pDatos.add(lNombre, reglasDatos);
+        lNombre2.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        lNombre2.setFont(new Font("Open Sans", Font.BOLD, 14));
+       	pDatos.add(lNombre2, reglasDatos);
        	
         reglasDatos.gridy = 3;
         reglas.insets = new Insets(0, 0, 10, 0);
-        JLabel lTelefono = new JLabel("Teléfono: ");
-        lTelefono.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
-        lTelefono.setFont(new Font("Open Sans", Font.BOLD, 14));
-       	pDatos.add(lTelefono, reglasDatos);
+        JLabel lTelefono2 = new JLabel("Teléfono: ");
+        lTelefono2.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        lTelefono2.setFont(new Font("Open Sans", Font.BOLD, 14));
+       	pDatos.add(lTelefono2, reglasDatos);
        	
         reglasDatos.gridy = 4;
         reglas.insets = new Insets(0, 0, 10, 0);
-        JLabel lCorreo = new JLabel("Correo Electrónico: ");
-        lCorreo.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
-        lCorreo.setFont(new Font("Open Sans", Font.BOLD, 14));
-       	pDatos.add(lCorreo, reglasDatos);
+        JLabel lCorreo2 = new JLabel("Correo Electrónico: ");
+        lCorreo2.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        lCorreo2.setFont(new Font("Open Sans", Font.BOLD, 14));
+       	pDatos.add(lCorreo2, reglasDatos);
        	
         reglasDatos.gridy = 5;
         reglas.insets = new Insets(0, 0, 10, 0);
-        JLabel lTipoR = new JLabel("Tipo: ");
-        lTipoR.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
-        lTipoR.setFont(new Font("Open Sans", Font.BOLD, 14));
-       	pDatos.add(lTipoR, reglasDatos);
+        JLabel lTipoR2 = new JLabel("Tipo: ");
+        lTipoR2.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        lTipoR2.setFont(new Font("Open Sans", Font.BOLD, 14));
+       	pDatos.add(lTipoR2, reglasDatos);
        	
         reglasDatos.gridy = 6;
         reglas.insets = new Insets(0, 0, 10, 0);
-        JLabel lDescri = new JLabel("Descripción: ");
-        lDescri.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
-        lDescri.setFont(new Font("Open Sans", Font.BOLD, 14));
-       	pDatos.add(lDescri, reglasDatos);
+        JLabel lDescri2 = new JLabel("Descripción: ");
+        lDescri2.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        lDescri2.setFont(new Font("Open Sans", Font.BOLD, 14));
+       	pDatos.add(lDescri2, reglasDatos);
        	
         reglasDatos.gridy = 7;
         reglas.insets = new Insets(0, 0, 10, 10);
-        JLabel lFechaC = new JLabel("Fecha de Creación: ");
-        lFechaC.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
-        lFechaC.setFont(new Font("Open Sans", Font.BOLD, 14));
-       	pDatos.add(lFechaC, reglasDatos);
+        JLabel lFechaC2 = new JLabel("Fecha de Creación: ");
+        lFechaC2.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        lFechaC2.setFont(new Font("Open Sans", Font.BOLD, 14));
+       	pDatos.add(lFechaC2, reglasDatos);
        	
        	
        	
@@ -324,10 +324,10 @@ public class VSolicitud extends JFrame implements ActionListener, ISolicitud, Pr
        	reglasDatos.gridx = 1;
         reglasDatos.gridy = 9;
         reglas.insets = new Insets(0, 0, 10, 10);
-        JLabel lDireccion = new JLabel("    AV. LAS INDUSTRIAS. NUCLEO OBELISCO. BARQUISIMETO-ESTADO LARA.");
-        lDireccion.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
-        lDireccion.setFont(new Font("Open Sans", Font.PLAIN, 11));
-       	pDatos.add(lDireccion, reglasDatos);
+        JLabel lDireccion2 = new JLabel("    AV. LAS INDUSTRIAS. NUCLEO OBELISCO. BARQUISIMETO-ESTADO LARA.");
+        lDireccion2.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        lDireccion2.setFont(new Font("Open Sans", Font.PLAIN, 11));
+       	pDatos.add(lDireccion2, reglasDatos);
 
         /*lSolicitud = new JLabel("");
             reglasDatos.gridy = 1;
@@ -451,7 +451,7 @@ public class VSolicitud extends JFrame implements ActionListener, ISolicitud, Pr
     public void cargarMaterias(String usuario) {
         // TODO Auto-generated method stub
         cbMateria.removeAllItems(); //hay antes para evitar que permanezcan cargadas materias de consultas anteriores (o se creen duplicados)
-        String sql = "SELECT asignatura.NombreAs, materia.idMA FROM asignatura INNER JOIN materia ON asignatura.idAs = materia.idAs INNER JOIN periodo ON materia.idPe = periodo.idPe INNER JOIN inscripcion ON materia.idMA = inscripcion.idMa WHERE periodo.estatusPe = 1 AND inscripcion.CedulaUs = " + usuario;
+        String sql = "SELECT asignatura.NombreAsignaturaAs, materia.IdMa FROM asignatura INNER JOIN materia ON asignatura.IdAs = materia.IdAs INNER JOIN periodo ON materia.IdPe = periodo.IdPe INNER JOIN inscripcion ON materia.IdMa = inscripcion.IdMa WHERE periodo.VigenciaPe = 1 AND inscripcion.CedulaEs = " + usuario;
         PreparedStatement ps = null;
         ResultSet rs = null;
         BdConex conn = new BdConex();
@@ -460,7 +460,7 @@ public class VSolicitud extends JFrame implements ActionListener, ISolicitud, Pr
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                cbMateria.addItem(new Materia(rs.getString("idMA"),rs.getString("nombreAs"))); //aquÃ­ le estoy pidiendo que agregue cada materia que encuentre en la base de datos en coincidencia con la bÃºsqueda anterior
+                cbMateria.addItem(new Materia(rs.getString("IdMa"),rs.getString("nombreAsignaturaAs"))); //aquÃ­ le estoy pidiendo que agregue cada materia que encuentre en la base de datos en coincidencia con la bÃºsqueda anterior
             }
         } catch (Exception e) {
             System.out.println(e);

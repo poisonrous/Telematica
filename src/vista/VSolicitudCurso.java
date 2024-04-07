@@ -2,19 +2,24 @@ package vista;
 
 import controlador.CSolicitudCurso;
 import modelo.BdConex;
+import com.mysql.cj.protocol.Resultset;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.awt.print.PrinterException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
+import javax.swing.ComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionListener {
 
@@ -31,10 +36,9 @@ public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionLi
     private int test = 1, testS=1, testE=0;
     
     public VSolicitudCurso(ISolicitudReporte v1){
-
+        this.setLayout(new BorderLayout());
         this.v1 = (VSolicitudReporte) v1;
 
-        this.setLayout(new BorderLayout());
 
         // título
         JLabel lTitulo = new JLabel("Lista de solicitudes");
@@ -58,7 +62,7 @@ public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionLi
                 try {
                     rs.first();
                     for (int i=0; i<tabla.getSelectedRow();i++){rs.next();}
-                    ID=rs.getString("idSo");
+                    ID=rs.getString("IdSo");
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -170,15 +174,15 @@ public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionLi
     //Get + Set Estado
 
     public String getEstado() {
-        if (cEstado.getSelectedItem().equals("Resuelta")){
-            return "1";
+        /*if (*/ return (String) cEstado.getSelectedItem(); /* {
+          return "1";
         }
-        else if (cEstado.getSelectedItem().equals("Pendiente")){
+        else if (Objects.equals(cEstado.getSelectedItem(), "Pendiente")){
             return "0";
         }
         else {
             return null;
-        }
+        }*/
     }
 
     /*public void setEstado() {
@@ -204,10 +208,10 @@ public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionLi
         BdConex conn = new BdConex();
         Connection con = (Connection) conn.getConexion();
         try {
-            ps = con.prepareStatement("SELECT tiposolicitud.tipoSo FROM tiposolicitud");
+            ps = con.prepareStatement("SELECT tiposolicitud.TipoTiSo FROM tiposolicitud");
             rs = ps.executeQuery();
             while (rs.next()) {
-                cTipo.addItem(rs.getString("tipoSo"));
+                cTipo.addItem(rs.getString("TipoTiSo"));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -228,16 +232,16 @@ public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionLi
                 while (rs.next()) {
                     fila = new Object[4];
 
-                    fila[0] = rs.getObject("cedula");
-                    fila[1] = rs.getObject("tipoSo");
-                    if(rs.getObject("NombreAs")!=null)
-                        fila[2] = rs.getObject("NombreAs");
-                    else fila[2] = rs.getObject("descripcion");
+                    fila[0] = rs.getObject("CedulaEs");
+                    fila[1] = rs.getObject("TipoTiSo");
+                    if(rs.getObject("NombreAsignaturaAs")!=null)
+                        fila[2] = rs.getObject("NombreAsignaturaAs");
+                    else fila[2] = rs.getObject("DescripcionSo");
                  //   fila[2] = rs.getObject("descripcion");
-                    if (rs.getObject("estado").equals("1"))
-                        fila[3] = "Resuelta";
-                    else if (rs.getObject("estado").equals("0"))
-                        fila[3] = "Pendiente";
+                 //   if (rs.getObject("EstadoSo").equals("1"))
+                    fila[3] = rs.getObject("EstadoSo");
+                   // else if (rs.getObject("estado").equals("0"))
+                    //    fila[3] = "Pendiente";
                     model.addRow(fila);
                 }} catch (SQLException e) {
                 e.printStackTrace();

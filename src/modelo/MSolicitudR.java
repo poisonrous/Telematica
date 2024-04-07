@@ -9,19 +9,19 @@ public class MSolicitudR {
         public ResultSet getResultSet(int Test, String Estado, String Tipo) {
           ResultSet rs = null;
             if (Test==1) {BdConex bd= new BdConex();
-                rs= bd.consultar("SELECT solicitud.idSo, solicitud.cedula, tiposolicitud.tipoSo, solicitud.descripcion, solicitud.estado, asignatura.NombreAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.tipo = tiposolicitud.idTiSo LEFT JOIN materia ON solicitud.materia = materia.idMA LEFT JOIN asignatura ON materia.idAs = asignatura.idAs");;
+                rs= bd.consultar("SELECT solicitud.IdSo, solicitud.CedulaEs, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs WHERE (BorradoSo, BorradoTiSo)= ('0', '0')");;
             }
             else if (Test==10){
              BdConex bd= new BdConex();
-               rs= bd.consultar("SELECT solicitud.idSo, solicitud.cedula, tiposolicitud.tipoSo, solicitud.descripcion, solicitud.estado, asignatura.NombreAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.tipo = tiposolicitud.idTiSo LEFT JOIN materia ON solicitud.materia = materia.idMA LEFT JOIN asignatura ON materia.idAs = asignatura.idAs WHERE tiposolicitud.TipoSo = '" + Tipo + "'");
+               rs= bd.consultar("SELECT solicitud.IdSo, solicitud.CedulaEs, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs WHERE (BorradoSo , BorradoTiSo, tiposolicitud.TipoTiSo) = ('0' , '0', '"+Tipo+"' )");
             }
             else if (Test==3){
                 BdConex bd= new BdConex();
-                rs= bd.consultar("SELECT solicitud.idSo, solicitud.cedula, tiposolicitud.tipoSo, solicitud.descripcion, solicitud.estado, asignatura.NombreAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.tipo = tiposolicitud.idTiSo LEFT JOIN materia ON solicitud.materia = materia.idMA LEFT JOIN asignatura ON materia.idAs = asignatura.idAs WHERE solicitud.estado = '"+Estado+"';");
+                rs= bd.consultar("SELECT solicitud.IdSo, solicitud.CedulaEs, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs WHERE (BorradoSo , BorradoTiSo, EstadoSo) = (0 , 0,'"+Estado+"')");
             }
             else if (Test>10){
                 BdConex bd= new BdConex();
-                rs= bd.consultar("SELECT solicitud.idSo, solicitud.cedula, tiposolicitud.tipoSo, solicitud.descripcion, solicitud.estado, asignatura.NombreAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.tipo = tiposolicitud.idTiSo LEFT JOIN materia ON solicitud.materia = materia.idMA LEFT JOIN asignatura ON materia.idAs = asignatura.idAs WHERE tiposolicitud.TipoSo = '" + Tipo + "' AND solicitud.estado = '"+Estado+"';");
+                rs= bd.consultar("SELECT solicitud.IdSo, solicitud.CedulaEs, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs WHERE (BorradoSo , BorradoTiSo, tiposolicitud.TipoTiSo, EstadoSo) = (0 , 0, '"+Tipo+"', '"+Estado+"')");
             }
 
         return rs;}
@@ -29,14 +29,14 @@ public class MSolicitudR {
       public ResultSet getResultSet() {
             ResultSet rs = null;
             BdConex bd= new BdConex();
-            rs= bd.consultar("SELECT cedula, tipoSo, descripcion, estado FROM solicitud, tiposolicitud WHERE tiposolicitud.TipoSo = ");
+            rs= bd.consultar("SELECT CedulaEs, tipoSo, DescripcionSo, EstadoSo FROM solicitud INNER JOIN tiposolicitud ON tiposolicitud.TipoTiSo = solicitud.TipoSo");
 
         return rs;}
         public MSolicitudR() {}
 
         public void actualizarSolicitud(String idSo, String Estado) {
             BdConex bd= new BdConex();
-            bd.ejecutar("UPDATE solicitud SET estado = '"+Estado+"' WHERE idSo = '"+idSo+"';");
+            bd.ejecutar("UPDATE solicitud SET EstadoSo = '"+Estado+"' WHERE IdSo = '"+idSo+"';");
             JOptionPane.showMessageDialog(null,"Estado actualizado exitosamente.");
         }
 

@@ -12,6 +12,7 @@ public class VCartelera extends JPanel implements ICartelera {
 
         pPrincipal = new JPanel(new GridBagLayout());
         pPrincipal.setBackground(new Color(255, 255, 255));
+        pPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         reglas = new GridBagConstraints();
         reglas.gridx = 1;
         reglas.gridy = 1;
@@ -27,9 +28,8 @@ public class VCartelera extends JPanel implements ICartelera {
         JLabel lTitulo = new JLabel("CARTELERA INFORMATIVA");
         lTitulo.setFont(new Font("Open Sans", Font.BOLD, 20));
         pIconCar.add(lTitulo);
-        pPrincipal.add(pIconCar, reglas);
-       
 
+        pPrincipal.add(pIconCar, reglas);
         this.add(pPrincipal);
     }
     @Override

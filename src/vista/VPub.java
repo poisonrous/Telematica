@@ -10,12 +10,11 @@ public class VPub extends JPanel implements IPub {
     public JPanel getPublicacion(String titulo, String autor, String contenido, String fecha){
         panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(255, 255, 255));
-        panel.setOpaque(true);
         GridBagConstraints reglas = new GridBagConstraints();
         reglas.gridx = 1;
         reglas.gridy = 1;
         JLabel lTitulo = new JLabel(titulo);
-        lTitulo.setFont(new Font("Open Sans", Font.BOLD, 12));
+        lTitulo.setFont(new Font("Open Sans", Font.BOLD, 14));
         panel.add(lTitulo, reglas);
         reglas.gridy++;
         JPanel datos = new JPanel(new GridBagLayout());
@@ -29,14 +28,20 @@ public class VPub extends JPanel implements IPub {
         datos.add(lAutor, reglas2);
         reglas2.gridx++;
         JLabel lFecha = new JLabel(fecha);
-        lFecha.setFont(new Font("Open Sans", Font.BOLD, 12));
+        lFecha.setFont(new Font("Open Sans", Font.PLAIN, 12));
+        lFecha.setForeground(Color.BLACK);
         datos.add(lFecha, reglas2);
         reglas.gridy++;
         panel.add(datos, reglas);
         reglas.gridy++;
-        JLabel lContenido = new JLabel(contenido);
-        lContenido.setFont(new Font("Open Sans", Font.BOLD, 12));
-        panel.add(lContenido, reglas);
+        reglas.anchor = GridBagConstraints.WEST;
+        JTextArea taContenido = new JTextArea(contenido);
+        taContenido.setFont(new Font("Open Sans", Font.ITALIC, 12));
+        taContenido.setPreferredSize(new Dimension(400, 200));
+        taContenido.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        taContenido.setLineWrap(true);
+        taContenido.setWrapStyleWord(true);
+        panel.add(taContenido, reglas);
         return panel;
   
         

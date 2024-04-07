@@ -18,6 +18,7 @@ public class VAdministrador extends JFrame {
     private VCambioContrasena cambioContrasena;
     private JButton bSolicitudes, bServicios, bActualizarServicios, bCartelera, bActualizarCartelera, bEventos, bActualizarEventos, bContrasena;
     private JPanel pPrincipal;
+    JScrollPane spPrincipal;
     private JToolBar tbMenu;
 
     public VAdministrador(OModelo usuario, ISolicitudReporte solicitudReporte, ISolicitudCurso solicitudCurso, IServicios servicios, IServicio servicio, ICartelera cartelera, IPublicacion publicacion, IEventos eventos, IEvento evento, ICambioContrasena cambioContrasena) {
@@ -25,7 +26,14 @@ public class VAdministrador extends JFrame {
         this.setSize(1000, 800);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        spPrincipal = new JScrollPane();
+        spPrincipal.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        spPrincipal.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        spPrincipal.setBounds(0, 0, 800, 800);
+
         pPrincipal = new JPanel();
+
+        spPrincipal.setViewportView(pPrincipal);
 
         JPanel datosUsuario = new JPanel();
         datosUsuario.add(new JLabel(usuario.getNombres() + " " + usuario.getApellidos()));
@@ -109,7 +117,7 @@ public class VAdministrador extends JFrame {
         tbMenu.add(bContrasena);
 
         this.add(tbMenu, BorderLayout.WEST);
-        this.add(pPrincipal, BorderLayout.CENTER);
+        this.add(spPrincipal, BorderLayout.CENTER);
     }
 
 }

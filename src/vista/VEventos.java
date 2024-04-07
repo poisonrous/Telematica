@@ -1,5 +1,7 @@
 package vista;
 
+//import controlador.CEventos;
+
 import controlador.CEventos;
 
 import javax.swing.*;
@@ -11,15 +13,47 @@ public class VEventos extends JPanel implements IEventos {
     public VEventos() {
 
         pPrincipal = new JPanel(new GridBagLayout());
+        pPrincipal.setBackground(new Color(255, 255, 255));
         reglas = new GridBagConstraints();
         reglas.gridx = 1;
         reglas.gridy = 1;
         reglas.insets = new Insets(10, 10, 10, 10);
+        JPanel pIconEven = new JPanel();
+        pIconEven.setBackground(new Color(255, 255, 255));
+        JLabel lImagenEven = new JLabel();  
+        lImagenEven.setSize(55, 45);
+        ImageIcon icon = new ImageIcon("media/eventosA.png");
+        Icon iconoCar = new ImageIcon(icon.getImage().getScaledInstance(lImagenEven.getWidth(), lImagenEven.getHeight(), Image.SCALE_DEFAULT));
+        lImagenEven.setIcon(iconoCar);
+        pIconEven.add(lImagenEven);
         JLabel lTitulo = new JLabel("Próximos Eventos");
-        lTitulo.setFont(new Font("Arial", Font.BOLD, 15));
-        lTitulo.setHorizontalAlignment(JLabel.CENTER);
-        pPrincipal.add(lTitulo, reglas);
+        lTitulo.setFont(new Font("Open Sans", Font.BOLD, 20));
+        pIconEven.add(lTitulo);
+        pPrincipal.add(pIconEven, reglas);
 
+        
+        JPanel pImagen = new JPanel(); 
+        pImagen.setBackground(new Color(255, 255, 255));
+    
+      
+        reglas.gridx = 3;
+        reglas.gridy = 1;
+        reglas.gridwidth = 1;
+        reglas.gridheight = 5;
+        
+        reglas.anchor = GridBagConstraints.EAST;
+      
+        
+        
+        JLabel lImagen = new JLabel();  
+        lImagen.setSize(450, 450);
+        ImageIcon imagen = new ImageIcon("media/EventosA.jpg");
+        Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(lImagen.getWidth(), lImagen.getHeight(), Image.SCALE_DEFAULT));
+        lImagen.setIcon(icono);
+        pImagen.add(lImagen);
+        pPrincipal.add (pImagen, reglas); 
+        
+        
         this.add(pPrincipal);
     }
 
@@ -35,51 +69,114 @@ public class VEventos extends JPanel implements IEventos {
     }
 
     @Override
-    public void setControlador(CEventos controlador){
-
+    public void setControlador(CEventos controlador) {
+        //Por si algún día queremos agregar algún botón de "asistiré" o algo por el estilo
     }
+
 
     @Override
     public JPanel getEvento(String titulo, String descripcion, String fecha, String hora, String lugar, String organizador, String modalidad, String precio){
         JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color(255, 255, 255));
         GridBagConstraints reglas = new GridBagConstraints();
+        reglas.anchor = GridBagConstraints.WEST;
         reglas.gridx = 1;
         reglas.gridy = 1;
-        panel.add(new JLabel("Evento: "),reglas);
-        reglas.gridy = 2;
-        panel.add(new JLabel("Organizador: "), reglas);
+        
+        JLabel lTituloEven = new JLabel(titulo);
+        lTituloEven.setFont(new Font("Roboto", Font.BOLD, 16));
+        lTituloEven.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+       	panel.add(lTituloEven, reglas);
+       
+        
+       	reglas.gridy = 2;
+        JLabel lOrganizado = new JLabel("Organizado por "+organizador+"");
+        lOrganizado.setFont(new Font("Open Sans", Font.BOLD, 14));
+        lOrganizado.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        panel.add(lOrganizado, reglas);
+       	
+        
+        reglas.gridy = 3;
         JLabel lPrecio = new JLabel("Precio: ");
-        reglas.gridy = 3;
+        lPrecio.setFont(new Font("Open Sans", Font.BOLD, 14));
+        lPrecio.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
         panel.add(lPrecio, reglas);
+       	
         reglas.gridy = 4;
-        panel.add(new JLabel("Fecha: "), reglas);
+        JLabel lFecha = new JLabel("Fecha: ");
+        lFecha.setFont(new Font("Open Sans", Font.BOLD, 14));
+        lFecha.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        panel.add(lFecha, reglas);
+        
+        
         reglas.gridy = 5;
-        panel.add(new JLabel("Hora: "), reglas);
+        JLabel lHora = new JLabel("Hora: ");
+        lHora.setFont(new Font("Open Sans", Font.BOLD, 14));
+        lHora.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        panel.add(lHora, reglas);
+        
         reglas.gridy = 6;
-        panel.add(new JLabel("Modalidad: "), reglas);
+        JLabel lModalidad = new JLabel("Modalidad: ");
+        lModalidad.setFont(new Font("Open Sans", Font.BOLD, 14));
+        lModalidad.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        panel.add(lModalidad, reglas);
+        
         reglas.gridy = 7;
-        panel.add(new JLabel("Lugar: "), reglas);
+        JLabel lLugar = new JLabel("Lugar: ");
+        lLugar.setFont(new Font("Open Sans", Font.BOLD, 14));
+        lLugar.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        panel.add(lLugar, reglas);
+        
         reglas.gridy = 8;
-        panel.add(new JLabel("Descripción: "), reglas);
-
+        reglas.anchor = GridBagConstraints.NORTHWEST;
+        JLabel lDescripcion = new JLabel("Descripción: ");
+        lDescripcion.setFont(new Font("Open Sans", Font.BOLD, 14));
+        lDescripcion.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        panel.add(lDescripcion, reglas);
+        
+        reglas.anchor = GridBagConstraints.WEST;
+        
+        
         reglas.gridx = 2;
-        reglas.gridy = 1;
-        panel.add(new JLabel(titulo), reglas);
-        reglas.gridy = 2;
-        panel.add(new JLabel(organizador), reglas);
-        JLabel stringPrecio = new JLabel(precio);
         reglas.gridy = 3;
+        JLabel stringPrecio = new JLabel(precio);
+        stringPrecio.setFont(new Font("Open Sans", Font.BOLD, 14));
+        stringPrecio.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
         panel.add(stringPrecio, reglas);
+        
         reglas.gridy = 4;
-        panel.add(new JLabel(fecha), reglas);
+        JLabel lFechaE = new JLabel(fecha);
+        lFechaE.setFont(new Font("Open Sans", Font.BOLD, 14));
+        lFechaE.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        panel.add(lFechaE, reglas);
+        
         reglas.gridy = 5;
-        panel.add(new JLabel(hora), reglas);
+        JLabel lHoraE = new JLabel(hora);
+        lHoraE.setFont(new Font("Open Sans", Font.BOLD, 14));
+        lHoraE.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        panel.add(lHoraE, reglas);
+        
         reglas.gridy = 6;
-        panel.add(new JLabel(modalidad), reglas);
+        JLabel lModalidadE = new JLabel(modalidad);
+        lModalidadE.setFont(new Font("Open Sans", Font.BOLD, 14));
+        lModalidadE.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        panel.add(lModalidadE, reglas);
+        
         reglas.gridy = 7;
-        panel.add(new JLabel(lugar), reglas);
+        JLabel lLugarE = new JLabel(lugar);
+        lLugarE.setFont(new Font("Open Sans", Font.BOLD, 14));
+        lLugarE.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        panel.add(lLugarE, reglas);
+        
         reglas.gridy = 8;
-        panel.add(new JLabel(descripcion), reglas);
+        JTextArea tDescripcionE = new JTextArea(descripcion);
+        tDescripcionE.setFont(new Font("Open Sans", Font.BOLD, 14));
+        tDescripcionE.setPreferredSize(new Dimension(200, 200));
+        tDescripcionE.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        tDescripcionE.setLineWrap(true);
+        tDescripcionE.setWrapStyleWord(true);
+        tDescripcionE.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+        panel.add(tDescripcionE, reglas);
 
         if(precio.equals("0")){
             lPrecio.setVisible(false);
@@ -91,6 +188,7 @@ public class VEventos extends JPanel implements IEventos {
             reglas.gridy = 3;
             reglas.gridwidth = 2;
             panel.add(lGratis, reglas);
+          
         }
         return panel;
     }
