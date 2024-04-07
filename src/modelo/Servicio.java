@@ -77,7 +77,7 @@ public class Servicio {
         Vector<Servicio> datos = new Vector<Servicio>();
         Servicio dat = null;
         try {
-            String sql = "SELECT * FROM servicio";
+            String sql = "SELECT * FROM serviciossociales WHERE borradoSS = 0";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             dat = new Servicio();
@@ -89,11 +89,11 @@ public class Servicio {
             datos.add(dat);
             while (rs.next()) {
                 dat = new Servicio();
-                dat.setIdServicio(rs.getString("idSe"));
-                dat.setNombreServicio(rs.getString("nombreSe"));
-                dat.setHorarioServicio(rs.getString("horarioSe"));
-                dat.setUbicacionServicio(rs.getString("ubicacionSe"));
-                dat.setEstatusServicio(rs.getString("estatusSe"));
+                dat.setIdServicio(rs.getString("IdSS"));
+                dat.setNombreServicio(rs.getString("TipoSS"));
+                dat.setHorarioServicio(rs.getString("HorarioSS"));
+                dat.setUbicacionServicio(rs.getString("UbicacionSS"));
+                dat.setEstatusServicio(rs.getString("EstatusSS"));
                 datos.add(dat);
             }
             rs.close();

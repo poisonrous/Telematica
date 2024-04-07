@@ -2,14 +2,16 @@ package modelo;
 
 public class Modelo {
 
-	private String usuario,  rol, contrasena;
+	private String usuario, nombres, apellidos, rol, contrasena;
 
 	
-	public Modelo(String usuario, String contrasena) {
+	public Modelo(String usuario, String nombres, String apellidos, String rol, String contrasena) {
 		
 		this.usuario = usuario;
-		this.contrasena = contrasena;
+		this.nombres = nombres;
+		this.apellidos = apellidos;
 		this.rol = rol;
+		this.contrasena = contrasena;
 	}
 	public Modelo () {
 		
@@ -40,18 +42,21 @@ public class Modelo {
 		this.contrasena = contrasena;
 	}
 
-
-	
-		
-		
-	
-
-	
-		
-		
-		
+	public String getNombres() {
+		return nombres;
 	}
-	
-	
-	
 
+	public void setNombres(String nombres) {
+		this.nombres = nombres;
+
+	}
+
+	public String getApellidos() {
+		return apellidos;
+	}
+
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
+	}
+
+	}

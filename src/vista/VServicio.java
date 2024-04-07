@@ -8,8 +8,10 @@ import java.awt.event.ItemListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Ellipse2D;
 
-public class VServicio extends JFrame implements ActionListener, IServicio{
+
+public class VServicio extends JPanel implements ActionListener, IServicio{
     private JButton bActualizar;
     private JPanel pPrincipal;
     private JComboBox cServicio;
@@ -18,35 +20,70 @@ public class VServicio extends JFrame implements ActionListener, IServicio{
     private CServicio controlador;
 
     public VServicio(){
-        super("Servicio");
-        this.setSize(400, 550);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setLocationRelativeTo(null);
+        
+        JPanel pBotones = new JPanel();
+        pBotones.setBackground(new Color(255, 255, 255));
+        bActualizar = new JButton("Actualizar");
+        bActualizar.setFont(new Font("Open Sans", Font.PLAIN, 15));
+        bActualizar.setForeground(Color.WHITE);
+        bActualizar.setBackground(new Color(0, 125, 254));
+        bActualizar.setActionCommand(IServicio.ACTUALIZAR);
+        bActualizar.addActionListener(this);
+        pBotones.add(bActualizar);
+        this.add(pBotones, BorderLayout.SOUTH);
+       
 
         pPrincipal = new JPanel(new GridBagLayout());
+        pPrincipal.setBackground(new Color(255, 255, 255));
         GridBagConstraints reglas = new GridBagConstraints();
-
-        JLabel lTitulo = new JLabel("Servicio");
-        lTitulo.setFont(new Font("Arial", Font.BOLD, 20));
-        reglas.gridx = 2;
+        reglas.anchor = GridBagConstraints.WEST;
+        
+        JPanel pIconSer = new JPanel();
+        pIconSer.setBackground(new Color(255, 255, 255));
+        JLabel lImagenSe = new JLabel();  
+        lImagenSe.setSize(40, 30);
+        ImageIcon icon = new ImageIcon("media/servicio.png");
+        Icon iconoSe = new ImageIcon(icon.getImage().getScaledInstance(lImagenSe.getWidth(), lImagenSe.getHeight(), Image.SCALE_DEFAULT));
+        lImagenSe.setIcon(iconoSe);
+        pIconSer.add(lImagenSe);
+        JLabel lTitulo = new JLabel("SERVICIO");
+        lTitulo.setFont(new Font("Open Sans", Font.BOLD, 20));
+        pIconSer.add(lTitulo);
+        reglas.gridx = 3;
         reglas.gridy = 1;
         reglas.insets = new Insets(10, 10, 10, 10);
-        pPrincipal.add(lTitulo, reglas);
+        pPrincipal.add(pIconSer, reglas);
+        
+        
         reglas.gridx = 1;
         reglas.gridy = 2;
-        pPrincipal.add(new JLabel("Servicio"), reglas);
+        JLabel lServicio = new JLabel("Servicio: ");
+        lServicio.setFont(new Font("Open Sans", Font.BOLD, 16));
+        pPrincipal.add(lServicio, reglas);
+        
         reglas.gridy = 3;
-        pPrincipal.add(new JLabel("Horario"), reglas);
+        JLabel lHorario = new JLabel("Horario: ");
+        lHorario.setFont(new Font("Open Sans", Font.BOLD, 16));
+        pPrincipal.add(lHorario, reglas);
+        
         reglas.gridy = 4;
-        pPrincipal.add(new JLabel("Ubicacion"), reglas);
+        JLabel lUbicacion = new JLabel("Ubicación: ");
+        lUbicacion.setFont(new Font("Open Sans", Font.BOLD, 16));
+        pPrincipal.add(lUbicacion, reglas);
+        
         reglas.gridy = 5;
-        pPrincipal.add(new JLabel("Estado"), reglas);
+        JLabel lEstado= new JLabel("Estado: ");
+        lEstado.setFont(new Font("Open Sans", Font.BOLD, 16));
+        pPrincipal.add(lEstado, reglas);    
         tNombre = new JTextField(20);
+        
         reglas.gridx = 2;
         reglas.gridy = 2;
         tNombre.setVisible(false);
         pPrincipal.add(tNombre, reglas);
         cServicio = new JComboBox();
+        cServicio.setFont(new Font("Open Sans", Font.PLAIN, 16));
+        cServicio.setBackground(new Color(255, 255, 255));
         cServicio.addItemListener(new ItemListener(){
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -64,20 +101,50 @@ public class VServicio extends JFrame implements ActionListener, IServicio{
         reglas.gridy = 4;
         pPrincipal.add(tUbicacion, reglas);
         rbActivo = new JRadioButton("Activo");
+       // reglas.anchor = GridBagConstraints.WEST;
+        rbActivo.setBackground(new Color(255, 255, 255));
+        rbActivo.setFont(new Font("Open Sans", Font.BOLD, 16));
+        //rbActivo.setIcon(new ColorIcon(Color.GREEN, 10));
+        
         rbInactivo = new JRadioButton("Inactivo");
+        rbInactivo.setFont(new Font("Open Sans", Font.BOLD, 16));
+        //rbInactivo.setIcon(new ColorIcon(Color.RED, 10));
+        
+        rbInactivo.setBackground(new Color(255, 255, 255));
         ButtonGroup bg = new ButtonGroup();
+       
         bg.add(rbActivo);
         bg.add(rbInactivo);
         reglas.gridy = 5;
+        //reglas.anchor = GridBagConstraints.EAST;
+        
         pPrincipal.add(rbActivo, reglas);
-        reglas.gridx = 3;
+       reglas.gridx = 3;
+       reglas.anchor = GridBagConstraints.WEST;
         pPrincipal.add(rbInactivo, reglas);
-        bActualizar = new JButton("Actualizar");
-        bActualizar.setActionCommand(IServicio.ACTUALIZAR);
-        bActualizar.addActionListener(this);
-        reglas.gridx = 2;
-        reglas.gridy = 6;
-        pPrincipal.add(bActualizar, reglas);
+        
+        
+        JPanel pImagen = new JPanel(); 
+        pImagen.setBackground(new Color(255, 255, 255));
+    
+      
+        reglas.gridx = 5;
+        reglas.gridy = 1;
+        reglas.gridwidth = 1;
+        reglas.gridheight = 5;
+        
+        reglas.anchor = GridBagConstraints.EAST;
+      
+        
+        
+        JLabel lImagen = new JLabel();  
+        lImagen.setSize(300, 300);
+        ImageIcon imagen = new ImageIcon("media/servicios.png");
+        Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(lImagen.getWidth(), lImagen.getHeight(), Image.SCALE_DEFAULT));
+        lImagen.setIcon(icono);
+        pImagen.add(lImagen);
+        pPrincipal.add (pImagen, reglas); 
+        
         this.add(pPrincipal);
     }
 
@@ -90,9 +157,36 @@ public class VServicio extends JFrame implements ActionListener, IServicio{
         } else {
             controlador.actionPerformed(e);
         }
-    }
+      }
     }
 
+    
+    static class ColorIcon implements Icon {
+        private Color color;
+        private int size;
+
+        public ColorIcon(Color color, int size) {
+            this.color = color;
+            this.size = size;
+        }
+
+        public void paintIcon(Component c, Graphics g, int x, int y) {
+            g.setColor(color);
+            g.fillOval(x, y, size, size);
+        }
+
+        public int getIconWidth() {
+            return size;
+        }
+
+        public int getIconHeight() {
+            return size;
+        }
+    
+    
+    }
+    
+    
     @Override
     public void arrancar() {
     this.setVisible(true);

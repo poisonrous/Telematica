@@ -1,11 +1,13 @@
 package vista;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +16,7 @@ import javax.swing.*;
 
 import controlador.CCambioContrasena;
 
-public class VCambioContrasena extends JFrame implements ActionListener, ICambioContrasena {
+public class VCambioContrasena extends JPanel implements ActionListener, ICambioContrasena {
 
 	
 	private JPasswordField tContrasenaActual, tNuevaContrasena, tConfirmarContrasena;
@@ -24,74 +26,113 @@ public class VCambioContrasena extends JFrame implements ActionListener, ICambio
 	
 	
 	public VCambioContrasena(){
-		
-		
-		super("Cambio de Contrasena de acceso");
-		this.setSize(400,550);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(null);
-		
-		
-	
-	
-		JLabel lTitulo = new JLabel("CAMBIO DE CONTRASEï¿½A");
-		lTitulo.setFont(new Font("Arial", Font.BOLD,20));
+		this.setLayout(new BorderLayout());
+		JPanel pTitulo = new JPanel();
+		JLabel lTitulo = new JLabel("CAMBIO DE CONTRASEÑA");
+		pTitulo.setBackground(new Color(255, 255, 255));
+		lTitulo.setFont(new Font("Open Sans", Font.BOLD,20));
+		lTitulo.setForeground(new Color(0, 125, 254));
 		lTitulo.setHorizontalAlignment(JLabel.CENTER);
-		this.add(lTitulo, BorderLayout.NORTH);
-		
+		pTitulo.add(lTitulo);
+		this.add(pTitulo, BorderLayout.NORTH);
 		
 		
 		//sur
 		
 		JPanel pBotones = new JPanel();
+		pBotones.setBackground(new Color(255, 255, 255));
 		bCancelar = new JButton("Cancelar");
+		bCancelar.setFont(new Font("Open Sans", Font.PLAIN, 15));
+        bCancelar.setForeground(Color.WHITE);
+        bCancelar.setBackground(new Color(0, 125, 254));
 		bCancelar.setActionCommand(ICambioContrasena.CANCELAR);
 		pBotones.add(bCancelar);
 		
 		
 		
 		bAceptar = new JButton("Aceptar");
+		bAceptar.setFont(new Font("Open Sans", Font.PLAIN, 15));
+        bAceptar.setForeground(Color.WHITE);
+        bAceptar.setBackground(new Color(0, 125, 254));
 		bAceptar.setActionCommand(ICambioContrasena.ACEPTAR);
 	//	bAceptar.addActionListener(this);
 		pBotones.add(bAceptar);
 		
 		
 		this.add(pBotones, BorderLayout.SOUTH);
+	
+		JPanel pPrincipal = new JPanel(new GridBagLayout());
+		GridBagConstraints reglas = new GridBagConstraints();
+		pPrincipal.setBackground(new Color(255, 255, 255));
+        pPrincipal.setBorder(BorderFactory.createEmptyBorder(5, 10, 15, 2));
+        
+        JPanel pImagen = new JPanel(); 
+		pImagen.setBackground(new Color(255, 255, 255));
+		reglas.gridy = 0;
+        reglas.weighty= 1.0;
+        reglas.gridheight=1;
+        
+        JLabel lImagen = new JLabel();  
+	    lImagen.setSize(350, 270);
+	    ImageIcon imagen = new ImageIcon("media/contrasena.jpg");
+	    Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(lImagen.getWidth(), lImagen.getHeight(), Image.SCALE_DEFAULT));
+	    lImagen.setIcon(icono);
+	    pImagen.add(lImagen);
+	    pPrincipal.add (pImagen);
+	    
+	    reglas.gridy = 1;
+        reglas.weighty= 1.0;
+        JPanel pCActual = new JPanel();
+        pCActual.setBackground(new Color(255, 255, 255));
+       // reglas.anchor = GridBagConstraints.WEST;
+		JLabel lContrasenaActual = new JLabel("Contraseña Actual:   ");
+		lContrasenaActual.setForeground(new Color(0, 125, 254));
+		lContrasenaActual.setFont(new Font("Open Sans", Font.BOLD, 14));
 		
-		JPanel pPrincipal = new JPanel(new GridLayout(4,2,5,5));
+		pCActual.add(lContrasenaActual);
+		tContrasenaActual = new JPasswordField();
+		tContrasenaActual.setPreferredSize(new Dimension(200,30));
+		reglas.anchor = GridBagConstraints.EAST;
+		pCActual.add(tContrasenaActual);
+		pPrincipal.add(pCActual, reglas);
 		
-		JPanel pCon = new JPanel();
-		pCon.add(new JLabel("Contraseï¿½a Actual:") );
 		tCodigo = new JTextField();
 		tCodigo.setVisible(false);
-		
-		pCon.add(tCodigo);
-		pPrincipal.add(pCon);
-		
-		tContrasenaActual = new JPasswordField(10);
-		pPrincipal.add(tContrasenaActual);
-		
-		pPrincipal.add(new JLabel("Nueva Contraseï¿½a:") );
-		tNuevaContrasena = new JPasswordField(15);
 	
-		pPrincipal.add(tNuevaContrasena);
+		reglas.gridy = 2;
+        reglas.weighty= 1.0;
+        JPanel pCNueva = new JPanel();
+        pCNueva.setBackground(new Color(255, 255, 255));
+        //reglas.anchor = GridBagConstraints.WEST;
+		JLabel lContrasenaNueva = new JLabel("Contraseña Nueva:   ");
+		lContrasenaNueva.setFont(new Font("Open Sans", Font.BOLD, 14));
+		lContrasenaNueva.setForeground(new Color(0, 125, 254));
+		pCNueva.add(lContrasenaNueva);
+		tNuevaContrasena = new JPasswordField();
+		tNuevaContrasena.setPreferredSize(new Dimension(200,30));
+		reglas.anchor = GridBagConstraints.EAST;
+		pCNueva.add(tNuevaContrasena);
+		pPrincipal.add(pCNueva, reglas);
 		
-		pPrincipal.add(new JLabel("Confirmar Contraseï¿½a:") );
-		tConfirmarContrasena = new JPasswordField(15);
-		pPrincipal.add(tConfirmarContrasena);
+		reglas.gridy = 3;
+        reglas.weighty= 1.0;
+        
+        JPanel pCContra = new JPanel();
+        pCContra.setBackground(new Color(255, 255, 255));
+        //reglas.anchor = GridBagConstraints.WEST;
+		JLabel lConfirmarContrasena = new JLabel("Confirmar Contraseña :   ");
+		lConfirmarContrasena.setFont(new Font("Open Sans", Font.BOLD, 14));
+		lConfirmarContrasena.setForeground(new Color(0, 125, 254));
+		pCContra.add(lConfirmarContrasena);
 		
-		tUsuario = new JTextField();
-		tUsuario.setVisible(false);
-		pPrincipal.add(tUsuario);
+		tConfirmarContrasena = new JPasswordField();
+		tConfirmarContrasena.setPreferredSize(new Dimension(200,30));
+		pCContra.add(tConfirmarContrasena);
+		pPrincipal.add(pCContra, reglas);
 		
-		
-		this.add(pPrincipal);
-		
-		
-		
+		this.add(pPrincipal, BorderLayout.CENTER);
 		
 	}
-	
 	
 	
 	
@@ -99,7 +140,10 @@ public class VCambioContrasena extends JFrame implements ActionListener, ICambio
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 
-	
+	if(e.getSource()==bCancelar) {
+       System.exit(0);
+       
+	}
 		
 	}
 

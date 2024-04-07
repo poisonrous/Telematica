@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import modelo.Modelo;
 import modelo.OModelo;
+import principal.Principal;
 import vista.IIniciarSesion;
 
 public class CIniciarSesion implements ActionListener {
@@ -14,6 +15,7 @@ public class CIniciarSesion implements ActionListener {
 	private IIniciarSesion vista;
 	private Modelo modelo;
 	private OModelo modelo2;
+	private Principal principal;
 
 
 
@@ -47,9 +49,11 @@ public class CIniciarSesion implements ActionListener {
 		        if (user != null) {
 
 		            if (user.getRol().equals("Estudiante")) {
-		                vista.inicioEstudiante();
-		            } else if (user.getRol().equals("Administrador")) {
-		                vista.inicioAdmin();
+						principal = new Principal();
+						principal.pantallaEstudiante();
+		            } else if (user.getRol().equals("Admin")) {
+		                principal = new Principal();
+						principal.pantallaAdministrador();
 		            }
 
 		        } else {

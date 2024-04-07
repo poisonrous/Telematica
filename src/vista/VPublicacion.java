@@ -8,7 +8,7 @@ import java.awt.*;
 import controlador.CSugerencia;
 import vista.IPublicacion;
 
-public class VPublicacion extends JFrame implements ActionListener, IPublicacion {
+public class VPublicacion extends JPanel implements ActionListener, IPublicacion {
     private CPublicacion controlador;
     private JPanel pPrincipal, pResultado, pDatos;
     private JLabel lNombre, lTelefono, lCorreo, lSugerencia, lDescripcion, lFecha;
@@ -17,25 +17,21 @@ public class VPublicacion extends JFrame implements ActionListener, IPublicacion
     private JButton bEnviar, bImprimir;
 
     public VPublicacion() {
-        super("Env√≠o de publicaci√≥n");
-        this.setSize(800, 650);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
-        this.setResizable(false);
 
-
+        this.setLayout(new BorderLayout());
+        
         JPanel pTitulo = new JPanel();
         pTitulo.setBackground(new Color(255, 255, 255));
-        JLabel lTitulo = new JLabel("TELECOMUN√çCATE", JLabel.CENTER);
+        JLabel lTitulo = new JLabel("TELECOMUNÕCATE", JLabel.CENTER);
         lTitulo.setFont(new Font("Roboto", Font.BOLD, 16));
         lTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-
+        
         pTitulo.add(lTitulo);
         this.add(pTitulo, BorderLayout.NORTH);
-
+        
         JPanel pBotones = new JPanel();
         pBotones.setBackground(new Color(255, 255, 255));
-
+        
         bEnviar = new JButton("Enviar");
         bEnviar.setFont(new Font("Open Sans", Font.PLAIN, 15));
         bEnviar.setForeground(Color.WHITE);
@@ -43,55 +39,55 @@ public class VPublicacion extends JFrame implements ActionListener, IPublicacion
         bEnviar.setActionCommand(ENVIAR);
         bEnviar.addActionListener(this);
         pBotones.add(bEnviar);
-
+        
         this.add(pBotones, BorderLayout.SOUTH);
-
+      
         //CENTRO
-
+        
         pPrincipal = new JPanel(new GridBagLayout());
         GridBagConstraints reglas = new GridBagConstraints();
         pPrincipal.setBackground(new Color(255, 255, 255));
         pPrincipal.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 2));
-
-
+        
+        
         JPanel pIconMe = new JPanel();
         pIconMe.setBackground(new Color(255, 255, 255));
         reglas.gridy = 0;
         reglas.weighty= 1.0;
         reglas.gridheight=1;
-        JLabel lImagenMe = new JLabel();
+        JLabel lImagenMe = new JLabel();  
         lImagenMe.setSize(30, 25);
         ImageIcon icon = new ImageIcon("media/megaphone.png");
         Icon iconoMe = new ImageIcon(icon.getImage().getScaledInstance(lImagenMe.getWidth(), lImagenMe.getHeight(), Image.SCALE_DEFAULT));
         lImagenMe.setIcon(iconoMe);
-        pIconMe.add(lImagenMe);
-        JLabel lTipo = new JLabel("Env√≠a tus publicaciones");
+       pIconMe.add(lImagenMe);
+        JLabel lTipo = new JLabel("EnvÌa tus publicaciones");
         lTipo.setFont(new Font("Roboto", Font.BOLD, 16));
         pIconMe.add(lTipo);
         pPrincipal.add(pIconMe, reglas);
-
-
-
+        
+        
+        
         reglas.gridy = 1;
         reglas.weighty= 1.0;
         reglas.anchor = GridBagConstraints.WEST;
-        JLabel lTituloPublicacion = new JLabel("T√≠tulo:");
+        JLabel lTituloPublicacion = new JLabel("TÌtulo:");
         lTituloPublicacion.setFont(new Font("Open Sans", Font.BOLD, 14));
-        pPrincipal.add(lTituloPublicacion, reglas);
+         pPrincipal.add(lTituloPublicacion, reglas);
 
-        reglas.gridy = 2;
-        reglas.weighty= 1.0;
-        tfTitulo = new JTextField();
+         reglas.gridy = 2;
+         reglas.weighty= 1.0;
+        tfTitulo = new JTextField();  
         tfTitulo.setPreferredSize(new Dimension(200, 35));
         tfTitulo.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-
+        
         pPrincipal.add(tfTitulo, reglas);
-
-
+        
+      
         reglas.gridy = 3;
         reglas.weighty= 1.0;
         reglas.anchor = GridBagConstraints.WEST;
-        JLabel lInformacion = new JLabel("Aporta m√°s informaci√≥n:");
+        JLabel lInformacion = new JLabel("Aporta m·s informaciÛn:");
         lInformacion.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lInformacion, reglas);
 
@@ -104,30 +100,30 @@ public class VPublicacion extends JFrame implements ActionListener, IPublicacion
         taDescripcion.setWrapStyleWord(true);
         pPrincipal.add(taDescripcion, reglas);
 
-
-        JPanel pImagen = new JPanel();
-        pImagen.setBackground(new Color(255, 255, 255));
-
-
-        reglas.gridx = 1;
-        reglas.gridy = 1;
-        reglas.gridwidth = 1;
-        reglas.gridheight = 5;
-
-        reglas.anchor = GridBagConstraints.EAST;
-
-
-
-        JLabel lImagen = new JLabel();
-        lImagen.setSize(500, 450);
-        ImageIcon imagen = new ImageIcon("media/recurso2.jpg");
-        Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(lImagen.getWidth(), lImagen.getHeight(), Image.SCALE_DEFAULT));
-        lImagen.setIcon(icono);
-        pImagen.add(lImagen);
-        pPrincipal.add (pImagen, reglas);
-
-
-
+       
+      JPanel pImagen = new JPanel(); 
+      pImagen.setBackground(new Color(255, 255, 255));
+  
+    
+      reglas.gridx = 1;
+      reglas.gridy = 1;
+      reglas.gridwidth = 1;
+      reglas.gridheight = 5;
+      
+      reglas.anchor = GridBagConstraints.EAST;
+    
+      
+      
+      JLabel lImagen = new JLabel();  
+      lImagen.setSize(500, 450);
+      ImageIcon imagen = new ImageIcon("media/recurso2.jpg");
+      Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(lImagen.getWidth(), lImagen.getHeight(), Image.SCALE_DEFAULT));
+      lImagen.setIcon(icono);
+      pImagen.add(lImagen);
+      pPrincipal.add (pImagen, reglas); 
+      
+      
+        
         /*bImprimir = new JButton("Imprimir");
         bImprimir.addActionListener(this);
         reglas.gridy = 8;

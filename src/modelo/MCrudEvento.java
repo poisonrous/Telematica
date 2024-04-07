@@ -12,4 +12,12 @@ public class MCrudEvento {
         op = bd.ejecutar(sql);
         return op;
     }
+
+    public ResultSet getResultSet() {
+        ResultSet rs = null;
+        bd.abrirConexion();
+        String sql = "SELECT * FROM evento WHERE FechaEv > now() AND BorradoEv = 0 ORDER BY FechaEv ASC";
+        rs = bd.consultar(sql);
+        return rs;
+    }
 }

@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import controlador.CIniciarSesion;
 
@@ -86,11 +87,13 @@ public class VIniciarSesion extends JFrame implements ActionListener, IIniciarSe
 		reglas.insets = new Insets(5, 10, 10, 10);
 		JLabel lUsuario = new JLabel("Usuario: ");
 		lUsuario.setFont(new Font("Open Sans", Font.BOLD, 16));
+		//reglas.anchor = GridBagConstraints.WEST;
 		
 		pUsuario.add(lUsuario);
 		tUsuario = new JTextField();
 		tUsuario.setPreferredSize(new Dimension(200,30));
 		pUsuario.add(tUsuario);
+		reglas.anchor = GridBagConstraints.EAST;
 		pPrincipal.add(pUsuario, reglas);
 		
 		JPanel pContrasena = new JPanel();
@@ -104,14 +107,16 @@ public class VIniciarSesion extends JFrame implements ActionListener, IIniciarSe
 		pContrasena.add(lContrasena);
 		tContrasena = new JPasswordField();
 		tContrasena.setPreferredSize(new Dimension(200,30));
+		
 		pContrasena.add(tContrasena);
 		pPrincipal.add(pContrasena, reglas);
 		
 		
 		reglas.gridx = 1;
 		reglas.gridy = 4;
-		JLabel lOlvidoContrasena = new JLabel("¿Olvidó su contraseña?");
-		lOlvidoContrasena.setFont(new Font("Open Sans", Font.BOLD, 14));
+		
+		JLabel lOlvidoContrasena = new JLabel("¿Olvidó su contraseña?", JLabel.CENTER);
+		lOlvidoContrasena.setFont(new Font("Open Sans", Font.ITALIC, 13));
 		
 		pPrincipal.add(lOlvidoContrasena, reglas);
 		
@@ -122,6 +127,7 @@ public class VIniciarSesion extends JFrame implements ActionListener, IIniciarSe
 		bIniciar.setFont(new Font("Open Sans", Font.PLAIN, 15));
 		bIniciar.setForeground(Color.WHITE);
 		bIniciar.setBackground(new Color(0, 125, 254));
+		bIniciar.setBorder(new EmptyBorder(10, 10, 10, 10));
 	
 		bIniciar.setActionCommand(IIniciarSesion.IniciarSesion);
 		pPrincipal.add(bIniciar, reglas);

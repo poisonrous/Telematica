@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-public class VEvento extends JFrame implements ActionListener, IEvento {
+public class VEvento extends JPanel implements ActionListener, IEvento {
     private JTextField tfTitulo, tfOrganizador, tfPrecio, tfLugar;
     private JTextArea taDescripcion;
     private JDateChooser dcFecha;
@@ -25,37 +25,64 @@ public class VEvento extends JFrame implements ActionListener, IEvento {
 
     public VEvento(){
 
-        super("Publicar Evento");
-        this.setSize(400, 550);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setLocationRelativeTo(null);
+        this.setLayout(new BorderLayout());
 
         JPanel pPrincipal = new JPanel(new GridBagLayout());
         GridBagConstraints reglas = new GridBagConstraints();
+        pPrincipal.setBackground(new Color(255, 255, 255));
+        pPrincipal.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         reglas.gridx = 1;
         reglas.gridy = 1;
         reglas.insets = new Insets(10, 10, 10, 10);
 
-        JLabel lTitulo = new JLabel("Agregar Evento");
-        lTitulo.setFont(new Font("Arial", Font.BOLD, 16));
-        lTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-        pPrincipal.add(lTitulo, reglas);
+        JPanel pIconE = new JPanel();
+        pIconE.setBackground(new Color(255, 255, 255));
+        JLabel lImagenE = new JLabel();  
+        lImagenE.setSize(35, 35);
+        ImageIcon iconE = new ImageIcon("media/evento.png");
+        Icon iconoE = new ImageIcon(iconE.getImage().getScaledInstance(lImagenE.getWidth(), lImagenE.getHeight(), Image.SCALE_DEFAULT));
+        lImagenE.setIcon(iconoE);
+       pIconE.add(lImagenE);
+        JLabel lTipo = new JLabel("Agregar Evento");
+        lTipo.setFont(new Font("Open Sans", Font.BOLD, 16));
+        pIconE.add(lTipo);
+        pPrincipal.add(pIconE, reglas);
+        
+        
+        
         reglas.gridy++;
-        pPrincipal.add(new JLabel("Nombre: "), reglas);
+        reglas.anchor = GridBagConstraints.WEST;
+        JLabel lNombre = new JLabel("Nombre:");
+        lNombre.setFont(new Font("Open Sans", Font.BOLD, 14));
+        pPrincipal.add(lNombre, reglas);
         reglas.gridy++;
-        pPrincipal.add(new JLabel("Organizador: "), reglas);
+        JLabel lOrganizador = new JLabel("Organizador:");
+        lOrganizador.setFont(new Font("Open Sans", Font.BOLD, 14));
+        pPrincipal.add(lOrganizador, reglas);
         reglas.gridy++;
-        pPrincipal.add(new JLabel("Fecha: "), reglas);
+        JLabel lFecha = new JLabel("Fecha:");
+        lFecha.setFont(new Font("Open Sans", Font.BOLD, 14));
+        pPrincipal.add(lFecha, reglas);
         reglas.gridy++;
-        pPrincipal.add(new JLabel("Hora: "), reglas);
+        JLabel lHora = new JLabel("Hora:");
+        lHora.setFont(new Font("Open Sans", Font.BOLD, 14));
+        pPrincipal.add(lHora, reglas);
         reglas.gridy++;
-        pPrincipal.add(new JLabel("Lugar: "), reglas);
+        JLabel lLugar = new JLabel("Lugar:");
+        lLugar.setFont(new Font("Open Sans", Font.BOLD, 14));
+        pPrincipal.add(lLugar, reglas);
         reglas.gridy++;
-        pPrincipal.add(new JLabel("Precio: "), reglas);
+        JLabel lPrecio = new JLabel("Precio:");
+        lPrecio.setFont(new Font("Open Sans", Font.BOLD, 14));
+        pPrincipal.add(lPrecio, reglas);
         reglas.gridy++;
-        pPrincipal.add(new JLabel("Modalidad: "), reglas);
+        JLabel lModalidad = new JLabel("Modalidad:");
+        lModalidad.setFont(new Font("Open Sans", Font.BOLD, 14));
+        pPrincipal.add(lModalidad, reglas);
         reglas.gridy++;
-        pPrincipal.add(new JLabel("DescripciÃ³n: "), reglas);
+        JLabel lDescripcion = new JLabel("Descripción:");
+        lDescripcion.setFont(new Font("Open Sans", Font.BOLD, 14));
+        pPrincipal.add(lDescripcion, reglas);
 
         tfTitulo = new JTextField(20);
         reglas.gridx = 2;
@@ -68,6 +95,7 @@ public class VEvento extends JFrame implements ActionListener, IEvento {
         reglas.gridy++;
         pPrincipal.add(dcFecha, reglas);
         tsHora = new TimeSelectionField();
+        tsHora.setBackground(new Color(255, 255, 255));
         reglas.gridy++;
         pPrincipal.add(tsHora, reglas);
         tfLugar = new JTextField(20);
@@ -77,32 +105,66 @@ public class VEvento extends JFrame implements ActionListener, IEvento {
         reglas.gridy++;
         pPrincipal.add(tfPrecio, reglas);
         cbGratuito = new JCheckBox("Gratuito");
+        cbGratuito.setFont(new Font("Open Sans", Font.BOLD, 14));
+        cbGratuito.setBackground(new Color(255, 255, 255));
         cbGratuito.addActionListener(this);
         reglas.gridx = 3;
         pPrincipal.add(cbGratuito, reglas);
         reglas.gridx = 2;
         rbPresencial = new JRadioButton("Presencial");
+        rbPresencial.setFont(new Font("Open Sans", Font.BOLD, 14));
+        rbPresencial.setBackground(new Color(255, 255, 255));
         rbVirtual = new JRadioButton("Virtual");
+        rbVirtual.setFont(new Font("Open Sans", Font.BOLD, 14));
+        rbVirtual.setBackground(new Color(255, 255, 255));
         rbSemipresencial = new JRadioButton("Semipresencial");
+        rbSemipresencial.setFont(new Font("Open Sans", Font.BOLD, 14));
+        rbSemipresencial.setBackground(new Color(255, 255, 255));
         bgModalidad = new ButtonGroup();
         bgModalidad.add(rbPresencial);
         bgModalidad.add(rbVirtual);
         bgModalidad.add(rbSemipresencial);
         rbPresencial.setSelected(true);
         JPanel pModalidad = new JPanel();
+        pModalidad.setBackground(new Color(255, 255, 255));
         pModalidad.add(rbPresencial);
         pModalidad.add(rbVirtual);
         pModalidad.add(rbSemipresencial);
         reglas.gridy++;
         pPrincipal.add(pModalidad, reglas);
         taDescripcion = new JTextArea(5, 20);
+        taDescripcion.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        taDescripcion.setLineWrap(true);
+        taDescripcion.setWrapStyleWord(true);
         reglas.gridy++;
         pPrincipal.add(taDescripcion, reglas);
+        
+        JPanel pImagen = new JPanel();
+        pImagen.setBackground(new Color(255, 255, 255));
+    
+        reglas.gridy++;
+      
+        
+        
+        JLabel lImagen = new JLabel();  
+        lImagen.setSize(350, 240);
+        ImageIcon imagen = new ImageIcon("media/eventos.jpg");
+        Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(lImagen.getWidth(), lImagen.getHeight(), Image.SCALE_DEFAULT));
+        lImagen.setIcon(icono);
+        pImagen.add(lImagen);
+        //pPrincipal.add (pImagen, reglas);
 
         bPublicar = new JButton("Publicar");
+        bPublicar.setFont(new Font("Open Sans", Font.PLAIN, 15));
+        bPublicar.setForeground(Color.WHITE);
+        bPublicar.setBackground(new Color(0, 125, 254));
         bPublicar.setActionCommand(IEvento.PUBLICAR);
         reglas.gridy++;
         pPrincipal.add(bPublicar, reglas);
+        
+        
+      
+        
 
         this.add(pPrincipal);
     }

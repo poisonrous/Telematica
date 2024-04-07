@@ -3,6 +3,8 @@ import java.sql.ResultSet;
 import modelo.BdConex;
 import modelo.MSugerencia;
 
+import javax.swing.*;
+
 
 public class MCrudSugerencia {
 
@@ -13,24 +15,28 @@ public class MCrudSugerencia {
     public int crearSugerencia(String usuario, String titulo, String descripcion) {
         int op=0;
         bd.abrirConexion();
-        String sql="INSERT INTO sugerencia (cedulaUs, tituloSu, descripcionSu, fechaSu) VALUES ('"+usuario+"', '"+titulo+"', '"+descripcion+"', CURDATE())";
+        String sql="INSERT INTO sugerencia (sugerencia.cedulaUs, tituloSu, descripcionSu, fechaSu) VALUES ('"+usuario+"', '"+titulo+"', '"+descripcion+"', CURDATE())";
         op=bd.ejecutar(sql);
         return op;
     }
 
-        public Object buscarSugerencia(String usuario, String titulo, String descripcion){
+    public Object buscarSugerencia(String usuario, String titulo, String descripcion){
+        JOptionPane.showMessageDialog(null, "usuario: "+usuario+" titulo: "+titulo+" descripcion: "+descripcion);
         mSugerencia = new MSugerencia();
-        rs=bd.consultar("SELECT usuario.NombresUs, usuario.ApellidosUs, usuario.telefonoUs, usuario.correoUs, sugerencia.tituloSu, sugerencia.descripcionSu, sugerencia.fechaSu FROM sugerencia INNER JOIN usuario ON sugerencia.cedulaUs = usuario.CedulaUs WHERE (usuario.cedulaUs, tituloSu, descripcionSu) = ('"+usuario+"', '"+titulo+"', '"+descripcion+"')");
+        rs=bd.consultar("SELECT usuario.NombresUs, usuario.ApellidosUs, estudiante.TelefonoEs, usuario.CorreoElectronicoUs, sugerencia.TituloSu, sugerencia.DescripcionSu, sugerencia.FechaSu FROM estudiante INNER JOIN usuario ON estudiante.CedulaEs = usuario.CedulaUs INNER JOIN sugerencia ON sugerencia.CedulaUs = usuario.CedulaUs WHERE (usuario.CedulaUs, TituloSu, DescripcionSu) = ('"+usuario+"', '"+titulo+"', '"+descripcion+"')");
         try
         {
             rs.next();
             mSugerencia.setNombre(rs.getString("NombresUs"));
             mSugerencia.setApellido(rs.getString("ApellidosUs"));
-            mSugerencia.setTelefono(rs.getString("telefonoUs"));
-            mSugerencia.setCorreo(rs.getString("correoUs"));
-            mSugerencia.setTitulo(rs.getString("tituloSu"));
-            mSugerencia.setDescripcion(rs.getString("descripcionSu"));
-            mSugerencia.setFecha(rs.getString("fechaSu"));
+            mSugerencia.setTelefono(rs.getString("TelefonoEs"));
+            mSugerencia.setCorreo(rs.getString("CorreoElectronicoUs"));
+            mSugerencia.setTitulo(rs.getString("TituloSu"));
+            mSugerencia.setDescripcion(rs.getString("DescripcionSu"));
+            mSugerencia.setFecha(rs.getString("FechaSu"));
+
+            if (mSugerencia.getTelefono() == null) mSugerencia.setTelefono("desconocido");
+            if (mSugerencia.getCorreo() == null) mSugerencia.setTelefono("desconocido");
 
         } catch (Exception e) {
             System.out.println("Error al mostrar los datos de la sugerencia");

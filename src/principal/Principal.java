@@ -1,47 +1,114 @@
 package principal;
 
 import controlador.*;
-import modelo.Modelo;
-import modelo.OModelo;
+import modelo.*;
 import vista.*;
 
 public class Principal {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	private static IIniciarSesion vista;
+	private static Modelo modelo;
+	private static OModelo modelo2;
+	private static CIniciarSesion controlador5;
 
-		IIniciarSesion vista = new VIniciarSesion();
-		Modelo modelo = new Modelo();
-		OModelo modelo2 = new OModelo();
-		CIniciarSesion controlador5 = new CIniciarSesion(vista, modelo, modelo2);
-		ICambioContrasena vista1 = new VCambioContrasena();
-		CCambioContrasena controlador1 = new CCambioContrasena(vista1, vista,modelo2);
-		vista1.setControlador(controlador1);
-		ISolicitud vista2 = new VSolicitud();
-		ICambioContrasena vista3 = new VCambioContrasena();
-		ISugerencia vista4 = new VSugerencia();
-		CSolicitud controlador = new CSolicitud(vista2, modelo2);
-		CSugerencia controlador2 = new CSugerencia(vista4, modelo2);
-		IPublicacion vista5 = new VPublicacion();
-		CPublicacion controlador3 = new CPublicacion(vista5, modelo2);
-		IServicio vista6 = new VServicio();
-		CServicio controlador4 = new CServicio(vista6);
-		vista6.setControlador(controlador4);
-		//vista6.arrancar();
-		controlador4.cargarServicio(vista6);
+	public static void main(String[] args) {
+
+		 vista = new VIniciarSesion();
+		 modelo = new Modelo();
+		 modelo2 = new OModelo();
+		 controlador5 = new CIniciarSesion(vista, modelo, modelo2);
 		vista.setControlador(controlador5);
-		vista2.setControlador(controlador);
-		vista4.setControlador(controlador2);
-		vista5.setControlador(controlador3);
 		vista.arrancar();
-		//vista2.arrancar();
-		//vista4.arrancar();
-		//vista5.arrancar();
-		//vista1.arrancar();
-		IEvento vista7 = new VEvento();
-		CEvento controlador6 = new CEvento(vista7);
-		vista7.setControlador(controlador6);
-		vista7.arrancar();
+
+
+		//vista.setVisible(true);
 	}
 
+	public void pantallaEstudiante() {
+		ICartelera cartelera = new VCartelera();
+		IPub pub = new VPub();
+		MCartelera mCartelera = new MCartelera();
+		CCartelera controlador = new CCartelera(cartelera, pub, mCartelera);
+		controlador.cargarCartelera();
+
+		ISolicitud solicitud = new VSolicitud();
+		CSolicitud controladorSolicitud = new CSolicitud(solicitud, modelo2);
+		solicitud.setControlador(controladorSolicitud);
+
+		IServicios servicios = new VServicios();
+		MCrudServicio mCrudServicio = new MCrudServicio();
+		CServicios controladorServicios = new CServicios(servicios, mCrudServicio);
+		controladorServicios.cargarServicios();
+
+		IEventos eventos = new VEventos();
+		MCrudEvento mCrudEvento = new MCrudEvento();
+		CEventos controladorEventos = new CEventos(eventos, mCrudEvento);
+		controladorEventos.cargarEventos();
+
+		ISugerencia sugerencia = new VSugerencia();
+		MCrudSugerencia mCrudSugerencia = new MCrudSugerencia();
+		CSugerencia controladorSugerencia = new CSugerencia(sugerencia, modelo2);
+		sugerencia.setControlador(controladorSugerencia);
+
+		IPublicacion publicacion = new VPublicacion();
+		CPublicacion controladorPublicacion = new CPublicacion(publicacion, modelo2);
+		publicacion.setControlador(controladorPublicacion);
+
+		ICambioContrasena cambioContrasena = new VCambioContrasena();
+		CCambioContrasena controladorCambioContrasena = new CCambioContrasena(cambioContrasena, vista, modelo2);
+		cambioContrasena.setControlador(controladorCambioContrasena);
+
+		VEstudiante estudiante = new VEstudiante(modelo2, cartelera, solicitud, servicios, eventos, sugerencia, publicacion, cambioContrasena);
+		estudiante.setVisible(true);
+	}
+
+	public void pantallaAdministrador(){
+		ICartelera cartelera = new VCartelera();
+		IPub pub = new VPub();
+		MCartelera mCartelera = new MCartelera();
+		CCartelera controlador = new CCartelera(cartelera, pub, mCartelera);
+		controlador.cargarCartelera();
+
+		IServicios servicios = new VServicios();
+		MCrudServicio mCrudServicio = new MCrudServicio();
+		CServicios controladorServicios = new CServicios(servicios, mCrudServicio);
+		controladorServicios.cargarServicios();
+
+		IServicio servicio = new VServicio();
+		CServicio controladorServicio = new CServicio(servicio, mCrudServicio);
+		servicio.setControlador(controladorServicio);
+		controladorServicio.cargarServicio(servicio);
+
+		IEventos eventos = new VEventos();
+		MCrudEvento mCrudEvento = new MCrudEvento();
+		CEventos controladorEventos = new CEventos(eventos, mCrudEvento);
+		controladorEventos.cargarEventos();
+
+		IPublicacion publicacion = new VPublicacion();
+		CPublicacion controladorPublicacion = new CPublicacion(publicacion, modelo2);
+		publicacion.setControlador(controladorPublicacion);
+
+		ICambioContrasena cambioContrasena = new VCambioContrasena();
+		CCambioContrasena controladorCambioContrasena = new CCambioContrasena(cambioContrasena, vista, modelo2);
+		cambioContrasena.setControlador(controladorCambioContrasena);
+
+		ISolicitudReporte solicitudReporte = new VSolicitudReporte();
+		MSolicitudR modulo = new MSolicitudR();
+		CSolicitudReporte controladorSolicitudReporte = new CSolicitudReporte(solicitudReporte, modulo);
+		solicitudReporte.setControlador(controladorSolicitudReporte);
+
+		ISolicitudCurso solicitudCurso = new VSolicitudCurso(solicitudReporte);
+		CSolicitudCurso controladorSolicitudCurso = new CSolicitudCurso(solicitudCurso, modulo);
+		solicitudCurso.setControlador(controladorSolicitudCurso);
+		solicitudCurso.mostrar();
+		solicitudCurso.desplegar();
+
+
+		IEvento evento = new VEvento();
+		CEvento controladorEvento = new CEvento(evento);
+		evento.setControlador(controladorEvento);
+
+		VAdministrador administrador = new VAdministrador(modelo2, solicitudReporte, solicitudCurso, servicios, servicio, cartelera, publicacion, eventos, evento, cambioContrasena);
+		administrador.setVisible(true);
+	}
 }

@@ -13,9 +13,9 @@ public class CServicio implements ActionListener {
     private IServicio vista;
     private MCrudServicio modelo;
 
-    public CServicio(IServicio vista){
+    public CServicio(IServicio vista, MCrudServicio modelo){
         this.vista = vista;
-        modelo = new MCrudServicio();
+        this.modelo = new MCrudServicio();
     }
 
     @Override

@@ -21,16 +21,16 @@ public class MCrudServicio {
         Servicio servicio = new Servicio();
      //   rs = bd.consultar("SELECT * FROM servicio WHERE nombreSe = '"+nombre+"'");
         try {
-            String sql = "SELECT * FROM servicio WHERE nombreSe = '"+nombre+"'";
+            String sql = "SELECT * FROM serviciossociales WHERE tipoSS = '"+nombre+"'";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             if (rs.next()) {
                 servicio = new Servicio();
-                servicio.setIdServicio(rs.getString("idSe"));
-                servicio.setNombreServicio(rs.getString("nombreSe"));
-                servicio.setHorarioServicio(rs.getString("horarioSe"));
-                servicio.setUbicacionServicio(rs.getString("ubicacionSe"));
-                servicio.setEstatusServicio(rs.getString("estatusSe"));
+                servicio.setIdServicio(rs.getString("idSS"));
+                servicio.setNombreServicio(rs.getString("tipoSS"));
+                servicio.setHorarioServicio(rs.getString("horarioSS"));
+                servicio.setUbicacionServicio(rs.getString("ubicacionSS"));
+                servicio.setEstatusServicio(rs.getString("estatusSS"));
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontro el servicio.");
             }
@@ -43,7 +43,7 @@ public class MCrudServicio {
         int resultado = 0;
         try {
             bd.abrirConexion();
-            bd.ejecutar("INSERT INTO servicio (nombreSe, horarioSe, ubicacionSe, estatusSe) VALUES ('"+nombre+"', '"+horario+"', '"+ubicacion+"', '"+estatus+"')");
+            bd.ejecutar("INSERT INTO serviciossociales (tipoSS, horarioSS, ubicacionSS, estatusSS) VALUES ('"+nombre+"', '"+horario+"', '"+ubicacion+"', '"+estatus+"')");
             JOptionPane.showMessageDialog(null, "Servicio creado exitosamente.");
         } catch (Exception e) {
             System.out.println("Error al crear el servicio");
@@ -55,11 +55,18 @@ public class MCrudServicio {
         int resultado = 0;
         try {
             bd.abrirConexion();
-            bd.ejecutar("UPDATE servicio SET horarioSe = '"+horario+"', ubicacionSe = '"+ubicacion+"', estatusSe = '"+estatus+"' WHERE nombreSe = '"+nombre+"'");
+            bd.ejecutar("UPDATE serviciossociales SET horarioSS = '"+horario+"', ubicacionSS = '"+ubicacion+"', estatusSS = '"+estatus+"' WHERE tipoSS = '"+nombre+"'");
             JOptionPane.showMessageDialog(null, "Servicio modificado exitosamente.");
         } catch (Exception e) {
             System.out.println("Error al modificar el servicio");
         }
         return resultado;
+    }
+
+    public ResultSet getResultSet(){
+        ResultSet rs = null;
+        BdConex bd = new BdConex();
+        rs= bd.consultar("SELECT * FROM serviciossociales WHERE estatusSS='1'");
+        return rs;
     }
 }
