@@ -2,6 +2,7 @@ package vista;
 
 import controlador.CSolicitudCurso;
 import controlador.CSolicitudReporte;
+import controlador.CSolicitudReporte;
 import modelo.BdConex;
 import vista.ISolicitudReporte;
 
@@ -18,15 +19,20 @@ import static java.awt.GridBagConstraints.REMAINDER;
 
 public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
 
-    private JLabel  lNombre, lCedula, lTipo, lEstado, lMateria, lMateria2;
-    private JButton bCambiar;
+    private final JLabel  lNombre;
+    private final JLabel lCedula;
+    private final JLabel lTipo;
+    private final JLabel lEstado;
+    private final JLabel lMateria;
+    private final JLabel lMateria2;
+    private final JButton bCambiar;
 
-    private JTextField tDescripcion;
-    private boolean CHANGE=false;
+    private final JTextField tDescripcion;
+    private final boolean CHANGE=false;
     private ResultSet rs2;
     private CSolicitudReporte controlador;
 
-    private JComboBox cEstado;
+    private final JComboBox cEstado;
     public VSolicitudReporte(){
 
         super("reporte seleccionado");
@@ -36,6 +42,7 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
 
         Dimension dimcombo = new Dimension(150, 30);
         JPanel pPrincipal = new JPanel(new GridBagLayout());
+        pPrincipal.setBackground(new Color(255, 255, 255));
         GridBagConstraints reglas = new GridBagConstraints();
         // por ahora las grid X estan segmentadas debido a que las arregle del sistema basado en gridy que tenía, resolver cuando vaya a arreglar el resto.
 
@@ -43,33 +50,40 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
         reglas.gridy = 1;
         reglas.insets = new Insets(10, 10, 10, 10);
         JLabel lNombre2 = new JLabel("Estudiante:");
+        lNombre2.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lNombre2,reglas);
 
         reglas.gridx = 2;
         lNombre = new JLabel();
+        lNombre.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lNombre,reglas);
 
         reglas.gridx = 1;
         reglas.gridy = 2;
         JLabel lCedula2 = new JLabel("Cedula:");
+        lCedula2.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lCedula2,reglas);
 
         reglas.gridx = 2;
         lCedula = new JLabel();
+        lCedula.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lCedula,reglas);
 
         reglas.gridx = 1;
         reglas.gridy = 3;
         JLabel lTipo2 = new JLabel("Tipo:");
+        lTipo2.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lTipo2,reglas);
 
         reglas.gridx = 2;
         lTipo = new JLabel();
+        lTipo.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lTipo,reglas);
 
         reglas.gridx = 1;
         reglas.gridy = 4;
-        JLabel lDescripcion2 = new JLabel("Descripción de la solicitud:");
+        JLabel lDescripcion2 = new JLabel("Descripci�n de la solicitud:");
+        lDescripcion2.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lDescripcion2,reglas);
 
         reglas.gridx = 1;
@@ -78,25 +92,31 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
         reglas.fill = GridBagConstraints.VERTICAL;
         tDescripcion = new JTextField();
         tDescripcion.setEditable(false);
+        tDescripcion.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+       
         pPrincipal.add(tDescripcion,reglas);
 
         reglas.gridx = 1;
         reglas.gridy = 6;
         JLabel lEstado2 = new JLabel("Estado:");
+        lEstado2.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lEstado2,reglas);
 
         reglas.gridx = 2;
         lEstado = new JLabel();
+        lEstado.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lEstado,reglas);
 
         reglas.gridx = 1;
         reglas.gridy = 7;
         lMateria2 = new JLabel("Materia:");
+        lMateria2.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lMateria2,reglas);
         lMateria2.setVisible(false);
 
         reglas.gridx = 2;
         lMateria = new JLabel("");
+        lMateria.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lMateria,reglas);
 
         this.add(pPrincipal, BorderLayout.CENTER);
@@ -165,6 +185,7 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
         this.rs2=rs;
     }
 
+
     @Override
     public void setControlador(CSolicitudReporte a) {
         this.controlador= a;
@@ -190,7 +211,7 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
         //if(rs2.getString("estado").equals("1")) lEstado.setText("Resuelta");
             /*else*/ lEstado.setText(rs2.getString("EstadoSo"));
         if(rs2.getString("NombreAsignaturaAs")!=null) tDescripcion.setText(rs2.getString("NombreAsignaturaAs"));
-        else tDescripcion.setText(rs2.getString("descripcion"));
+        else tDescripcion.setText(rs2.getString("descripcionSo"));
         //if(rs2.getString("EstadoSo").equals("1")) cEstado.setSelectedItem("Resuelta");
             /*  else*/ cEstado.setSelectedItem(rs2.getString("EstadoSo"));
             this.setVisible(true);

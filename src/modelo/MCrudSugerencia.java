@@ -1,9 +1,7 @@
 package modelo;
-import java.sql.ResultSet;
-import modelo.BdConex;
-import modelo.MSugerencia;
 
 import javax.swing.*;
+import java.sql.ResultSet;
 
 
 public class MCrudSugerencia {
@@ -20,10 +18,16 @@ public class MCrudSugerencia {
         return op;
     }
 
+    public ResultSet getSugestlist ( ){
+            rs= bd.consultar("SELECT estudiante.NombresEs, estudiante.ApellidosEs, Estudiante.CedulaEs, sugerencia.TituloSu, sugerencia.DescripcionSu, sugerencia.FechaSu FROM estudiante INNER JOIN sugerencia ON estudiante.CedulaEs = sugerencia.CedulaUs WHERE (BorradoSu, BorradoEs)= ('0', '0')");
+            return rs;}
+
+
+
     public Object buscarSugerencia(String usuario, String titulo, String descripcion){
         JOptionPane.showMessageDialog(null, "usuario: "+usuario+" titulo: "+titulo+" descripcion: "+descripcion);
         mSugerencia = new MSugerencia();
-        rs=bd.consultar("SELECT usuario.NombresUs, usuario.ApellidosUs, estudiante.TelefonoEs, usuario.CorreoElectronicoUs, sugerencia.TituloSu, sugerencia.DescripcionSu, sugerencia.FechaSu FROM estudiante INNER JOIN usuario ON estudiante.CedulaEs = usuario.CedulaUs INNER JOIN sugerencia ON sugerencia.CedulaUs = usuario.CedulaUs WHERE (usuario.CedulaUs, TituloSu, DescripcionSu) = ('"+usuario+"', '"+titulo+"', '"+descripcion+"')");
+        rs=bd.consultar("SELECT usuario.NombresUs, usuario.ApellidosUs, estudiante.TelefonoEs, usuario.CorreoElectronicoUs, sugerencia.TituloSu, sugerencia.DescripcionSu, sugerencia.FechaSu FROM estudiante INNER JOIN usuario ON estudiante.CedulaEs = usuario.CedulaUs INNER JOIN sugerencia ON sugerencia.CedulaUs = usuario.CedulaUs WHERE (usuario.CedulaUs, TituloSu, DescripcionSu, BorradoUs, BorradoSu) = ('"+usuario+"', '"+titulo+"', '"+descripcion+"', '0','0')");
         try
         {
             rs.next();

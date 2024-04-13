@@ -23,32 +23,42 @@ import javax.swing.table.DefaultTableModel;
 
 public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionListener {
 
-    private JComboBox cTipo, cEstado;
-    private JScrollPane spTabla;
-    private VSolicitudReporte v1;
-    private JTable tabla;
-    private JPopupMenu popup;
-    private DefaultTableModel model;
-    private JButton bParametro, bImprimir;
+    private final JComboBox cTipo;
+    private final JComboBox cEstado;
+    private final JScrollPane spTabla;
+    private final VSolicitudReporte v1;
+    private final JTable tabla;
+    private final JPopupMenu popup;
+    private final DefaultTableModel model;
+    private final JButton bParametro;
+    private final JButton bImprimir;
     private CSolicitudCurso controlador;
     private ResultSet rs;
     private String ID;
     private int test = 1, testS=1, testE=0;
     
     public VSolicitudCurso(ISolicitudReporte v1){
+        this.setPreferredSize(new Dimension(1085, 680));
+
+
         this.setLayout(new BorderLayout());
+
         this.v1 = (VSolicitudReporte) v1;
 
-
         // título
+		JPanel pTitulo = new JPanel();
         JLabel lTitulo = new JLabel("Lista de solicitudes");
-		lTitulo.setFont(new Font("Arial", Font.BOLD,15));
+        pTitulo.setBackground(new Color(255, 255, 255));
+		lTitulo.setFont(new Font("Open Sans", Font.BOLD,15));
 		lTitulo.setHorizontalAlignment(JLabel.CENTER);
-		this.add(lTitulo, BorderLayout.NORTH);
+		pTitulo.add(lTitulo);
+		this.add(pTitulo, BorderLayout.NORTH);
 
         // Proto tabla
 
         tabla = new JTable ();
+       
+       
         model= new DefaultTableModel();
         tabla.setModel(model);
 
@@ -57,12 +67,13 @@ public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionLi
 
         //setup de la segunda ventana
         popup = new JPopupMenu();
+        
         popup.add(new AbstractAction("Seleccione para detalles") {
             public void actionPerformed(ActionEvent e) {
                 try {
                     rs.first();
                     for (int i=0; i<tabla.getSelectedRow();i++){rs.next();}
-                    ID=rs.getString("IdSo");
+                    ID=rs.getString("idSo");
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -77,12 +88,21 @@ public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionLi
 
         //cosas de botones
         JPanel pSouth = new JPanel();
+        pSouth.setBackground(new Color(255, 255, 255));
         JPanel pBotones = new JPanel();
+        pBotones.setBackground(new Color(255, 255, 255));
 
         JLabel saber = new JLabel("");
-        bParametro = new JButton("Aplicar parámetros de búsqueda:");
+        bParametro = new JButton("Aplicar par�metros de b�squeda:");
+        bParametro.setFont(new Font("Open Sans", Font.PLAIN, 15));
+        bParametro.setForeground(Color.WHITE);
+        bParametro.setBackground(new Color(0, 125, 254));
+        
 		bParametro.setActionCommand(ISolicitudCurso.PARAMETROS);
         bImprimir = new JButton("Imprimir resultados");
+        bImprimir.setFont(new Font("Open Sans", Font.PLAIN, 15));
+        bImprimir.setForeground(Color.WHITE);
+        bImprimir.setBackground(new Color(0, 125, 254));
 		bImprimir.addActionListener(this);
 		pBotones.add(bImprimir);
         pBotones.add(bParametro);
@@ -93,7 +113,10 @@ public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionLi
 
         Dimension dimcombo = new Dimension(150, 30);
         JPanel pCombo = new JPanel();
+        pCombo.setBackground(new Color(255, 255, 255));
         cTipo = new JComboBox();
+        cTipo.setBackground(new Color(255, 255, 255));
+        cTipo.setFont(new Font("Open Sans", Font.PLAIN, 15));
         cTipo.setPreferredSize(dimcombo);
         cTipo.addItem("Todos");
         cTipo.addItemListener(new ItemListener(){
@@ -105,6 +128,8 @@ public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionLi
         cTipo.setPreferredSize(dimcombo);
 
         cEstado = new JComboBox();
+        cEstado.setBackground(new Color(255, 255, 255));
+        cEstado.setFont(new Font("Open Sans", Font.PLAIN, 15));
         cEstado.setPreferredSize(dimcombo);
         cEstado.addItem("Todos");
         cEstado.addItem("Resuelta");
@@ -206,7 +231,7 @@ public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionLi
         PreparedStatement ps = null;
         ResultSet rs = null;
         BdConex conn = new BdConex();
-        Connection con = (Connection) conn.getConexion();
+        Connection con = conn.getConexion();
         try {
             ps = con.prepareStatement("SELECT tiposolicitud.TipoTiSo FROM tiposolicitud");
             rs = ps.executeQuery();

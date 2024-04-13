@@ -104,6 +104,12 @@ public class MCrudSolicitud {
         return mSolicitud;
     }
 
+    public ResultSet getSolicitudes(String usuario){
+        bd.abrirConexion();
+        rs=bd.consultar("SELECT IdSo, tipoTiSo, DescripcionSo, EstadoSo, FechaSo FROM solicitud INNER JOIN tiposolicitud ON tiposolicitud.IdTiSo = solicitud.IdTiSo WHERE BorradoSo = 0 AND  solicitud.CedulaEs = "+usuario+" ORDER BY FechaSo ASC");
+        return rs;
+    }
+
        /* public int eliminarSolicitud(String tipo, String descripcion){
         int op=0;
         bd.abrirConexion();

@@ -79,7 +79,8 @@ public class BdConex {
 	// Ejecuta la sentencia SQL Select
 	public ResultSet consultar(String sentencia) {
 		try {
-			ps = con.prepareStatement(sentencia);
+			ps = con.prepareStatement(sentencia, ResultSet.TYPE_SCROLL_SENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
 			rs = ps.executeQuery();
 		} catch (SQLException ex) {
 			ex.printStackTrace();

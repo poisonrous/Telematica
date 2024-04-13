@@ -1,13 +1,18 @@
 package vista;
 import javax.swing.*;
 import java.awt.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.util.Date;
 
 public class VPub extends JPanel implements IPub {
     private JPanel panel;
     public VPub() {
     }
 
-    public JPanel getPublicacion(String titulo, String autor, String contenido, String fecha){
+    public JPanel getPublicacion(String titulo, String autor, String contenido, TemporalAccessor fecha){
         panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(255, 255, 255));
         GridBagConstraints reglas = new GridBagConstraints();
@@ -27,7 +32,8 @@ public class VPub extends JPanel implements IPub {
         lAutor.setFont(new Font("Open Sans", Font.BOLD, 12));
         datos.add(lAutor, reglas2);
         reglas2.gridx++;
-        JLabel lFecha = new JLabel(fecha);
+        DateTimeFormatter formateador = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        JLabel lFecha = new JLabel(formateador.format(fecha));
         lFecha.setFont(new Font("Open Sans", Font.PLAIN, 12));
         lFecha.setForeground(Color.BLACK);
         datos.add(lFecha, reglas2);

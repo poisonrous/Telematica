@@ -12,9 +12,9 @@ import vista.IIniciarSesion;
 
 public class CIniciarSesion implements ActionListener {
 
-	private IIniciarSesion vista;
-	private Modelo modelo;
-	private OModelo modelo2;
+	private final IIniciarSesion vista;
+	private final Modelo modelo;
+	private final OModelo modelo2;
 	private Principal principal;
 
 

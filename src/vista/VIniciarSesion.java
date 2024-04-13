@@ -28,222 +28,235 @@ import controlador.CIniciarSesion;
 
 public class VIniciarSesion extends JFrame implements ActionListener, IIniciarSesion {
 
-	private JTextField tUsuario, tRol;
-	private JPasswordField tContrasena;
-	private JButton bIniciar;
-	private CIniciarSesion controlador;
-	
-	public VIniciarSesion() {
-		
-		
-		super("Iniciar SesiÛn");
-		this.setSize(650,480);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(null);
-		
-		
-		JPanel pTitulo = new JPanel();
+    private final JTextField tUsuario;
+    private final JTextField tRol;
+    private final JPasswordField tContrasena;
+    private final JButton bIniciar;
+    private CIniciarSesion controlador;
+
+    public VIniciarSesion() {
+
+
+        super("Iniciar Sesi√≥n");
+        this.setSize(650,480);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+
+
+        JPanel pTitulo = new JPanel();
         pTitulo.setBackground(new Color(255, 255, 255));
-        JLabel lTitulo = new JLabel("TELECOMUNÕCATE", JLabel.CENTER);
+        JLabel lTitulo = new JLabel("TELECOMUN√çCATE", JLabel.CENTER);
         lTitulo.setFont(new Font("Open Sans", Font.BOLD, 20));
         lTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		pTitulo.add(lTitulo);
-		this.add(pTitulo, BorderLayout.NORTH);
-		
-		JPanel pPrincipal = new JPanel(new GridBagLayout());
-		GridBagConstraints reglas = new GridBagConstraints();
-		pPrincipal.setBackground(new Color(255, 255, 255));
-		
-		reglas.gridx = 0;
-		reglas.gridy = 0;
-		tRol = new JTextField();
-		tRol.setVisible(false);
-		pPrincipal.add(tRol, reglas);
-		
-		
-		reglas.gridx = 1;
-		reglas.gridy = 1;
-		reglas.insets = new Insets(10, 10, 10, 10);
-	   
-		JPanel pIconMe = new JPanel();
+        pTitulo.add(lTitulo);
+        this.add(pTitulo, BorderLayout.NORTH);
+
+        JPanel pPrincipal = new JPanel(new GridBagLayout());
+        GridBagConstraints reglas = new GridBagConstraints();
+        pPrincipal.setBackground(new Color(255, 255, 255));
+
+        reglas.gridx = 0;
+        reglas.gridy = 0;
+        tRol = new JTextField();
+        tRol.setVisible(false);
+        pPrincipal.add(tRol, reglas);
+
+
+        reglas.gridx = 1;
+        reglas.gridy = 1;
+        reglas.insets = new Insets(10, 10, 10, 10);
+
+        JPanel pIconMe = new JPanel();
         pIconMe.setBackground(new Color(255, 255, 255));
         reglas.gridy = 0;
         reglas.weighty= 1.0;
         reglas.gridheight=1;
-        JLabel lImagenMe = new JLabel();  
+        JLabel lImagenMe = new JLabel();
         lImagenMe.setSize(200, 170);
         ImageIcon icon = new ImageIcon("media/login3.png");
         Icon iconoMe = new ImageIcon(icon.getImage().getScaledInstance(lImagenMe.getWidth(), lImagenMe.getHeight(), Image.SCALE_DEFAULT));
         lImagenMe.setIcon(iconoMe);
-       pIconMe.add(lImagenMe);
-       pPrincipal.add(pIconMe, reglas);
-       
-		
-        
+        pIconMe.add(lImagenMe);
+        pPrincipal.add(pIconMe, reglas);
+
+
+
         JPanel pUsuario = new JPanel();
-        pUsuario.setBackground(new Color(255, 255, 255));;
+        pUsuario.setBackground(new Color(255, 255, 255));
         reglas.gridx = 1;
-		reglas.gridy = 2;
-		reglas.insets = new Insets(5, 10, 10, 10);
-		JLabel lUsuario = new JLabel("Usuario: ");
-		lUsuario.setFont(new Font("Open Sans", Font.BOLD, 16));
-		//reglas.anchor = GridBagConstraints.WEST;
-		
-		pUsuario.add(lUsuario);
-		tUsuario = new JTextField();
-		tUsuario.setPreferredSize(new Dimension(200,30));
-		pUsuario.add(tUsuario);
-		reglas.anchor = GridBagConstraints.EAST;
-		pPrincipal.add(pUsuario, reglas);
-		
-		JPanel pContrasena = new JPanel();
-		pContrasena.setBackground(new Color(255, 255, 255));
+        reglas.gridy = 2;
+        reglas.insets = new Insets(5, 10, 10, 10);
+        JLabel lUsuario = new JLabel("Usuario: ");
+        lUsuario.setFont(new Font("Open Sans", Font.BOLD, 16));
+        //reglas.anchor = GridBagConstraints.WEST;
+
+        pUsuario.add(lUsuario);
+        tUsuario = new JTextField();
+        tUsuario.setPreferredSize(new Dimension(200,30));
+        pUsuario.add(tUsuario);
+        reglas.anchor = GridBagConstraints.EAST;
+        pPrincipal.add(pUsuario, reglas);
+
+        JPanel pContrasena = new JPanel();
+        pContrasena.setBackground(new Color(255, 255, 255));
         reglas.gridx = 1;
-		reglas.gridy = 3;
-		reglas.insets = new Insets(5, 10, 10, 10);
-		JLabel lContrasena = new JLabel("ContraseÒa: ");
-		lContrasena.setFont(new Font("Open Sans", Font.BOLD, 16));
-	
-		pContrasena.add(lContrasena);
-		tContrasena = new JPasswordField();
-		tContrasena.setPreferredSize(new Dimension(200,30));
-		
-		pContrasena.add(tContrasena);
-		pPrincipal.add(pContrasena, reglas);
-		
-		
-		reglas.gridx = 1;
-		reglas.gridy = 4;
-		
-		JLabel lOlvidoContrasena = new JLabel("øOlvidÛ su contraseÒa?", JLabel.CENTER);
-		lOlvidoContrasena.setFont(new Font("Open Sans", Font.ITALIC, 13));
-		
-		pPrincipal.add(lOlvidoContrasena, reglas);
-		
-		
-		reglas.gridx = 1;
-		reglas.gridy = 5;
-		bIniciar = new JButton("Iniciar SesiÛn");
-		bIniciar.setFont(new Font("Open Sans", Font.PLAIN, 15));
-		bIniciar.setForeground(Color.WHITE);
-		bIniciar.setBackground(new Color(0, 125, 254));
-		bIniciar.setBorder(new EmptyBorder(10, 10, 10, 10));
-	
-		bIniciar.setActionCommand(IIniciarSesion.IniciarSesion);
-		pPrincipal.add(bIniciar, reglas);
-		
-		 JPanel pImagen = new JPanel(); 
-		 //pImagen.setBackground(new Color(255, 255, 255));;
-		 
-	      pImagen.setBackground(new Color(0, 125, 254));
-	  
-	    
-	      reglas.gridx = 2;
-	      reglas.gridy = 0;
-	      reglas.gridwidth = 1;
-	      reglas.gridheight = 5;
-	      reglas.weighty= 20.0;
-	      
-	      reglas.anchor = GridBagConstraints.EAST;
-	    
-	      
-	      
-	      JLabel lImagen = new JLabel();  
-	      lImagen.setSize(250, 300);
-	      ImageIcon imagen = new ImageIcon("media/recurso3.jpg");
-	      Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(lImagen.getWidth(), lImagen.getHeight(), Image.SCALE_DEFAULT));
-	      lImagen.setIcon(icono);
-	      pImagen.add(lImagen);
-	      pPrincipal.add (pImagen, reglas); 
-		
-		this.add(pPrincipal);
-		
-     
-	
-     
-		
-	}
-	
-	
-	
-	
-	
-	@Override
-	public void setControlador(CIniciarSesion c) {
-		// TODO Auto-generated method stub
-		controlador = c;
-		bIniciar.addActionListener(c);
-	}
+        reglas.gridy = 3;
+        reglas.insets = new Insets(5, 10, 10, 10);
+        JLabel lContrasena = new JLabel("Contrase√±a: ");
+        lContrasena.setFont(new Font("Open Sans", Font.BOLD, 16));
 
-	@Override
-	public void arrancar() {
-		// TODO Auto-generated method stub
-		
-		this.setVisible(true);
-	}
+        pContrasena.add(lContrasena);
+        tContrasena = new JPasswordField();
+        tContrasena.setPreferredSize(new Dimension(200,30));
 
-	@Override
-	public String getUsuario() {
-		// TODO Auto-generated method stub
-	    return tUsuario.getText();
-	}
+        pContrasena.add(tContrasena);
+        pPrincipal.add(pContrasena, reglas);
 
-	@Override
-	public String getContrasena() {
-		// TODO Auto-generated method stub
-		return String.valueOf(tContrasena.getPassword());
-	}
+
+        reglas.gridx = 1;
+        reglas.gridy = 4;
+
+        JLabel lOlvidoContrasena = new JLabel("¬øOlvid√≥ su contrase√±a?", JLabel.CENTER);
+        lOlvidoContrasena.setFont(new Font("Open Sans", Font.ITALIC, 13));
+
+        pPrincipal.add(lOlvidoContrasena, reglas);
+
+
+        reglas.gridx = 1;
+        reglas.gridy = 5;
+        bIniciar = new JButton("Iniciar Sesi√≥n");
+        bIniciar.setFont(new Font("Open Sans", Font.PLAIN, 15));
+        bIniciar.setForeground(Color.WHITE);
+        bIniciar.setBackground(new Color(0, 125, 254));
+        bIniciar.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        bIniciar.setActionCommand(IIniciarSesion.IniciarSesion);
+        pPrincipal.add(bIniciar, reglas);
+
+        JPanel pImagen = new JPanel();
+        //pImagen.setBackground(new Color(255, 255, 255));;
+
+        pImagen.setBackground(new Color(0, 125, 254));
+
+
+        reglas.gridx = 2;
+        reglas.gridy = 0;
+        reglas.gridwidth = 1;
+        reglas.gridheight = 5;
+        reglas.weighty= 20.0;
+
+        reglas.anchor = GridBagConstraints.EAST;
+
+
+
+        JLabel lImagen = new JLabel();
+        lImagen.setSize(250, 300);
+        ImageIcon imagen = new ImageIcon("media/recurso3.jpg");
+        Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(lImagen.getWidth(), lImagen.getHeight(), Image.SCALE_DEFAULT));
+        lImagen.setIcon(icono);
+        pImagen.add(lImagen);
+        pPrincipal.add (pImagen, reglas);
+
+        this.add(pPrincipal);
 
 
 
 
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-		tUsuario.setText("");
-		tContrasena.setText("");
-	}
-
-
-
-
-	@Override
-	public void inicioEstudiante() {
-		// TODO Auto-generated method stub
-	    this.setVisible(true);
-	}
+    }
 
 
 
 
 
-	@Override
-	public void inicioAdmin() {
-		// TODO Auto-generated method stub
-		this.setVisible(true);
-	}
+    @Override
+    public void setControlador(CIniciarSesion c) {
+        // TODO Auto-generated method stub
+        controlador = c;
+        bIniciar.addActionListener(c);
+    }
+
+    @Override
+    public void arrancar() {
+        // TODO Auto-generated method stub
+
+        this.setVisible(true);
+    }
+
+    @Override
+    public void cerrar() {
+        this.setVisible(false);
+    }
+
+    @Override
+    public void limpiar() {
+        // TODO Auto-generated method stub
+        tUsuario.setText("");
+        tContrasena.setText("");
+    }
+
+    @Override
+    public String getUsuario() {
+        // TODO Auto-generated method stub
+        return tUsuario.getText();
+    }
+
+    @Override
+    public String getContrasena() {
+        // TODO Auto-generated method stub
+        return String.valueOf(tContrasena.getPassword());
+    }
 
 
 
 
 
-	@Override
-	public String getRol() {
-		// TODO Auto-generated method stub
-		return tRol.getText();
-	}
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
+
+        tUsuario.setText("");
+        tContrasena.setText("");
+    }
+
+
+
+
+    @Override
+    public void inicioEstudiante() {
+        // TODO Auto-generated method stub
+        this.setVisible(true);
+    }
 
 
 
 
 
-	@Override
-	public String consultaUsuario(String usuario, String contrasena) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public void inicioAdmin() {
+        // TODO Auto-generated method stub
+        this.setVisible(true);
+    }
+
+
+
+
+
+    @Override
+    public String getRol() {
+        // TODO Auto-generated method stub
+        return tRol.getText();
+    }
+
+
+
+
+
+    @Override
+    public String consultaUsuario(String usuario, String contrasena) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 
 
@@ -252,4 +265,3 @@ public class VIniciarSesion extends JFrame implements ActionListener, IIniciarSe
 
 
 }
-

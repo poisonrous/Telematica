@@ -15,13 +15,23 @@ import java.util.logging.Logger;
 
 public class VSugerencia extends JPanel implements ActionListener, ISugerencia, Printable {
     private CSugerencia controlador;
-    private JPanel pPrincipal, pResultado, pDatos;
-    private JLabel lNombreUser, lTelefonoUser, lCorreoUser, lSugerenciaUser, lDescripcionUser, lFechaUser;
-    private JTextField tfTitulo;
-    private JTextArea taDescripcion;
-    private JButton bEnviar, bImprimir;
+    private final JPanel pPrincipal;
+    private final JPanel pResultado;
+    private final JPanel pDatos;
+    private final JLabel lNombreUser;
+    private final JLabel lTelefonoUser;
+    private final JLabel lCorreoUser;
+    private final JLabel lSugerenciaUser;
+    private final JLabel lDescripcionUser;
+    private final JLabel lFechaUser;
+    private final JTextField tfTitulo;
+    private final JTextArea taDescripcion;
+    private final JButton bEnviar;
+    private final JButton bImprimir;
 
     public VSugerencia() {
+        this.setPreferredSize(new Dimension(1085, 680));
+
         this.setLayout(new BorderLayout());
 
         JPanel pTitulo = new JPanel();

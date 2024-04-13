@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CEvento implements ActionListener {
-    private IEvento vista;
+    private final IEvento vista;
 
     public CEvento(IEvento vista){
         this.vista = vista;

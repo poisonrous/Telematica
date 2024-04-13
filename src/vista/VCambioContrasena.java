@@ -19,16 +19,21 @@ import controlador.CCambioContrasena;
 public class VCambioContrasena extends JPanel implements ActionListener, ICambioContrasena {
 
 	
-	private JPasswordField tContrasenaActual, tNuevaContrasena, tConfirmarContrasena;
-	private JTextField tCodigo, tUsuario;
-	private JButton bAceptar, bCancelar;
+	private final JPasswordField tContrasenaActual;
+    private final JPasswordField tNuevaContrasena;
+    private final JPasswordField tConfirmarContrasena;
+	private final JTextField tCodigo;
+    private JTextField tUsuario;
+	private final JButton bAceptar;
+    private final JButton bCancelar;
 	
 	
 	
 	public VCambioContrasena(){
+		this.setPreferredSize(new Dimension(1085, 680));
 		this.setLayout(new BorderLayout());
 		JPanel pTitulo = new JPanel();
-		JLabel lTitulo = new JLabel("CAMBIO DE CONTRASEÑA");
+		JLabel lTitulo = new JLabel("CAMBIO DE CONTRASEÃ‘A");
 		pTitulo.setBackground(new Color(255, 255, 255));
 		lTitulo.setFont(new Font("Open Sans", Font.BOLD,20));
 		lTitulo.setForeground(new Color(0, 125, 254));
@@ -85,7 +90,7 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
         JPanel pCActual = new JPanel();
         pCActual.setBackground(new Color(255, 255, 255));
        // reglas.anchor = GridBagConstraints.WEST;
-		JLabel lContrasenaActual = new JLabel("Contraseña Actual:   ");
+		JLabel lContrasenaActual = new JLabel("ContraseÃ±a Actual:   ");
 		lContrasenaActual.setForeground(new Color(0, 125, 254));
 		lContrasenaActual.setFont(new Font("Open Sans", Font.BOLD, 14));
 		
@@ -104,7 +109,7 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
         JPanel pCNueva = new JPanel();
         pCNueva.setBackground(new Color(255, 255, 255));
         //reglas.anchor = GridBagConstraints.WEST;
-		JLabel lContrasenaNueva = new JLabel("Contraseña Nueva:   ");
+		JLabel lContrasenaNueva = new JLabel("ContraseÃ±a Nueva:   ");
 		lContrasenaNueva.setFont(new Font("Open Sans", Font.BOLD, 14));
 		lContrasenaNueva.setForeground(new Color(0, 125, 254));
 		pCNueva.add(lContrasenaNueva);
@@ -120,7 +125,7 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
         JPanel pCContra = new JPanel();
         pCContra.setBackground(new Color(255, 255, 255));
         //reglas.anchor = GridBagConstraints.WEST;
-		JLabel lConfirmarContrasena = new JLabel("Confirmar Contraseña :   ");
+		JLabel lConfirmarContrasena = new JLabel("Confirmar ContraseÃ±a :   ");
 		lConfirmarContrasena.setFont(new Font("Open Sans", Font.BOLD, 14));
 		lConfirmarContrasena.setForeground(new Color(0, 125, 254));
 		pCContra.add(lConfirmarContrasena);

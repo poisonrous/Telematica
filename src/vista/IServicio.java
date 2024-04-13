@@ -6,18 +6,18 @@ import javax.swing.*;
 import java.awt.event.ItemEvent;
 
 public interface IServicio {
-    public static String ACTUALIZAR = "Actualizar";
-    public static String SELECCION = "Seleccion";
-    public void arrancar();
-    public void cargarServicio(ComboBoxModel cbmServicio);
-    public void servicioSeleccion(ItemEvent e);
-    public void mostrarServicio(String horario, String ubicacion, String estatus);
+    String ACTUALIZAR = "Actualizar";
+    String SELECCION = "Seleccion";
+    void arrancar();
+    void cargarServicio(ComboBoxModel cbmServicio);
+    void servicioSeleccion(ItemEvent e);
+    void mostrarServicio(String horario, String ubicacion, String estatus);
 
-    public void setControlador(CServicio controlador);
-    public int getCaso();
+    void setControlador(CServicio controlador);
+    int getCaso();
 
-    public String getNombreServicio();
-    public String getHorarioServicio();
-    public String getUbicacionServicio();
-    public String getEstatusServicio();
+    String getNombreServicio();
+    String getHorarioServicio();
+    String getUbicacionServicio();
+    String getEstatusServicio();
 }

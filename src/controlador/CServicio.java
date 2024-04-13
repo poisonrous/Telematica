@@ -10,8 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 
 public class CServicio implements ActionListener {
-    private IServicio vista;
-    private MCrudServicio modelo;
+    private final IServicio vista;
+    private final MCrudServicio modelo;
 
     public CServicio(IServicio vista, MCrudServicio modelo){
         this.vista = vista;

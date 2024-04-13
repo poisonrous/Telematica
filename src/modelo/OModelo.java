@@ -36,6 +36,12 @@ public class OModelo {
 			cconsu.setContrasena(rs.getString("ContrasennaEncriptadaCo"));
 			cconsu.setRol(rs.getString("RolRoUs"));
 			JOptionPane.showMessageDialog(null,"Bienvenid@, "+rs.getString("NombresUs")+" "+rs.getString("ApellidosUs"));
+			//if(cconsu.getRol().equals("Estudiante")) principal.pantallaEstudiante();
+			/*else if(cconsu.getRol().equals("Administrador")) principal.pantallaAdministrador();
+			else if(cconsu.getRol().equals("Docente")) principal.pantallaDocente();
+			else if(cconsu.getRol().equals("Personal")) principal.pantallaPersonal();
+			else if(cconsu.getRol().equals("Invitado")) principal.pantallaInvitado();
+			else JOptionPane.showMessageDialog(null,"Rol no encontrado.");*/
 			}
 			catch(SQLException e){
 			 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta.");

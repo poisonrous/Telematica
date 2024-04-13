@@ -9,9 +9,9 @@ import java.awt.event.ActionListener;
 
 public class CSolicitudCurso implements ActionListener {
 
-    private ISolicitudCurso vista;
+    private final ISolicitudCurso vista;
     private ISolicitudReporte vista2;
-    private MSolicitudR modulo;
+    private final MSolicitudR modulo;
 
     public CSolicitudCurso(ISolicitudCurso vista,MSolicitudR modulo) {
         this.vista=vista;

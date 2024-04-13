@@ -7,8 +7,8 @@ import javax.swing.*;
 import java.sql.ResultSet;
 
 public class CServicios {
-    private IServicios vista;
-    private MCrudServicio mCrudServicio;
+    private final IServicios vista;
+    private final MCrudServicio mCrudServicio;
     private ResultSet rs;
 
 

@@ -6,11 +6,14 @@ import java.awt.*;
 
 
 public class VCartelera extends JPanel implements ICartelera {
-    private JPanel pPrincipal;
-    private GridBagConstraints reglas;
+    private final JPanel pPrincipal;
+    private final GridBagConstraints reglas;
     public VCartelera() {
 
+       // this.setPreferredSize(new Dimension(1085, 680));
+
         pPrincipal = new JPanel(new GridBagLayout());
+        //pPrincipal.setPreferredSize(new Dimension(1085, 680));
         pPrincipal.setBackground(new Color(255, 255, 255));
         pPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         reglas = new GridBagConstraints();

@@ -10,19 +10,24 @@ import vista.IPublicacion;
 
 public class VPublicacion extends JPanel implements ActionListener, IPublicacion {
     private CPublicacion controlador;
-    private JPanel pPrincipal, pResultado, pDatos;
+    private final JPanel pPrincipal;
+    private JPanel pResultado;
+    private JPanel pDatos;
     private JLabel lNombre, lTelefono, lCorreo, lSugerencia, lDescripcion, lFecha;
-    private JTextField tfTitulo;
-    private JTextArea taDescripcion;
-    private JButton bEnviar, bImprimir;
+    private final JTextField tfTitulo;
+    private final JTextArea taDescripcion;
+    private final JButton bEnviar;
+    private JButton bImprimir;
 
     public VPublicacion() {
+        this.setPreferredSize(new Dimension(1085, 680));
+
 
         this.setLayout(new BorderLayout());
         
         JPanel pTitulo = new JPanel();
         pTitulo.setBackground(new Color(255, 255, 255));
-        JLabel lTitulo = new JLabel("TELECOMUNÕCATE", JLabel.CENTER);
+        JLabel lTitulo = new JLabel("TELECOMUN√çCATE", JLabel.CENTER);
         lTitulo.setFont(new Font("Roboto", Font.BOLD, 16));
         lTitulo.setHorizontalAlignment(SwingConstants.CENTER);
         
@@ -61,7 +66,7 @@ public class VPublicacion extends JPanel implements ActionListener, IPublicacion
         Icon iconoMe = new ImageIcon(icon.getImage().getScaledInstance(lImagenMe.getWidth(), lImagenMe.getHeight(), Image.SCALE_DEFAULT));
         lImagenMe.setIcon(iconoMe);
        pIconMe.add(lImagenMe);
-        JLabel lTipo = new JLabel("EnvÌa tus publicaciones");
+        JLabel lTipo = new JLabel("Env√≠a tus publicaciones");
         lTipo.setFont(new Font("Roboto", Font.BOLD, 16));
         pIconMe.add(lTipo);
         pPrincipal.add(pIconMe, reglas);
@@ -71,7 +76,7 @@ public class VPublicacion extends JPanel implements ActionListener, IPublicacion
         reglas.gridy = 1;
         reglas.weighty= 1.0;
         reglas.anchor = GridBagConstraints.WEST;
-        JLabel lTituloPublicacion = new JLabel("TÌtulo:");
+        JLabel lTituloPublicacion = new JLabel("T√≠tulo:");
         lTituloPublicacion.setFont(new Font("Open Sans", Font.BOLD, 14));
          pPrincipal.add(lTituloPublicacion, reglas);
 
@@ -87,7 +92,7 @@ public class VPublicacion extends JPanel implements ActionListener, IPublicacion
         reglas.gridy = 3;
         reglas.weighty= 1.0;
         reglas.anchor = GridBagConstraints.WEST;
-        JLabel lInformacion = new JLabel("Aporta m·s informaciÛn:");
+        JLabel lInformacion = new JLabel("Aporta m√°s informaci√≥n:");
         lInformacion.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lInformacion, reglas);
 

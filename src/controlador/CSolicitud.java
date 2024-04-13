@@ -15,8 +15,8 @@ import modelo.Materia;
 import javax.swing.*;
 
 public class CSolicitud implements ActionListener{
-    private ISolicitud vista;
-    private OModelo usuario;
+    private final ISolicitud vista;
+    private final OModelo usuario;
 
     public CSolicitud(ISolicitud vista, OModelo usuario) {
         this.vista = vista;
@@ -43,7 +43,7 @@ public class CSolicitud implements ActionListener{
             } else {
                   mCrudSolicitud.crearSolicitudMateria(vista.getTipo(), materia.getIdMateria(), usuario.getUsuario());
                   MSolicitud resultado = (MSolicitud) mCrudSolicitud.buscarSolicitudMateria(vista.getTipo(), materia.getIdMateria(), usuario.getUsuario());
-                  vista.mostrarResultado(resultado.getNombre(), resultado.getApellido(), resultado.getTelefono(), resultado.getCorreo(), resultado.getTipoS(), resultado.getDescripcion(), resultado.getFecha());
+                  vista.mostrarResultado(resultado.getNombre(), resultado.getApellido(), resultado.getTelefono(), resultado.getCorreo(), resultado.getTipoS(), resultado.getMateria(), resultado.getFecha());
             }
 }
 }

@@ -6,11 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 
     public class VServicios extends JPanel implements IServicios {
-        private JPanel pPrincipal;
-        private GridBagConstraints reglas;
+        private final JPanel pPrincipal;
+        private final GridBagConstraints reglas;
         public VServicios() {
+            this.setPreferredSize(new Dimension(1085, 680));
+
 
             pPrincipal = new JPanel(new GridBagLayout());
+            pPrincipal.setPreferredSize(new Dimension(1085, 680));
             pPrincipal.setBackground(new Color(255, 255, 255));
             reglas = new GridBagConstraints();
             

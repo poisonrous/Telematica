@@ -22,24 +22,26 @@ import modelo.Materia;
 
 public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Printable {
 
-    private JButton bEnviar, bImprimir;
+    private final JButton bEnviar;
+    private final JButton bImprimir;
     public JRadioButton rbAula, rbAcademico, rbInfraestructura, rbProfesor,rbDocente,rbAcoso, rbOtro;
-    private JTextArea taDescripcion;
-    private JComboBox cbMateria;
+    private final JTextArea taDescripcion;
+    private final JComboBox cbMateria;
     private CSolicitud controlador;
-    private JPanel pPrincipal, pResultado, pDatos;
-    private JLabel lNombre, lTelefono, lCorreo, lTipoS, lDescripcion, lFecha;
+    private final JPanel pPrincipal;
+    private final JPanel pResultado;
+    private final JPanel pDatos;
+    private final JLabel lNombre;
+    private final JLabel lTelefono;
+    private final JLabel lCorreo;
+    private final JLabel lTipoS;
+    private final JLabel lDescripcion;
+    private final JLabel lFecha;
     public VSolicitud(){
-
-       /* super("Envío de Problemáticas");
-        this.setSize(850, 680);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);*/
-        
-        
-       
+    this.setPreferredSize(new Dimension(1085, 680));
 
         pPrincipal = new JPanel(new GridBagLayout());
+        pPrincipal.setPreferredSize(new Dimension(1085, 680));
         GridBagConstraints reglas = new GridBagConstraints();
         pPrincipal.setBackground(new Color(255, 255, 255));
 
@@ -383,9 +385,9 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
     @Override
     public String getTipo(){
         if(rbAula.isSelected()){                //los tipos de solicitud son fijos; se asume que al agregar un nuevo tipo a la base de datos se corregirÃ¡ el cÃ³digo
-            return "1";
-        } else if(rbAcademico.isSelected()){
             return "2";
+        } else if(rbAcademico.isSelected()){
+            return "1";
         } else if(rbInfraestructura.isSelected()){
             return "3";
         } else if(rbProfesor.isSelected()){
@@ -455,7 +457,7 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
         PreparedStatement ps = null;
         ResultSet rs = null;
         BdConex conn = new BdConex();
-        Connection con = (Connection) conn.getConexion();
+        Connection con = conn.getConexion();
         try {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();

@@ -9,7 +9,7 @@ public class MSolicitudR {
         public ResultSet getResultSet(int Test, String Estado, String Tipo) {
           ResultSet rs = null;
             if (Test==1) {BdConex bd= new BdConex();
-                rs= bd.consultar("SELECT solicitud.IdSo, solicitud.CedulaEs, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs WHERE (BorradoSo, BorradoTiSo)= ('0', '0')");;
+                rs= bd.consultar("SELECT solicitud.IdSo, solicitud.CedulaEs, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs WHERE (BorradoSo, BorradoTiSo)= ('0', '0')");
             }
             else if (Test==10){
              BdConex bd= new BdConex();
@@ -29,7 +29,7 @@ public class MSolicitudR {
       public ResultSet getResultSet() {
             ResultSet rs = null;
             BdConex bd= new BdConex();
-            rs= bd.consultar("SELECT CedulaEs, tipoSo, DescripcionSo, EstadoSo FROM solicitud INNER JOIN tiposolicitud ON tiposolicitud.TipoTiSo = solicitud.TipoSo");
+            rs= bd.consultar("SELECT CedulaEs, tipoTiSo, DescripcionSo, EstadoSo, FechaSo FROM solicitud INNER JOIN tiposolicitud ON tiposolicitud.IdTiSo = solicitud.IdTiSo WHERE BorradoSo = 0;");
 
         return rs;}
         public MSolicitudR() {}

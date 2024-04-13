@@ -7,8 +7,8 @@ import java.awt.event.ActionEvent;
 
 public class CSolicitudReporte {
 
-    private ISolicitudReporte vista;
-    private MSolicitudR modulo;
+    private final ISolicitudReporte vista;
+    private final MSolicitudR modulo;
     public CSolicitudReporte(ISolicitudReporte vista, MSolicitudR modulo) {
         this.vista=vista;
         this.modulo=modulo;

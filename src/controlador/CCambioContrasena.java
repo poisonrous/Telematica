@@ -11,9 +11,9 @@ import vista.IIniciarSesion;
 
 public class CCambioContrasena implements ActionListener {
 
-	private ICambioContrasena vista;
-	private IIniciarSesion vistaIniciarSesion;
-	private OModelo usuario;
+	private final ICambioContrasena vista;
+	private final IIniciarSesion vistaIniciarSesion;
+	private final OModelo usuario;
 	
 	
 	public CCambioContrasena(ICambioContrasena vista,IIniciarSesion vistaIniciarSesion, OModelo usuario) {

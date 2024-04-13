@@ -7,8 +7,8 @@ import javax.swing.*;
 import java.sql.ResultSet;
 
 public class CEventos {
-    private IEventos vista;
-    private MCrudEvento mCrudEvento;
+    private final IEventos vista;
+    private final MCrudEvento mCrudEvento;
     private ResultSet rs;
 
     public CEventos(IEventos vista, MCrudEvento mCrudEvento) {

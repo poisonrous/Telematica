@@ -1,16 +1,16 @@
 package vista;
 
 public interface IEvento {
-    public static String PUBLICAR = "publicar";
-    public void setControlador(controlador.CEvento c);
-    public void arrancar();
-    public void limpiar();
-    public String getTitulo();
-    public String getOrganizador();
-    public String getDescripcion();
-    public String getFecha();
-    public String getHora();
-    public String getLugar();
-    public String getModalidad();
-    public String getPrecio();
+    String PUBLICAR = "publicar";
+    void setControlador(controlador.CEvento c);
+    void arrancar();
+    void limpiar();
+    String getTitulo();
+    String getOrganizador();
+    String getDescripcion();
+    String getFecha();
+    String getHora();
+    String getLugar();
+    String getModalidad();
+    String getPrecio();
 }

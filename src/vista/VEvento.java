@@ -14,16 +14,23 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 public class VEvento extends JPanel implements ActionListener, IEvento {
-    private JTextField tfTitulo, tfOrganizador, tfPrecio, tfLugar;
-    private JTextArea taDescripcion;
-    private JDateChooser dcFecha;
-    private TimeSelectionField tsHora;
-    private JRadioButton rbPresencial, rbVirtual, rbSemipresencial;
-    private ButtonGroup bgModalidad;
-    private JCheckBox cbGratuito;
-    private JButton bPublicar;
+    private final JTextField tfTitulo;
+    private final JTextField tfOrganizador;
+    private final JTextField tfPrecio;
+    private final JTextField tfLugar;
+    private final JTextArea taDescripcion;
+    private final JDateChooser dcFecha;
+    private final TimeSelectionField tsHora;
+    private final JRadioButton rbPresencial;
+    private final JRadioButton rbVirtual;
+    private final JRadioButton rbSemipresencial;
+    private final ButtonGroup bgModalidad;
+    private final JCheckBox cbGratuito;
+    private final JButton bPublicar;
 
     public VEvento(){
+        this.setPreferredSize(new Dimension(1085, 680));
+
 
         this.setLayout(new BorderLayout());
 
@@ -80,7 +87,7 @@ public class VEvento extends JPanel implements ActionListener, IEvento {
         lModalidad.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lModalidad, reglas);
         reglas.gridy++;
-        JLabel lDescripcion = new JLabel("Descripción:");
+        JLabel lDescripcion = new JLabel("DescripciÃ³n:");
         lDescripcion.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lDescripcion, reglas);
 
@@ -218,7 +225,7 @@ public class VEvento extends JPanel implements ActionListener, IEvento {
 
     @Override
     public String getFecha() {
-        DateFormat formateador= new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat formateador= new SimpleDateFormat("dd-MM-yyyy");
         return formateador.format(dcFecha.getDate());
       //  return dcFecha.getDate().toString();
     }

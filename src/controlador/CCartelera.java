@@ -4,12 +4,14 @@ import vista.*;
 import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.temporal.TemporalAccessor;
+import java.util.Date;
 
 public class CCartelera {
-    private ICartelera vista;
-    private IPub pub;
+    private final ICartelera vista;
+    private final IPub pub;
     private ResultSet rs;
-    private MCartelera mCartelera;
+    private final MCartelera mCartelera;
 
     public CCartelera(ICartelera vista, IPub pub, MCartelera mCartelera) {
         this.vista = vista;
@@ -26,7 +28,7 @@ public class CCartelera {
                 String titulo = rs.getString("tituloPu");
                 String autor = rs.getString("NombresUs")+" "+rs.getString("ApellidosUs");
                 String contenido = rs.getString("descripcionPu");
-                String fecha = rs.getString("fechaPu");
+                TemporalAccessor fecha = rs.getTimestamp("fechaPu").toLocalDateTime();
                 articulo = pub.getPublicacion(titulo, autor, contenido, fecha);
                 vista.cargarPub(articulo);
                 i++;

@@ -12,15 +12,21 @@ import java.awt.geom.Ellipse2D;
 
 
 public class VServicio extends JPanel implements ActionListener, IServicio{
-    private JButton bActualizar;
-    private JPanel pPrincipal;
-    private JComboBox cServicio;
-    private JTextField tNombre, tHorario, tUbicacion;
-    private JRadioButton rbActivo, rbInactivo;
+    private final JButton bActualizar;
+    private final JPanel pPrincipal;
+    private final JComboBox cServicio;
+    private final JTextField tNombre;
+    private final JTextField tHorario;
+    private final JTextField tUbicacion;
+    private final JRadioButton rbActivo;
+    private final JRadioButton rbInactivo;
     private CServicio controlador;
 
     public VServicio(){
-        
+        this.setPreferredSize(new Dimension(1085, 680));
+
+        this.setLayout(new BorderLayout());
+
         JPanel pBotones = new JPanel();
         pBotones.setBackground(new Color(255, 255, 255));
         bActualizar = new JButton("Actualizar");
@@ -67,7 +73,7 @@ public class VServicio extends JPanel implements ActionListener, IServicio{
         pPrincipal.add(lHorario, reglas);
         
         reglas.gridy = 4;
-        JLabel lUbicacion = new JLabel("Ubicación: ");
+        JLabel lUbicacion = new JLabel("UbicaciÃ³n: ");
         lUbicacion.setFont(new Font("Open Sans", Font.BOLD, 16));
         pPrincipal.add(lUbicacion, reglas);
         
@@ -162,8 +168,8 @@ public class VServicio extends JPanel implements ActionListener, IServicio{
 
     
     static class ColorIcon implements Icon {
-        private Color color;
-        private int size;
+        private final Color color;
+        private final int size;
 
         public ColorIcon(Color color, int size) {
             this.color = color;

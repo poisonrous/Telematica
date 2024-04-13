@@ -73,7 +73,7 @@ public class Servicio {
         PreparedStatement ps = null;
         ResultSet rs = null;
         BdConex conn = new BdConex();
-        Connection con = (Connection) conn.getConexion();
+        Connection con = conn.getConexion();
         Vector<Servicio> datos = new Vector<Servicio>();
         Servicio dat = null;
         try {

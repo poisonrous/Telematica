@@ -15,9 +15,9 @@ public class Modelo {
 	}
 	public Modelo () {
 		
-	};
+	}
 
-	public void setUsuario(String usuario) {
+    public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
 

@@ -17,7 +17,7 @@ public class MCrudServicio {
     ResultSet rs;
 
     public Servicio buscarServicio(String nombre) {
-        Connection con = (Connection) bd.getConexion();
+        Connection con = bd.getConexion();
         Servicio servicio = new Servicio();
      //   rs = bd.consultar("SELECT * FROM servicio WHERE nombreSe = '"+nombre+"'");
         try {

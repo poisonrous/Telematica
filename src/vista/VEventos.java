@@ -8,11 +8,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class VEventos extends JPanel implements IEventos {
-    private JPanel pPrincipal;
-    private GridBagConstraints reglas;
+    private final JPanel pPrincipal;
+    private final GridBagConstraints reglas;
     public VEventos() {
+        //this.setPreferredSize(new Dimension(1085, 680));
+
 
         pPrincipal = new JPanel(new GridBagLayout());
+        pPrincipal.setPreferredSize(new Dimension(1085, 680));
         pPrincipal.setBackground(new Color(255, 255, 255));
         reglas = new GridBagConstraints();
         reglas.gridx = 1;
@@ -25,8 +28,8 @@ public class VEventos extends JPanel implements IEventos {
         ImageIcon icon = new ImageIcon("media/eventosA.png");
         Icon iconoCar = new ImageIcon(icon.getImage().getScaledInstance(lImagenEven.getWidth(), lImagenEven.getHeight(), Image.SCALE_DEFAULT));
         lImagenEven.setIcon(iconoCar);
-        pIconEven.add(lImagenEven);
-        JLabel lTitulo = new JLabel("Próximos Eventos");
+       // pIconEven.add(lImagenEven);
+        JLabel lTitulo = new JLabel("PrÃ³ximos Eventos");
         lTitulo.setFont(new Font("Open Sans", Font.BOLD, 20));
         pIconEven.add(lTitulo);
         pPrincipal.add(pIconEven, reglas);
@@ -45,16 +48,20 @@ public class VEventos extends JPanel implements IEventos {
       
         
         
-        JLabel lImagen = new JLabel();  
+        JLabel lImagen = new JLabel();
         lImagen.setSize(450, 450);
         ImageIcon imagen = new ImageIcon("media/EventosA.jpg");
         Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(lImagen.getWidth(), lImagen.getHeight(), Image.SCALE_DEFAULT));
         lImagen.setIcon(icono);
         pImagen.add(lImagen);
-        pPrincipal.add (pImagen, reglas); 
+        //pPrincipal.add (pImagen, reglas);
         
         
         this.add(pPrincipal);
+
+        reglas.gridheight = 2;
+        reglas.gridx = 1;
+        reglas.anchor = GridBagConstraints.WEST;
     }
 
     @Override
@@ -65,12 +72,12 @@ public class VEventos extends JPanel implements IEventos {
     @Override
     public void cargarEve(JPanel evento){
         reglas.gridy++;
-        pPrincipal.add(evento,reglas);
+        pPrincipal.add(evento, reglas);
     }
 
     @Override
     public void setControlador(CEventos controlador) {
-        //Por si algún día queremos agregar algún botón de "asistiré" o algo por el estilo
+        //Por si algÃºn dÃ­a queremos agregar algÃºn botÃ³n de "asistirÃ©" o algo por el estilo
     }
 
 
@@ -90,7 +97,7 @@ public class VEventos extends JPanel implements IEventos {
        
         
        	reglas.gridy = 2;
-        JLabel lOrganizado = new JLabel("Organizado por "+organizador+"");
+        JLabel lOrganizado = new JLabel("Organizado por "+organizador);
         lOrganizado.setFont(new Font("Open Sans", Font.BOLD, 14));
         lOrganizado.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
         panel.add(lOrganizado, reglas);
@@ -129,7 +136,7 @@ public class VEventos extends JPanel implements IEventos {
         
         reglas.gridy = 8;
         reglas.anchor = GridBagConstraints.NORTHWEST;
-        JLabel lDescripcion = new JLabel("Descripción: ");
+        JLabel lDescripcion = new JLabel("DescripciÃ³n: ");
         lDescripcion.setFont(new Font("Open Sans", Font.BOLD, 14));
         lDescripcion.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
         panel.add(lDescripcion, reglas);
@@ -171,7 +178,7 @@ public class VEventos extends JPanel implements IEventos {
         reglas.gridy = 8;
         JTextArea tDescripcionE = new JTextArea(descripcion);
         tDescripcionE.setFont(new Font("Open Sans", Font.BOLD, 14));
-        tDescripcionE.setPreferredSize(new Dimension(200, 200));
+        tDescripcionE.setPreferredSize(new Dimension(200, 100));
         tDescripcionE.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         tDescripcionE.setLineWrap(true);
         tDescripcionE.setWrapStyleWord(true);

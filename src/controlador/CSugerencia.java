@@ -10,8 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CSugerencia implements ActionListener {
-    private ISugerencia vista;
-    private OModelo usuario;
+    private final ISugerencia vista;
+    private final OModelo usuario;
 
     public CSugerencia(ISugerencia vista, OModelo usuario) {
         this.vista = vista;
