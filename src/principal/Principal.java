@@ -4,6 +4,8 @@ import controlador.*;
 import modelo.*;
 import vista.*;
 
+import javax.swing.*;
+
 public class Principal {
 
 	private static IIniciarSesion vista;
@@ -12,10 +14,10 @@ public class Principal {
 	private static CIniciarSesion controlador5;
 	public static Instanciar instanciar;
 	private static VEstudiante estudiante;
-	private static VAdministrador administrador;
+	private static VProfesor administrador;
 
 	public static void main(String[] args) {
-
+		UIManager.put(JOptionPane.YES_OPTION, "Sí");
 		 vista = new VIniciarSesion();
 		 modelo = new Modelo();
 		 modelo2 = new OModelo();
@@ -32,7 +34,7 @@ public class Principal {
 	}
 
 	public void pantallaAdministrador(){
-		administrador = new VAdministrador(modelo2, instanciar);
+		administrador = new VProfesor(modelo2, instanciar);
 		administrador.setVisible(true);
 		vista.cerrar();
 	}
