@@ -32,7 +32,7 @@ public class VServicio extends JPanel implements ActionListener, IServicio{
         bActualizar = new JButton("Actualizar");
         bActualizar.setFont(new Font("Open Sans", Font.PLAIN, 15));
         bActualizar.setForeground(Color.WHITE);
-        bActualizar.setBackground(new Color(0, 125, 254));
+        bActualizar.setBackground(new Color(2, 152, 178));
         bActualizar.setActionCommand(IServicio.ACTUALIZAR);
         bActualizar.addActionListener(this);
         pBotones.add(bActualizar);
@@ -85,6 +85,7 @@ public class VServicio extends JPanel implements ActionListener, IServicio{
         
         reglas.gridx = 2;
         reglas.gridy = 2;
+        Validacion.validarLongitud(tNombre, 30);
         tNombre.setVisible(false);
         pPrincipal.add(tNombre, reglas);
         cServicio = new JComboBox();
@@ -101,9 +102,11 @@ public class VServicio extends JPanel implements ActionListener, IServicio{
       //  cServicio.addItem("Otro");
         pPrincipal.add(cServicio, reglas);
         tHorario = new JTextField(20);
+        Validacion.validarLongitud(tHorario,45);
         reglas.gridy = 3;
         pPrincipal.add(tHorario, reglas);
         tUbicacion = new JTextField(20);
+        Validacion.validarLongitud(tUbicacion,45);
         reglas.gridy = 4;
         pPrincipal.add(tUbicacion, reglas);
         rbActivo = new JRadioButton("Activo");

@@ -25,6 +25,8 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
     private final JLabel lEstado;
     private final JLabel lMateria;
     private final JLabel lMateria2;
+    private final JLabel lCarrera;
+
     private final JButton bCambiar;
 
     private final JTextField tDescripcion;
@@ -71,6 +73,17 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
 
         reglas.gridx = 1;
         reglas.gridy = 3;
+        JLabel lCarrera2 = new JLabel("Carrera:");
+        lCarrera2.setFont(new Font("Open Sans", Font.BOLD, 14));
+        pPrincipal.add(lCarrera2,reglas);
+
+        reglas.gridx = 2;
+        lCarrera = new JLabel();
+        lCarrera.setFont(new Font("Open Sans", Font.BOLD, 14));
+        pPrincipal.add(lCarrera,reglas);
+
+        reglas.gridx = 1;
+        reglas.gridy = 4;
         JLabel lTipo2 = new JLabel("Tipo:");
         lTipo2.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lTipo2,reglas);
@@ -81,13 +94,13 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
         pPrincipal.add(lTipo,reglas);
 
         reglas.gridx = 1;
-        reglas.gridy = 4;
+        reglas.gridy = 5;
         JLabel lDescripcion2 = new JLabel("Descripci�n de la solicitud:");
         lDescripcion2.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lDescripcion2,reglas);
 
         reglas.gridx = 1;
-        reglas.gridy = 5;
+        reglas.gridy = 6;
         reglas.gridwidth = GridBagConstraints.REMAINDER;
         reglas.fill = GridBagConstraints.VERTICAL;
         tDescripcion = new JTextField();
@@ -97,7 +110,7 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
         pPrincipal.add(tDescripcion,reglas);
 
         reglas.gridx = 1;
-        reglas.gridy = 6;
+        reglas.gridy = 7;
         JLabel lEstado2 = new JLabel("Estado:");
         lEstado2.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lEstado2,reglas);
@@ -108,7 +121,7 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
         pPrincipal.add(lEstado,reglas);
 
         reglas.gridx = 1;
-        reglas.gridy = 7;
+        reglas.gridy = 8;
         lMateria2 = new JLabel("Materia:");
         lMateria2.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lMateria2,reglas);
@@ -194,19 +207,18 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
     @Override
     public void llamar(String idSo) {
         BdConex bd= new BdConex();
-        this.rs2= bd.consultar("SELECT usuario.NombresUs, solicitud.IdSo, solicitud.cedulaEs, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs LEFT JOIN usuario ON solicitud.cedulaEs = usuario.CedulaUs WHERE IdSo= '"+idSo+ "';");
+        this.rs2= bd.consultar("SELECT estudiante.NombresEs, solicitud.IdSo, solicitud.cedulaEs, NombreCa, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs LEFT JOIN estudiante ON solicitud.CedulaEs = estudiante.CedulaEs LEFT JOIN carrera ON estudiante.IdCa = carrera.IdCa WHERE IdSo= '"+idSo+ "';");
     }
     //, asignatura.idAs, NombreAs,  asignatura, materia, and asignatura.idAs = materia.idAs and materia.idMa = solicitud.materia
     @Override
     public void activar() {
         /*{while (rs.next())*/
 
-
-
         try {   rs2.first();
-            System.out.println(rs2.getString("NombresUs"));
-        lNombre.setText(rs2.getString("NombresUs"));
+            System.out.println(rs2.getString("NombresEs"));
+        lNombre.setText(rs2.getString("NombresEs"));
         lCedula.setText(rs2.getString("CedulaEs"));
+        lCarrera.setText(rs2.getString("NombreCa"));
         lTipo.setText(rs2.getString("TipoTiSo"));
         //if(rs2.getString("estado").equals("1")) lEstado.setText("Resuelta");
             /*else*/ lEstado.setText(rs2.getString("EstadoSo"));

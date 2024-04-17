@@ -2,7 +2,7 @@ package vista;
 
 import controlador.CSolicitudCurso;
 import modelo.BdConex;
-import com.mysql.cj.protocol.Resultset;
+import modelo.Instanciar;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,30 +12,28 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Objects;
 import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import static principal.Principal.instanciar;
+
 
 public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionListener {
 
-    private final JComboBox cTipo;
-    private final JComboBox cEstado;
+    private final JComboBox cTipo, cEstado, cCarrera;
     private final JScrollPane spTabla;
     private final VSolicitudReporte v1;
     private final JTable tabla;
     private final JPopupMenu popup;
     private final DefaultTableModel model;
-    private final JButton bParametro;
-    private final JButton bImprimir;
+    private final JButton bParametro, bImprimir, bRegresar;
     private CSolicitudCurso controlador;
     private ResultSet rs;
     private String ID;
-    private int test = 1, testS=1, testE=0;
+    private Double test = 1.0, testS=1.0, testE=0.0, testC=0.0;
     
     public VSolicitudCurso(ISolicitudReporte v1){
         this.setPreferredSize(new Dimension(1085, 680));
@@ -92,19 +90,28 @@ public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionLi
         JPanel pBotones = new JPanel();
         pBotones.setBackground(new Color(255, 255, 255));
 
+        bRegresar = new JButton("Regresar");
+        bRegresar.setFont(new Font("Open Sans", Font.PLAIN, 15));
+        bRegresar.setForeground(Color.WHITE);
+        bRegresar.setBackground(new Color(2, 152, 178));
+        bRegresar.addActionListener(e -> {
+
+        });
+
         JLabel saber = new JLabel("");
-        bParametro = new JButton("Aplicar par�metros de b�squeda:");
+        bParametro = new JButton("Aplicar párametros de búsqueda:");
         bParametro.setFont(new Font("Open Sans", Font.PLAIN, 15));
         bParametro.setForeground(Color.WHITE);
-        bParametro.setBackground(new Color(0, 125, 254));
+        bParametro.setBackground(new Color(2, 152, 178));
         
 		bParametro.setActionCommand(ISolicitudCurso.PARAMETROS);
         bImprimir = new JButton("Imprimir resultados");
         bImprimir.setFont(new Font("Open Sans", Font.PLAIN, 15));
         bImprimir.setForeground(Color.WHITE);
-        bImprimir.setBackground(new Color(0, 125, 254));
+        bImprimir.setBackground(new Color(2, 152, 178));
 		bImprimir.addActionListener(this);
-		pBotones.add(bImprimir);
+		//pBotones.add(bRegresar);
+        pBotones.add(bImprimir);
         pBotones.add(bParametro);
 		pSouth.add(pBotones, BorderLayout.SOUTH);
 
@@ -132,8 +139,6 @@ public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionLi
         cEstado.setFont(new Font("Open Sans", Font.PLAIN, 15));
         cEstado.setPreferredSize(dimcombo);
         cEstado.addItem("Todos");
-        cEstado.addItem("Resuelta");
-        cEstado.addItem("Pendiente");
         cEstado.addItemListener(new ItemListener(){
             public void itemStateChanged(ItemEvent e) {
                 // TODO Auto-generated method stub
@@ -141,8 +146,23 @@ public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionLi
             }
         });
         cEstado.setPreferredSize(dimcombo);
+
+        cCarrera = new JComboBox();
+        cCarrera.setBackground(new Color(255, 255, 255));
+        cCarrera.setFont(new Font("Open Sans", Font.PLAIN, 15));
+        cCarrera.setPreferredSize(dimcombo);
+        cCarrera.addItem("Todas");
+        cEstado.addItemListener(new ItemListener(){
+            public void itemStateChanged(ItemEvent e) {
+                // TODO Auto-generated method stub
+                carreraSeleccion(e);
+            }
+        });
+        cCarrera.setPreferredSize(dimcombo);
+
         pCombo.add(cTipo);
         pCombo.add(cEstado);
+        pCombo.add(cCarrera);
         pSouth.add(pCombo, BorderLayout.NORTH);
         this.add(pSouth, BorderLayout.SOUTH);
 
@@ -153,10 +173,10 @@ public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionLi
         // TODO Auto-generated method stub
         if(e.getStateChange()==ItemEvent.SELECTED)
             if (cTipo.getSelectedItem() == "Todos") {
-            testS = 1;
+            testS = 1.0;
         }
             else {
-            testS = 10;
+            testS = 10.0;
         }
     }
 
@@ -164,10 +184,21 @@ public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionLi
         // TODO Auto-generated method stub
         if(e.getStateChange()==ItemEvent.SELECTED)
             if (cEstado.getSelectedItem() == "Todos"){
-                testE=0;
+                testE=0.0;
             }
             else {
-                testE=2;
+                testE=2.0;
+            }
+    }
+
+    public void carreraSeleccion(ItemEvent e) {
+        // TODO Auto-generated method stub
+        if(e.getStateChange()==ItemEvent.SELECTED)
+            if (cEstado.getSelectedItem() == "Todos"){
+                testC=0.0;
+            }
+            else {
+                testC=0.5;
             }
     }
 
@@ -179,40 +210,24 @@ public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionLi
         bParametro.addActionListener(a);
     }
 
-    @Override
-    public void cargarEstado(ComboBoxModel cbEstado) {cEstado.setModel(cbEstado);
-    }
-    @Override
-    public void cargarTipo(ComboBoxModel cbTipo) {
-        cTipo.setModel(cbTipo);
-
-    }
     public void limpiarTabla() {
         int filas=tabla.getRowCount();
         for(int i=0; i<filas;i++)
             model.removeRow(0);
     }
     //Getter tipo
-    public Object getTipo() {
-        return cTipo.getSelectedItem();
+    public String getTipo() {
+        return (String) cTipo.getSelectedItem();
     }
     //Get + Set Estado
 
     public String getEstado() {
-        /*if (*/ return (String) cEstado.getSelectedItem(); /* {
-          return "1";
-        }
-        else if (Objects.equals(cEstado.getSelectedItem(), "Pendiente")){
-            return "0";
-        }
-        else {
-            return null;
-        }*/
+        return (String) cEstado.getSelectedItem();
     }
 
-    /*public void setEstado() {
-        return null;
-    }*/
+    public String getCarrera() {
+        return (String) cCarrera.getSelectedItem();
+    }
 
     @Override
     public void setConsulta(ResultSet rs) {
@@ -224,6 +239,7 @@ public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionLi
     public void mostrar() {
         // prepara la tabla
         model.addColumn("Usuario");
+        model.addColumn("Carrera");
         model.addColumn("Tipo");
         model.addColumn("Descripción");
         model.addColumn("Estado");
@@ -241,6 +257,25 @@ public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionLi
         } catch (Exception e) {
             System.out.println(e);
         }
+        try {
+            ps = con.prepareStatement("SELECT DISTINCT EstadoSo FROM solicitud");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                cEstado.addItem(rs.getString("EstadoSo"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        try {
+            ps = con.prepareStatement("SELECT NombreCa FROM carrera");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                cCarrera.addItem(rs.getString("NombreCa"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
     }
 
     @Override
@@ -255,18 +290,15 @@ public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionLi
         Object[] fila;
             try {
                 while (rs.next()) {
-                    fila = new Object[4];
+                    fila = new Object[5];
 
                     fila[0] = rs.getObject("CedulaEs");
-                    fila[1] = rs.getObject("TipoTiSo");
+                    fila[1] = rs.getObject("NombreCa");
+                    fila[2] = rs.getObject("TipoTiSo");
                     if(rs.getObject("NombreAsignaturaAs")!=null)
-                        fila[2] = rs.getObject("NombreAsignaturaAs");
-                    else fila[2] = rs.getObject("DescripcionSo");
-                 //   fila[2] = rs.getObject("descripcion");
-                 //   if (rs.getObject("EstadoSo").equals("1"))
-                    fila[3] = rs.getObject("EstadoSo");
-                   // else if (rs.getObject("estado").equals("0"))
-                    //    fila[3] = "Pendiente";
+                        fila[3] = rs.getObject("NombreAsignaturaAs");
+                    else fila[3] = rs.getObject("DescripcionSo");
+                    fila[4] = rs.getObject("EstadoSo");
                     model.addRow(fila);
                 }} catch (SQLException e) {
                 e.printStackTrace();
@@ -280,7 +312,7 @@ public class VSolicitudCurso extends JPanel implements ISolicitudCurso, ActionLi
     }
 
     @Override
-    public int getTest() {
+    public Double getTest() {
         return test;
     }
 

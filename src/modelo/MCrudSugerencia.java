@@ -13,7 +13,7 @@ public class MCrudSugerencia {
     public int crearSugerencia(String usuario, String titulo, String descripcion) {
         int op=0;
         bd.abrirConexion();
-        String sql="INSERT INTO sugerencia (sugerencia.cedulaUs, tituloSu, descripcionSu, fechaSu) VALUES ('"+usuario+"', '"+titulo+"', '"+descripcion+"', CURDATE())";
+        String sql="INSERT INTO sugerencia (sugerencia.cedulaUs, tituloSu, descripcionSu, fechaSu) VALUES ('"+usuario+"', '"+titulo.replace("'","''")+"', '"+descripcion.replace("'","''")+"', CURDATE())";
         op=bd.ejecutar(sql);
         return op;
     }
@@ -25,9 +25,8 @@ public class MCrudSugerencia {
 
 
     public Object buscarSugerencia(String usuario, String titulo, String descripcion){
-        JOptionPane.showMessageDialog(null, "usuario: "+usuario+" titulo: "+titulo+" descripcion: "+descripcion);
         mSugerencia = new MSugerencia();
-        rs=bd.consultar("SELECT usuario.NombresUs, usuario.ApellidosUs, estudiante.TelefonoEs, usuario.CorreoElectronicoUs, sugerencia.TituloSu, sugerencia.DescripcionSu, sugerencia.FechaSu FROM estudiante INNER JOIN usuario ON estudiante.CedulaEs = usuario.CedulaUs INNER JOIN sugerencia ON sugerencia.CedulaUs = usuario.CedulaUs WHERE (usuario.CedulaUs, TituloSu, DescripcionSu, BorradoUs, BorradoSu) = ('"+usuario+"', '"+titulo+"', '"+descripcion+"', '0','0')");
+        rs=bd.consultar("SELECT usuario.NombresUs, usuario.ApellidosUs, estudiante.TelefonoEs, usuario.CorreoElectronicoUs, sugerencia.TituloSu, sugerencia.DescripcionSu, sugerencia.FechaSu FROM estudiante INNER JOIN usuario ON estudiante.CedulaEs = usuario.CedulaUs INNER JOIN sugerencia ON sugerencia.CedulaUs = usuario.CedulaUs WHERE (usuario.CedulaUs, TituloSu, DescripcionSu, BorradoUs, BorradoSu) = ('"+usuario+"', '"+titulo.replace("'","''")+"', '"+descripcion.replace("'","''")+"', '0','0')");
         try
         {
             rs.next();

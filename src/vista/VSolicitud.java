@@ -22,21 +22,14 @@ import modelo.Materia;
 
 public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Printable {
 
-    private final JButton bEnviar;
-    private final JButton bImprimir;
+    private JButton bEnviar, bImprimir, bRegresar;
     public JRadioButton rbAula, rbAcademico, rbInfraestructura, rbProfesor,rbDocente,rbAcoso, rbOtro;
-    private final JTextArea taDescripcion;
-    private final JComboBox cbMateria;
+    public ButtonGroup bgTipo;
+    private JTextArea taDescripcion;
+    private JComboBox cbMateria;
     private CSolicitud controlador;
-    private final JPanel pPrincipal;
-    private final JPanel pResultado;
-    private final JPanel pDatos;
-    private final JLabel lNombre;
-    private final JLabel lTelefono;
-    private final JLabel lCorreo;
-    private final JLabel lTipoS;
-    private final JLabel lDescripcion;
-    private final JLabel lFecha;
+    private JPanel pPrincipal, pResultado, pDatos;
+    private JLabel lNombre, lTelefono, lCorreo, lTipoS, lDescripcion, lFecha, lInformacion;
     public VSolicitud(){
     this.setPreferredSize(new Dimension(1085, 680));
 
@@ -86,7 +79,11 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
         rbAula.setFont(new Font("Open Sans", Font.BOLD, 14));
         rbAula.setActionCommand(ISolicitud.MATERIA);
         pTipo.add(rbAula, reglasTipo);
-        
+
+        cbMateria = new JComboBox();
+        pTipo.add(cbMateria, reglasTipo);
+        cbMateria.setVisible(false);
+
         rbAcademico = new JRadioButton("Académico/administrativo");
         rbAcademico.addActionListener(this);
         rbAcademico.setBackground(new Color(255, 255, 255));
@@ -128,8 +125,9 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
         rbOtro.setFont(new Font("Open Sans", Font.BOLD, 14));
         reglasTipo.gridy = 7;
         pTipo.add(rbOtro, reglasTipo);
+
         
-        ButtonGroup bgTipo = new ButtonGroup();
+        bgTipo = new ButtonGroup();
         bgTipo.add(rbAula);
         bgTipo.add(rbAcademico);
         bgTipo.add(rbInfraestructura);
@@ -140,7 +138,7 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
         reglas.gridy = 3;
         pPrincipal.add(pTipo, reglas);
 
-        JLabel lInformacion= new JLabel("Aporta más información");
+        lInformacion= new JLabel("Aporta más información");
         lInformacion.setFont(new Font("Open Sans", Font.BOLD, 16));
         reglas.gridy = 4;
         pPrincipal.add(lInformacion, reglas);
@@ -150,17 +148,18 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
         taDescripcion.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         taDescripcion.setLineWrap(true);
         taDescripcion.setWrapStyleWord(true);
+        Validacion.validarLongitud(taDescripcion, 450);
         reglas.gridy = 5;
         pPrincipal.add(taDescripcion, reglas);
 
-        cbMateria = new JComboBox();
+       /* cbMateria = new JComboBox();
         pPrincipal.add(cbMateria, reglas);
-        cbMateria.setVisible(false);
+        cbMateria.setVisible(false);*/
         
         bEnviar = new JButton("Enviar");
         bEnviar.setFont(new Font("Open Sans", Font.PLAIN, 15));
         bEnviar.setForeground(Color.WHITE);
-        bEnviar.setBackground(new Color(0, 125, 254));
+        bEnviar.setBackground(new Color(2, 152, 178));
         bEnviar.setActionCommand(ISolicitud.ENVIAR);
         reglas.gridy = 6;
         reglas.gridx = 2;
@@ -189,7 +188,7 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
         Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(lImagen.getWidth(), lImagen.getHeight(), Image.SCALE_DEFAULT));
         lImagen.setIcon(icono);
         pImagen.add(lImagen);
-        pPrincipal.add (pImagen, reglas); 
+        pPrincipal.add (pImagen, reglas);
         
         
        this.add(pPrincipal);
@@ -370,10 +369,20 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
         bImprimir= new JButton("Imprimir");
         bImprimir.setFont(new Font("Open Sans", Font.PLAIN, 15));
         bImprimir.setForeground(Color.WHITE);
-        bImprimir.setBackground(new Color(0, 125, 254));
+        bImprimir.setBackground(new Color(2, 152, 178));
         bImprimir.addActionListener(this);
         reglasResultado.gridy = 4;
         pResultado.add(bImprimir, reglasResultado);
+
+        bRegresar= new JButton("Regresar");
+        bRegresar.setFont(new Font("Open Sans", Font.PLAIN, 15));
+        bRegresar.setForeground(Color.WHITE);
+        bRegresar.setBackground(new Color(2, 152, 178));
+        bRegresar.addActionListener(this);
+        reglasResultado.gridx = 1;
+        reglasResultado.gridy = 5;
+        pResultado.add(bRegresar, reglasResultado);
+
 
       //this.add(pResultado);
 
@@ -399,10 +408,37 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
         else if(rbAcoso.isSelected()){
             return "6";
         } 
-        else {
+        else if(rbOtro.isSelected()){
             return "7";
         }
+        else {
+            return "8";
+        }
     }
+
+    @Override
+    public String getTipoNombre() {
+        //ESTO TIENE QUE CAMBIARSE PARA MANEJARLO COMO OBJETO TRAÍDO DESDE LA BASE DE DATOS
+        if(rbAula.isSelected()){
+            return "Aula no asignada";
+        } else if(rbAcademico.isSelected()){
+            return "Académico/administrativo";
+        } else if(rbInfraestructura.isSelected()){
+            return "Fallas en infraestructura";
+        } else if(rbProfesor.isSelected()){
+            return "Materia sin profesor";
+        }
+        else if(rbDocente.isSelected()){
+            return "Enseñanza del docente";
+        }
+        else if(rbAcoso.isSelected()){
+            return "Acoso";
+        }
+        else {
+            return "Otro";
+        }
+    }
+
     @Override
     public Object getMateria(){
         return cbMateria.getSelectedItem();
@@ -431,10 +467,12 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
         // TODO Auto-generated method stub
         if (rbAula.isSelected()){ //solo cuando se seleccione el radio button de aula no asignada se mostrarÃ¡ el combo box de materias y por tanto no es necesario el textfield
             cbMateria.setVisible(true);
+            lInformacion.setVisible(false);
             taDescripcion.setVisible(false);
             taDescripcion.setText(""); //para que no se mantenga el texto que se haya escrito en el textfield y por tanto no se envÃ­e a la base de datos si la solicitud es de aula
         } else { //todas las demÃ¡s opciones requieren textfield pero no combobox
             cbMateria.setVisible(false);
+            lInformacion.setVisible(true);
             taDescripcion.setVisible(true);
             cbMateria.removeAllItems(); //para que no se mantenga la materia seleccionada en el combobox y por tanto no se envÃ­e a la base de datos si la solicitud es de otro tipo
         }
@@ -448,12 +486,19 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
                 Logger.getLogger(VSolicitud.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+
+		if (event.getSource() == bRegresar) {
+            taDescripcion.setText("");
+            bgTipo.clearSelection();
+			pResultado.setVisible(false);
+			pPrincipal.setVisible(true);
+		}
     }
     @Override
     public void cargarMaterias(String usuario) {
         // TODO Auto-generated method stub
         cbMateria.removeAllItems(); //hay antes para evitar que permanezcan cargadas materias de consultas anteriores (o se creen duplicados)
-        String sql = "SELECT asignatura.NombreAsignaturaAs, materia.IdMa FROM asignatura INNER JOIN materia ON asignatura.IdAs = materia.IdAs INNER JOIN periodo ON materia.IdPe = periodo.IdPe INNER JOIN inscripcion ON materia.IdMa = inscripcion.IdMa WHERE periodo.VigenciaPe = 1 AND inscripcion.CedulaEs = " + usuario;
+        String sql = "SELECT asignatura.NombreAsignaturaAs, materia.IdMa FROM asignatura INNER JOIN materia ON asignatura.IdAs = materia.IdAs INNER JOIN periodo ON materia.IdPe = periodo.IdPe INNER JOIN inscripcion ON materia.IdMa = inscripcion.IdMa WHERE periodo.VigenciaPe = 1 AND materia.BorradoMa = '0' AND inscripcion.CedulaEs = " + usuario;
         PreparedStatement ps = null;
         ResultSet rs = null;
         BdConex conn = new BdConex();
@@ -490,8 +535,6 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
         if (pageIndex > 0) {
             return Printable.NO_SUCH_PAGE;
         }
-
-     
         double marginLeft = 50.0;
         double marginTop = 50.0;
         double marginRight = 50.0;

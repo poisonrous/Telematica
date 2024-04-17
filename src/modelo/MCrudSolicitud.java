@@ -2,6 +2,7 @@ package modelo;
 
 import javax.swing.*;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Objects;
 
 import modelo.BdConex;
@@ -15,7 +16,7 @@ public class MCrudSolicitud {
     public int crearSolicitud(String tipo, String descripcion, String usuario) {
         int op=0;
         bd.abrirConexion();
-        String sql="INSERT INTO solicitud (CedulaEs, IdTiSo, DescripcionSo, FechaSo) VALUES ('"+usuario+"', '"+tipo+"', '"+descripcion+"', CURDATE())";
+        String sql="INSERT INTO solicitud (CedulaEs, IdTiSo, DescripcionSo, FechaSo) VALUES ('"+usuario+"', '"+tipo+"', '"+descripcion.replace("'","''")+"', CURDATE())";
            op=bd.ejecutar(sql);
           /* if(op>0){
                rs=bd.consultar("SELECT usuario.NombresUs, usuario.ApellidosUs, usuario.telefonoUs, usuario.correoUs, tiposolicitud.tipoSo, solicitud.descripcion, solicitud.fechaSo FROM solicitud INNER JOIN usuario ON solicitud.cedula = usuario.CedulaUs INNER JOIN tiposolicitud " +
@@ -54,7 +55,7 @@ public class MCrudSolicitud {
         mSolicitud = new MSolicitud();
 
         rs=bd.consultar("SELECT usuario.NombresUs, usuario.ApellidosUs, estudiante.TelefonoEs, usuario.CorreoElectronicoUs, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.FechaSo FROM estudiante INNER JOIN solicitud "+
-                "ON estudiante.CedulaEs = solicitud.CedulaEs INNER JOIN usuario ON solicitud.CedulaEs = usuario.CedulaUs INNER JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo WHERE (usuario.CedulaUs, solicitud.IdTiSo, DescripcionSo) = ('"+usuario+"', '"+tipo+"', '"+descripcion+"')");
+                "ON estudiante.CedulaEs = solicitud.CedulaEs INNER JOIN usuario ON solicitud.CedulaEs = usuario.CedulaUs INNER JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo WHERE (usuario.CedulaUs, solicitud.IdTiSo, DescripcionSo) = ('"+usuario+"', '"+tipo+"', '"+descripcion.replace("'","''")+"')");
         try
         {
             // rs.beforeFirst(); NO SÉ QUÉ COÑOS HACE ESTO Y ME VOY A VOLVER LOCAAAAAAAA
@@ -126,4 +127,27 @@ public class MCrudSolicitud {
         return op;
     }*/ //esto no se usa porque no se pueden eliminar solicitudes, pero lo dejo por si acaso PENDIENTE AGREGAR MODIFICACIÓN (corresponde a Neri) Y ELIMINACIÓN LÓGICA
 
+    public boolean checkMateria (String NombreMa, String CedulaEs){
+        bd.abrirConexion();
+        rs=bd.consultar("SELECT DISTINCT NombreAsignaturaAs, solicitud.CedulaEs FROM solicitud INNER JOIN materia ON solicitud.MateriaSo = materia.IdMa INNER JOIN asignatura ON asignatura.IdAs = materia.IdAs WHERE BorradoSo = '0' AND  solicitud.CedulaEs = '"+CedulaEs+"' AND asignatura.NombreAsignaturaAs = '"+NombreMa+"' AND EstadoSo = 'Pendiente'");
+
+        try {
+            rs.last();
+            return rs.getRow()==1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean checkSolicitud (String usuario, String descripcion){
+         bd.abrirConexion();
+         rs = bd.consultar("SELECT DISTINCT solicitud.DescripcionSo, solicitud.CedulaEs FROM solicitud WHERE BorradoSo = '0' AND  solicitud.CedulaEs = '"+usuario+"' AND solicitud.DescripcionSo = '"+descripcion.replace("'","''")+"' AND EstadoSo = 'Pendiente'");
+        try {
+            rs.last();
+            return rs.getRow()==1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }

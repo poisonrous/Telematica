@@ -40,7 +40,7 @@ public class VPublicacion extends JPanel implements ActionListener, IPublicacion
         bEnviar = new JButton("Enviar");
         bEnviar.setFont(new Font("Open Sans", Font.PLAIN, 15));
         bEnviar.setForeground(Color.WHITE);
-        bEnviar.setBackground(new Color(0, 125, 254));
+        bEnviar.setBackground(new Color(2, 152, 178));
         bEnviar.setActionCommand(ENVIAR);
         bEnviar.addActionListener(this);
         pBotones.add(bEnviar);
@@ -85,6 +85,7 @@ public class VPublicacion extends JPanel implements ActionListener, IPublicacion
         tfTitulo = new JTextField();  
         tfTitulo.setPreferredSize(new Dimension(200, 35));
         tfTitulo.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        Validacion.validarLongitud(tfTitulo,45);
         
         pPrincipal.add(tfTitulo, reglas);
         
@@ -99,10 +100,11 @@ public class VPublicacion extends JPanel implements ActionListener, IPublicacion
         reglas.gridy = 4;
         reglas.weighty= 1.0;
         taDescripcion = new JTextArea();
-        taDescripcion.setPreferredSize(new Dimension(220, 200));
+        taDescripcion.setPreferredSize(new Dimension(240, 210));
         taDescripcion.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         taDescripcion.setLineWrap(true);
         taDescripcion.setWrapStyleWord(true);
+        Validacion.validarLongitud(taDescripcion,500);
         pPrincipal.add(taDescripcion, reglas);
 
        

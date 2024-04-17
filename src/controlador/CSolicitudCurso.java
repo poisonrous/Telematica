@@ -23,7 +23,7 @@ public class CSolicitudCurso implements ActionListener {
         if(e.getActionCommand().equals(vista.PARAMETROS))
             vista.probando();
             vista.limpiarTabla();
-            vista.setConsulta(modulo.getResultSet(vista.getTest(),vista.getEstado(),vista.getTipo().toString()));
+            vista.setConsulta(modulo.getResultSet(vista.getTest(),vista.getEstado(),vista.getTipo(),vista.getCarrera()));
             vista.nuevatabla();
         }
     }

@@ -10,20 +10,21 @@ public interface ISolicitudCurso {
     String PARAMETROS = "parametros";
 
     void setControlador(CSolicitudCurso a);
-    void cargarEstado (ComboBoxModel cbEstado);
-    void cargarTipo (ComboBoxModel cbTipo);
     String getEstado();
+    String getTipo();
+    String getCarrera();
+
+
     //void setEstado();
     void setConsulta(ResultSet rs);
     void mostrar();
     void desplegar () ;
     void activar();
-    int getTest();
+    Double getTest();
     void probando();
 
     void nuevatabla();
 
     void limpiarTabla();
 
-    Object getTipo();
 }

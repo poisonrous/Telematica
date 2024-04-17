@@ -4,6 +4,7 @@ import modelo.MCrudSugerencia;
 import vista.ISugerencias;
 
 import javax.swing.*;
+import java.awt.*;
 import java.sql.ResultSet;
 
 public class CSugerencias {
@@ -17,7 +18,6 @@ public class CSugerencias {
     }
 
     public void cargarSugerencias()  {
-
         JPanel evento = null;
         rs = mCrudSugerencia.getSugestlist();
         try

@@ -15,19 +15,11 @@ import java.util.logging.Logger;
 
 public class VSugerencia extends JPanel implements ActionListener, ISugerencia, Printable {
     private CSugerencia controlador;
-    private final JPanel pPrincipal;
-    private final JPanel pResultado;
-    private final JPanel pDatos;
-    private final JLabel lNombreUser;
-    private final JLabel lTelefonoUser;
-    private final JLabel lCorreoUser;
-    private final JLabel lSugerenciaUser;
-    private final JLabel lDescripcionUser;
-    private final JLabel lFechaUser;
-    private final JTextField tfTitulo;
-    private final JTextArea taDescripcion;
-    private final JButton bEnviar;
-    private final JButton bImprimir;
+    private JPanel pPrincipal, pResultado, pDatos;
+    private JLabel lNombreUser, lTelefonoUser, lCorreoUser, lSugerenciaUser, lDescripcionUser, lFechaUser;
+    private JTextField tfTitulo;
+    private JTextArea taDescripcion;
+    private JButton bEnviar, bImprimir, bRegresar;
 
     public VSugerencia() {
         this.setPreferredSize(new Dimension(1085, 680));
@@ -86,6 +78,7 @@ public class VSugerencia extends JPanel implements ActionListener, ISugerencia, 
         tfTitulo = new JTextField();  
         tfTitulo.setPreferredSize(new Dimension(200, 35));
         tfTitulo.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        Validacion.validarLongitud(tfTitulo,45);
         
         pPrincipal.add(tfTitulo, reglas);
         
@@ -104,6 +97,7 @@ public class VSugerencia extends JPanel implements ActionListener, ISugerencia, 
         taDescripcion.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         taDescripcion.setLineWrap(true);
         taDescripcion.setWrapStyleWord(true);
+        Validacion.validarLongitud(taDescripcion,300);
         pPrincipal.add(taDescripcion, reglas);
         
         reglas.gridy = 5;
@@ -113,7 +107,7 @@ public class VSugerencia extends JPanel implements ActionListener, ISugerencia, 
         bEnviar = new JButton("Enviar");
         bEnviar.setFont(new Font("Open Sans", Font.PLAIN, 15));
         bEnviar.setForeground(Color.WHITE);
-        bEnviar.setBackground(new Color(0, 125, 254));
+        bEnviar.setBackground(new Color(2, 152, 178));
         bEnviar.setActionCommand(ENVIAR);
         bEnviar.addActionListener(this);
         pPrincipal.add(bEnviar, reglas);
@@ -317,10 +311,19 @@ public class VSugerencia extends JPanel implements ActionListener, ISugerencia, 
       bImprimir= new JButton("Imprimir");
       bImprimir.setFont(new Font("Open Sans", Font.PLAIN, 15));
       bImprimir.setForeground(Color.WHITE);
-      bImprimir.setBackground(new Color(0, 125, 254));
+      bImprimir.setBackground(new Color(2, 152, 178));
       bImprimir.addActionListener(this);
       reglasResultado.gridy = 4;
       pResultado.add(bImprimir, reglasResultado);
+
+      bRegresar= new JButton("Regresar");
+      bRegresar.setFont(new Font("Open Sans", Font.PLAIN, 15));
+      bRegresar.setForeground(Color.WHITE);
+      bRegresar.setBackground(new Color(2, 152, 178));
+      bRegresar.addActionListener(this);
+      reglasResultado.gridx = 1;
+      reglasResultado.gridy = 5;
+      pResultado.add(bRegresar, reglasResultado);
 
     //this.add(pResultado);
     }
@@ -367,6 +370,13 @@ public class VSugerencia extends JPanel implements ActionListener, ISugerencia, 
                 Logger.getLogger(VSolicitud.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+
+		if (event.getSource() == bRegresar) {
+            tfTitulo.setText("");
+            taDescripcion.setText("");
+			pResultado.setVisible(false);
+			pPrincipal.setVisible(true);
+		}
     }
 
     @Override

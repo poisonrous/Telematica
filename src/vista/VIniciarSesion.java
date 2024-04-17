@@ -9,8 +9,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -26,28 +25,34 @@ import javax.swing.border.EmptyBorder;
 
 import controlador.CIniciarSesion;
 
+import static javax.swing.JOptionPane.PLAIN_MESSAGE;
+
 public class VIniciarSesion extends JFrame implements ActionListener, IIniciarSesion {
 
-    private final JTextField tUsuario;
-    private final JTextField tRol;
-    private final JPasswordField tContrasena;
-    private final JButton bIniciar;
-    private CIniciarSesion controlador;
+	private JTextField tUsuario, tRol;
+	private JPasswordField tContrasena;
+	private JButton bIniciar;
+	private CIniciarSesion controlador;
 
-    public VIniciarSesion() {
+	public VIniciarSesion() {
 
+		super("Telecomunícate");
+        int n;
+		this.setSize(700,480);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		this.setLocationRelativeTo(null);
 
-        super("Iniciar Sesión");
-        this.setSize(650,480);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
-
-
-        JPanel pTitulo = new JPanel();
+		JPanel pTitulo = new JPanel();
         pTitulo.setBackground(new Color(255, 255, 255));
-        JLabel lTitulo = new JLabel("TELECOMUNÍCATE", JLabel.CENTER);
+        /*JLabel lTitulo = new JLabel("TELECOMUNÍCATE", JLabel.CENTER);
         lTitulo.setFont(new Font("Open Sans", Font.BOLD, 20));
-        lTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+        lTitulo.setHorizontalAlignment(SwingConstants.CENTER);*/
+        ImageIcon titulo = new ImageIcon("media/int.png");
+        JLabel lTitulo = new JLabel();
+        lTitulo.setSize(170, 33);
+        Icon icon = new ImageIcon(titulo.getImage().getScaledInstance(lTitulo.getWidth(), lTitulo.getHeight(), Image.SCALE_DEFAULT));
+        lTitulo.setIcon(icon);
+        pTitulo.add(lTitulo);
         pTitulo.add(lTitulo);
         this.add(pTitulo, BorderLayout.NORTH);
 
@@ -73,8 +78,8 @@ public class VIniciarSesion extends JFrame implements ActionListener, IIniciarSe
         reglas.gridheight=1;
         JLabel lImagenMe = new JLabel();
         lImagenMe.setSize(200, 170);
-        ImageIcon icon = new ImageIcon("media/login3.png");
-        Icon iconoMe = new ImageIcon(icon.getImage().getScaledInstance(lImagenMe.getWidth(), lImagenMe.getHeight(), Image.SCALE_DEFAULT));
+        ImageIcon logo = new ImageIcon("media/login3.png");
+        Icon iconoMe = new ImageIcon(logo.getImage().getScaledInstance(lImagenMe.getWidth(), lImagenMe.getHeight(), Image.SCALE_DEFAULT));
         lImagenMe.setIcon(iconoMe);
         pIconMe.add(lImagenMe);
         pPrincipal.add(pIconMe, reglas);
@@ -93,6 +98,7 @@ public class VIniciarSesion extends JFrame implements ActionListener, IIniciarSe
         pUsuario.add(lUsuario);
         tUsuario = new JTextField();
         tUsuario.setPreferredSize(new Dimension(200,30));
+        Validacion.validarNumeros(tUsuario);
         pUsuario.add(tUsuario);
         reglas.anchor = GridBagConstraints.EAST;
         pPrincipal.add(pUsuario, reglas);
@@ -100,81 +106,109 @@ public class VIniciarSesion extends JFrame implements ActionListener, IIniciarSe
         JPanel pContrasena = new JPanel();
         pContrasena.setBackground(new Color(255, 255, 255));
         reglas.gridx = 1;
-        reglas.gridy = 3;
-        reglas.insets = new Insets(5, 10, 10, 10);
-        JLabel lContrasena = new JLabel("Contraseña: ");
-        lContrasena.setFont(new Font("Open Sans", Font.BOLD, 16));
+		reglas.gridy = 3;
+		reglas.insets = new Insets(5, 10, 10, 10);
+		JLabel lContrasena = new JLabel("Contraseña: ");
+		lContrasena.setFont(new Font("Open Sans", Font.BOLD, 16));
 
-        pContrasena.add(lContrasena);
-        tContrasena = new JPasswordField();
-        tContrasena.setPreferredSize(new Dimension(200,30));
+		pContrasena.add(lContrasena);
+		tContrasena = new JPasswordField();
+		tContrasena.setPreferredSize(new Dimension(200,30));
+		tContrasena.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
 
-        pContrasena.add(tContrasena);
-        pPrincipal.add(pContrasena, reglas);
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                   bIniciar.doClick();
+                }
+            }
 
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
 
-        reglas.gridx = 1;
-        reglas.gridy = 4;
-
-        JLabel lOlvidoContrasena = new JLabel("¿Olvidó su contraseña?", JLabel.CENTER);
-        lOlvidoContrasena.setFont(new Font("Open Sans", Font.ITALIC, 13));
-
-        pPrincipal.add(lOlvidoContrasena, reglas);
-
-
-        reglas.gridx = 1;
-        reglas.gridy = 5;
-        bIniciar = new JButton("Iniciar Sesión");
-        bIniciar.setFont(new Font("Open Sans", Font.PLAIN, 15));
-        bIniciar.setForeground(Color.WHITE);
-        bIniciar.setBackground(new Color(0, 125, 254));
-        bIniciar.setBorder(new EmptyBorder(10, 10, 10, 10));
-
-        bIniciar.setActionCommand(IIniciarSesion.IniciarSesion);
-        pPrincipal.add(bIniciar, reglas);
-
-        JPanel pImagen = new JPanel();
-        //pImagen.setBackground(new Color(255, 255, 255));;
-
-        pImagen.setBackground(new Color(0, 125, 254));
+		pContrasena.add(tContrasena);
+		pPrincipal.add(pContrasena, reglas);
 
 
-        reglas.gridx = 2;
-        reglas.gridy = 0;
-        reglas.gridwidth = 1;
-        reglas.gridheight = 5;
-        reglas.weighty= 20.0;
+		reglas.gridx = 1;
+		reglas.gridy = 4;
 
-        reglas.anchor = GridBagConstraints.EAST;
+		JLabel lOlvidoContrasena = new JLabel("¿Olvidó su contraseña?", JLabel.CENTER);
+		lOlvidoContrasena.setFont(new Font("Open Sans", Font.ITALIC, 13));
 
-
-
-        JLabel lImagen = new JLabel();
-        lImagen.setSize(250, 300);
-        ImageIcon imagen = new ImageIcon("media/recurso3.jpg");
-        Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(lImagen.getWidth(), lImagen.getHeight(), Image.SCALE_DEFAULT));
-        lImagen.setIcon(icono);
-        pImagen.add(lImagen);
-        pPrincipal.add (pImagen, reglas);
-
-        this.add(pPrincipal);
+		pPrincipal.add(lOlvidoContrasena, reglas);
 
 
+		reglas.gridx = 1;
+		reglas.gridy = 5;
+		bIniciar = new JButton("Iniciar Sesión");
+		bIniciar.setFont(new Font("Open Sans", Font.PLAIN, 15));
+		bIniciar.setForeground(Color.WHITE);
+		bIniciar.setBackground(new Color(2, 152, 178));
+		bIniciar.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+		bIniciar.setActionCommand(IIniciarSesion.IniciarSesion);
+		pPrincipal.add(bIniciar, reglas);
+
+		 JPanel pImagen = new JPanel();
+		 pImagen.setBackground(new Color(255, 255, 255));;
+         pImagen.setOpaque(true);
+
+	     // pImagen.setBackground(new Color(2, 152, 178));
 
 
+	      reglas.gridx = 2;
+	      reglas.gridy = 0;
+	      reglas.gridwidth = 1;
+	      reglas.gridheight = 5;
+	      reglas.weighty= 20.0;
 
-    }
-
+	      reglas.anchor = GridBagConstraints.EAST;
 
 
 
+	      JLabel lImagen = new JLabel();
+	      lImagen.setSize(300, 300);
+	      ImageIcon imagen = new ImageIcon("media/logo.png");
+	      Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(lImagen.getWidth(), lImagen.getHeight(), Image.SCALE_DEFAULT));
+	      lImagen.setIcon(icono);
+         // lImagen.setOpaque(true);
+	      pImagen.add(lImagen);
+	      pPrincipal.add (pImagen, reglas);
 
-    @Override
-    public void setControlador(CIniciarSesion c) {
-        // TODO Auto-generated method stub
-        controlador = c;
-        bIniciar.addActionListener(c);
-    }
+		this.add(pPrincipal);
+
+        //Confirmar cerrado
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                int confirmed = JOptionPane.showConfirmDialog(null,
+                        "¿Estas seguro de que quieres salir?", "Confirmar salida",
+                        JOptionPane.YES_NO_OPTION, PLAIN_MESSAGE, null);
+                if (confirmed == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
+
+
+
+	}
+
+
+
+
+
+	@Override
+	public void setControlador(CIniciarSesion c) {
+		// TODO Auto-generated method stub
+		controlador = c;
+		bIniciar.addActionListener(c);
+	}
 
     @Override
     public void arrancar() {

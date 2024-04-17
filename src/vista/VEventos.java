@@ -15,7 +15,7 @@ public class VEventos extends JPanel implements IEventos {
 
 
         pPrincipal = new JPanel(new GridBagLayout());
-        pPrincipal.setPreferredSize(new Dimension(1085, 680));
+        //pPrincipal.setPreferredSize(new Dimension(1085, 680));
         pPrincipal.setBackground(new Color(255, 255, 255));
         reglas = new GridBagConstraints();
         reglas.gridx = 1;
@@ -59,7 +59,7 @@ public class VEventos extends JPanel implements IEventos {
         
         this.add(pPrincipal);
 
-        reglas.gridheight = 2;
+        reglas.gridheight = 1;
         reglas.gridx = 1;
         reglas.anchor = GridBagConstraints.WEST;
     }

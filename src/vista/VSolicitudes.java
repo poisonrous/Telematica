@@ -12,7 +12,7 @@ public class VSolicitudes extends JPanel implements ISolicitudes {
     private int i = 0;
 
     public VSolicitudes(){
-        this.setPreferredSize(new Dimension(1085, 680));
+       // this.setPreferredSize(new Dimension(1085, 680));
         pPrincipal = new JPanel(new GridBagLayout());
         pPrincipal.setBackground(new Color(255, 255, 255));
         reglas = new GridBagConstraints();

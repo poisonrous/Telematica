@@ -51,7 +51,7 @@ public class CIniciarSesion implements ActionListener {
 		            if (user.getRol().equals("Estudiante")) {
 						principal = new Principal();
 						principal.pantallaEstudiante();
-		            } else if (user.getRol().equals("Admin")) {
+		            } else if (user.getRol().equals("Profesor")) {
 		                principal = new Principal();
 						principal.pantallaAdministrador();
 		            }

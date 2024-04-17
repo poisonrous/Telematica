@@ -2,6 +2,9 @@ package modelo;
 import vista.*;
 import controlador.*;
 
+import javax.swing.*;
+import java.awt.*;
+
 public class Instanciar {
 
     private static IIniciarSesion vista;
@@ -79,7 +82,12 @@ public class Instanciar {
         CSugerencias controladorSugerencias = new CSugerencias(sugerencias, mCrudSugerencia);
         sugerencias.setControlador(controladorSugerencias);
         controladorSugerencias.cargarSugerencias();
+        JOptionPane.showMessageDialog((Component) vista,
+                "¡Justo iba a sugerir eso!",
+                "¿Revisas las sugerencias?",
+                JOptionPane.PLAIN_MESSAGE);
         return sugerencias;
+
     }
 
     public IPublicacion llamarPublicacion() {
@@ -119,6 +127,11 @@ public class Instanciar {
         solicitudCurso.mostrar();
         solicitudCurso.desplegar();
 
+        JOptionPane.showMessageDialog((Component) vista,
+                "¡Eres un sol!",
+                "¿Revisas las solicitudes?",
+                JOptionPane.PLAIN_MESSAGE);
+
         return solicitudCurso;
     }
 
@@ -127,6 +140,34 @@ public class Instanciar {
         CCambioContrasena controladorCambioContrasena = new CCambioContrasena(cambioContrasena, vista, modelo2);
         cambioContrasena.setControlador(controladorCambioContrasena);
         return cambioContrasena;
+    }
+
+    public IDatos llamarDatos() {
+        IDatos datos = new VDatos();
+        MDatos modulo = new MDatos();
+        CDatos controladorDatos = new CDatos(datos, modulo);
+        datos.setControlador(controladorDatos);
+        datos.llamar();
+        return datos;
+    }
+
+    public IListado llamarListado() {
+        IListado listado = new VListado();
+        MListado modelo = new MListado();
+        CListado controlador = new CListado(listado, modelo, modelo2);
+        listado.setControlador(controlador);
+        controlador.cargarMaterias();
+        return listado;
+    }
+
+    public IRegistro llamarRegistro() {
+        IRegistro registro = new VRegistro();
+        MRegistro modelo = new MRegistro();
+        Estudiante estudiante = new Estudiante();
+        CRegistro controlador = new CRegistro(registro, estudiante, modelo);
+        registro.setControlador(controlador);
+        registro.cargarMateria();
+        return registro;
     }
 
 }

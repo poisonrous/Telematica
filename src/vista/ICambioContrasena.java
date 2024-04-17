@@ -5,7 +5,6 @@ import controlador.CIniciarSesion;
 
 public interface ICambioContrasena {
 
-	
 	String ACEPTAR = "Aceptar";
 	String CANCELAR = "Cancelar";
 	
@@ -16,6 +15,8 @@ public interface ICambioContrasena {
 	String getNuevaContrasena();
 	String verificarContrasena(String contrasena);
 	String cambiarContrasena();
+
+	void cancelar();
 	String getUsuario();
 	
 	

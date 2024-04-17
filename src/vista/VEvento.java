@@ -92,10 +92,12 @@ public class VEvento extends JPanel implements ActionListener, IEvento {
         pPrincipal.add(lDescripcion, reglas);
 
         tfTitulo = new JTextField(20);
+        Validacion.validarLongitud(tfTitulo,45);
         reglas.gridx = 2;
         reglas.gridy = 2;
         pPrincipal.add(tfTitulo, reglas);
         tfOrganizador = new JTextField(20);
+        Validacion.validarLongitud(tfOrganizador,45);
         reglas.gridy++;
         pPrincipal.add(tfOrganizador, reglas);
         dcFecha = new JDateChooser();
@@ -106,9 +108,11 @@ public class VEvento extends JPanel implements ActionListener, IEvento {
         reglas.gridy++;
         pPrincipal.add(tsHora, reglas);
         tfLugar = new JTextField(20);
+        Validacion.validarLongitud(tfLugar,100);
         reglas.gridy++;
         pPrincipal.add(tfLugar, reglas);
         tfPrecio = new JTextField(20);
+        Validacion.validarNumeros(tfPrecio);
         reglas.gridy++;
         pPrincipal.add(tfPrecio, reglas);
         cbGratuito = new JCheckBox("Gratuito");
@@ -143,6 +147,7 @@ public class VEvento extends JPanel implements ActionListener, IEvento {
         taDescripcion.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         taDescripcion.setLineWrap(true);
         taDescripcion.setWrapStyleWord(true);
+        Validacion.validarLongitud(taDescripcion,600);
         reglas.gridy++;
         pPrincipal.add(taDescripcion, reglas);
         
@@ -164,7 +169,7 @@ public class VEvento extends JPanel implements ActionListener, IEvento {
         bPublicar = new JButton("Publicar");
         bPublicar.setFont(new Font("Open Sans", Font.PLAIN, 15));
         bPublicar.setForeground(Color.WHITE);
-        bPublicar.setBackground(new Color(0, 125, 254));
+        bPublicar.setBackground(new Color(2, 152, 178));
         bPublicar.setActionCommand(IEvento.PUBLICAR);
         reglas.gridy++;
         pPrincipal.add(bPublicar, reglas);
@@ -225,8 +230,15 @@ public class VEvento extends JPanel implements ActionListener, IEvento {
 
     @Override
     public String getFecha() {
-        DateFormat formateador= new SimpleDateFormat("dd-MM-yyyy");
+        try {
+        DateFormat formateador= new SimpleDateFormat("yyyy-MM-dd");
         return formateador.format(dcFecha.getDate());
+    } catch (Exception f) {
+        System.out.println(f);
+        JOptionPane.showMessageDialog(null, "La fecha no puede quedar vacia");
+        return null;
+    }
+
       //  return dcFecha.getDate().toString();
     }
 

@@ -1,5 +1,9 @@
 package modelo;
 
+import javax.swing.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class MSolicitud {
     private String tipo, materia, descripcion, usuario, fecha, nombre, apellido, telefono, correo, tipoS;
     private boolean estado;

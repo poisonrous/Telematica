@@ -12,6 +12,7 @@ public interface ISolicitud {
 	void mostrarResultado(String nombre, String apellido, String telefono, String correo, String tipo, String descripcion, String fecha);
 	void arrancar();
 	String getTipo();
+	String getTipoNombre();
 	Object getMateria();
 	String getDescripcion();
 	String getImagen();

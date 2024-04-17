@@ -3,15 +3,17 @@ package modelo;
 public class Modelo {
 
 	private String usuario, nombres, apellidos, rol, contrasena;
+	private int admin;
 
 	
-	public Modelo(String usuario, String nombres, String apellidos, String rol, String contrasena) {
+	public Modelo(String usuario, String nombres, String apellidos, String rol, String contrasena, int admin) {
 		
 		this.usuario = usuario;
 		this.nombres = nombres;
 		this.apellidos = apellidos;
 		this.rol = rol;
 		this.contrasena = contrasena;
+		this.admin = admin;
 	}
 	public Modelo () {
 		
@@ -20,7 +22,6 @@ public class Modelo {
     public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
-
 
 	public String getRol() {
 		return rol;
@@ -31,26 +32,20 @@ public class Modelo {
 	public String getUsuario() {
 		return usuario;
 	}
-	
 
 	public String getContrasena() {
 		return contrasena;
 	}
 
-
 	public void setContrasena(String contrasena) {
 		this.contrasena = contrasena;
 	}
-
 	public String getNombres() {
 		return nombres;
 	}
-
 	public void setNombres(String nombres) {
 		this.nombres = nombres;
-
 	}
-
 	public String getApellidos() {
 		return apellidos;
 	}
@@ -59,4 +54,8 @@ public class Modelo {
 		this.apellidos = apellidos;
 	}
 
+	public int isAdmin() {
+		return admin;}
+
+	public void setAdmin(int admin) {this.admin = admin;}
 	}

@@ -6,22 +6,34 @@ import java.sql.ResultSet;
 public class MSolicitudR {
 
     private int Test;
-        public ResultSet getResultSet(int Test, String Estado, String Tipo) {
+        public ResultSet getResultSet(Double Test, String Estado, String Tipo, String Carrera) {
           ResultSet rs = null;
-            if (Test==1) {BdConex bd= new BdConex();
-                rs= bd.consultar("SELECT solicitud.IdSo, solicitud.CedulaEs, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs WHERE (BorradoSo, BorradoTiSo)= ('0', '0')");
+            if (Test==1.0) {BdConex bd= new BdConex();
+                rs= bd.consultar("SELECT solicitud.IdSo, solicitud.CedulaEs, NombreCa, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs LEFT JOIN estudiante ON estudiante.CedulaEs = solicitud.CedulaEs LEFT JOIN carrera ON estudiante.IdCa = carrera.IdCa WHERE (BorradoSo, BorradoTiSo)= ('0', '0')");
             }
-            else if (Test==10){
+            else if (Test==1.5){
+                BdConex bd= new BdConex();
+                rs= bd.consultar("SELECT solicitud.IdSo, solicitud.CedulaEs, NombreCa, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs LEFT JOIN estudiante ON estudiante.CedulaEs = solicitud.CedulaEs LEFT JOIN carrera ON estudiante.IdCa = carrera.IdCa WHERE (BorradoSo , BorradoTiSo, NombreCa) = ('0' , '0', '"+Carrera+"' )");
+            }
+            else if (Test==10.0){
              BdConex bd= new BdConex();
-               rs= bd.consultar("SELECT solicitud.IdSo, solicitud.CedulaEs, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs WHERE (BorradoSo , BorradoTiSo, tiposolicitud.TipoTiSo) = ('0' , '0', '"+Tipo+"' )");
+               rs= bd.consultar("SELECT solicitud.IdSo, solicitud.CedulaEs, NombreCa, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs LEFT JOIN estudiante ON estudiante.CedulaEs = solicitud.CedulaEs LEFT JOIN carrera ON estudiante.IdCa = carrera.IdCa WHERE (BorradoSo , BorradoTiSo, tiposolicitud.TipoTiSo) = ('0' , '0', '"+Tipo+"' )");
             }
-            else if (Test==3){
+            else if (Test==10.5){
                 BdConex bd= new BdConex();
-                rs= bd.consultar("SELECT solicitud.IdSo, solicitud.CedulaEs, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs WHERE (BorradoSo , BorradoTiSo, EstadoSo) = (0 , 0,'"+Estado+"')");
+                rs= bd.consultar("SELECT solicitud.IdSo, solicitud.CedulaEs, NombreCa, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs LEFT JOIN estudiante ON estudiante.CedulaEs = solicitud.CedulaEs LEFT JOIN carrera ON estudiante.IdCa = carrera.IdCa WHERE (BorradoSo , BorradoTiSo, tiposolicitud.TipoTiSo, NombreCa) = ('0' , '0', '"+Tipo+"', '"+Carrera+"' )");
             }
-            else if (Test>10){
+            else if (Test==3.0){
                 BdConex bd= new BdConex();
-                rs= bd.consultar("SELECT solicitud.IdSo, solicitud.CedulaEs, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs WHERE (BorradoSo , BorradoTiSo, tiposolicitud.TipoTiSo, EstadoSo) = (0 , 0, '"+Tipo+"', '"+Estado+"')");
+                rs= bd.consultar("SELECT solicitud.IdSo, solicitud.CedulaEs, NombreCa, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs LEFT JOIN estudiante ON estudiante.CedulaEs = solicitud.CedulaEs LEFT JOIN carrera ON estudiante.IdCa = carrera.IdCa WHERE (BorradoSo , BorradoTiSo, EstadoSo) = (0 , 0,'"+Estado+"')");
+            }
+            else if (Test==3.5){
+                BdConex bd= new BdConex();
+                rs= bd.consultar("SELECT solicitud.IdSo, solicitud.CedulaEs, NombreCa, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs LEFT JOIN estudiante ON estudiante.CedulaEs = solicitud.CedulaEs LEFT JOIN carrera ON estudiante.IdCa = carrera.IdCa WHERE (BorradoSo , BorradoTiSo, tiposolicitud.TipoTiSo, NombreCa) = ('0' , '0', '"+Tipo+"', '"+Carrera+"' )");
+            }
+            else if (Test>10.0){
+                BdConex bd= new BdConex();
+                rs= bd.consultar("SELECT solicitud.IdSo, solicitud.CedulaEs, NombreCa, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs LEFT JOIN estudiante ON estudiante.CedulaEs = solicitud.CedulaEs LEFT JOIN carrera ON estudiante.IdCa = carrera.IdCa WHERE (BorradoSo , BorradoTiSo, tiposolicitud.TipoTiSo, EstadoSo, NombreCa) = (0 , 0, '"+Tipo+"', '"+Estado+"', '"+Carrera+"')");
             }
 
         return rs;}

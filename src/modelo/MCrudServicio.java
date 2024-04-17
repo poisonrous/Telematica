@@ -21,7 +21,7 @@ public class MCrudServicio {
         Servicio servicio = new Servicio();
      //   rs = bd.consultar("SELECT * FROM servicio WHERE nombreSe = '"+nombre+"'");
         try {
-            String sql = "SELECT * FROM serviciossociales WHERE tipoSS = '"+nombre+"'";
+            String sql = "SELECT * FROM serviciossociales WHERE tipoSS = '"+nombre.replace("'","''")+"'";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -43,7 +43,7 @@ public class MCrudServicio {
         int resultado = 0;
         try {
             bd.abrirConexion();
-            bd.ejecutar("INSERT INTO serviciossociales (tipoSS, horarioSS, ubicacionSS, estatusSS) VALUES ('"+nombre+"', '"+horario+"', '"+ubicacion+"', '"+estatus+"')");
+            bd.ejecutar("INSERT INTO serviciossociales (tipoSS, horarioSS, ubicacionSS, estatusSS) VALUES ('"+nombre.replace("'","''")+"', '"+horario.replace("'","''")+"', '"+ubicacion.replace("'","''")+"', '"+estatus.replace("'","''")+"')");
             JOptionPane.showMessageDialog(null, "Servicio creado exitosamente.");
         } catch (Exception e) {
             System.out.println("Error al crear el servicio");
@@ -55,7 +55,7 @@ public class MCrudServicio {
         int resultado = 0;
         try {
             bd.abrirConexion();
-            bd.ejecutar("UPDATE serviciossociales SET horarioSS = '"+horario+"', ubicacionSS = '"+ubicacion+"', estatusSS = '"+estatus+"' WHERE tipoSS = '"+nombre+"'");
+            bd.ejecutar("UPDATE serviciossociales SET horarioSS = '"+horario.replace("'","''")+"', ubicacionSS = '"+ubicacion.replace("'","''")+"', estatusSS = '"+estatus.replace("'","''")+"' WHERE tipoSS = '"+nombre.replace("'","''")+"'");
             JOptionPane.showMessageDialog(null, "Servicio modificado exitosamente.");
         } catch (Exception e) {
             System.out.println("Error al modificar el servicio");

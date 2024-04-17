@@ -33,12 +33,18 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
 		this.setPreferredSize(new Dimension(1085, 680));
 		this.setLayout(new BorderLayout());
 		JPanel pTitulo = new JPanel();
+		pTitulo.setLayout(new BorderLayout());
 		JLabel lTitulo = new JLabel("CAMBIO DE CONTRASEÑA");
 		pTitulo.setBackground(new Color(255, 255, 255));
 		lTitulo.setFont(new Font("Open Sans", Font.BOLD,20));
-		lTitulo.setForeground(new Color(0, 125, 254));
+		lTitulo.setForeground(new Color(2, 152, 178));
 		lTitulo.setHorizontalAlignment(JLabel.CENTER);
-		pTitulo.add(lTitulo);
+		JLabel linstruccion = new JLabel("Debe tener entre 6 y 16 caracteres");
+		linstruccion.setFont(new Font("Open Sans", Font.ITALIC,8));
+		linstruccion.setForeground(new Color(2, 152, 178));
+		linstruccion.setHorizontalAlignment(JLabel.CENTER);
+		pTitulo.add(lTitulo, BorderLayout.NORTH);
+		pTitulo.add(linstruccion, BorderLayout.SOUTH);
 		this.add(pTitulo, BorderLayout.NORTH);
 		
 		
@@ -49,7 +55,7 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
 		bCancelar = new JButton("Cancelar");
 		bCancelar.setFont(new Font("Open Sans", Font.PLAIN, 15));
         bCancelar.setForeground(Color.WHITE);
-        bCancelar.setBackground(new Color(0, 125, 254));
+        bCancelar.setBackground(new Color(2, 152, 178));
 		bCancelar.setActionCommand(ICambioContrasena.CANCELAR);
 		pBotones.add(bCancelar);
 		
@@ -58,7 +64,7 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
 		bAceptar = new JButton("Aceptar");
 		bAceptar.setFont(new Font("Open Sans", Font.PLAIN, 15));
         bAceptar.setForeground(Color.WHITE);
-        bAceptar.setBackground(new Color(0, 125, 254));
+        bAceptar.setBackground(new Color(2, 152, 178));
 		bAceptar.setActionCommand(ICambioContrasena.ACEPTAR);
 	//	bAceptar.addActionListener(this);
 		pBotones.add(bAceptar);
@@ -91,12 +97,13 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
         pCActual.setBackground(new Color(255, 255, 255));
        // reglas.anchor = GridBagConstraints.WEST;
 		JLabel lContrasenaActual = new JLabel("Contraseña Actual:   ");
-		lContrasenaActual.setForeground(new Color(0, 125, 254));
+		lContrasenaActual.setForeground(new Color(2, 152, 178));
 		lContrasenaActual.setFont(new Font("Open Sans", Font.BOLD, 14));
 		
 		pCActual.add(lContrasenaActual);
 		tContrasenaActual = new JPasswordField();
 		tContrasenaActual.setPreferredSize(new Dimension(200,30));
+		Validacion.validarLongitud(tContrasenaActual,25);
 		reglas.anchor = GridBagConstraints.EAST;
 		pCActual.add(tContrasenaActual);
 		pPrincipal.add(pCActual, reglas);
@@ -111,9 +118,10 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
         //reglas.anchor = GridBagConstraints.WEST;
 		JLabel lContrasenaNueva = new JLabel("Contraseña Nueva:   ");
 		lContrasenaNueva.setFont(new Font("Open Sans", Font.BOLD, 14));
-		lContrasenaNueva.setForeground(new Color(0, 125, 254));
+		lContrasenaNueva.setForeground(new Color(2, 152, 178));
 		pCNueva.add(lContrasenaNueva);
 		tNuevaContrasena = new JPasswordField();
+		Validacion.validarLongitud(tNuevaContrasena,25);
 		tNuevaContrasena.setPreferredSize(new Dimension(200,30));
 		reglas.anchor = GridBagConstraints.EAST;
 		pCNueva.add(tNuevaContrasena);
@@ -127,11 +135,12 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
         //reglas.anchor = GridBagConstraints.WEST;
 		JLabel lConfirmarContrasena = new JLabel("Confirmar Contraseña :   ");
 		lConfirmarContrasena.setFont(new Font("Open Sans", Font.BOLD, 14));
-		lConfirmarContrasena.setForeground(new Color(0, 125, 254));
+		lConfirmarContrasena.setForeground(new Color(2, 152, 178));
 		pCContra.add(lConfirmarContrasena);
 		
 		tConfirmarContrasena = new JPasswordField();
 		tConfirmarContrasena.setPreferredSize(new Dimension(200,30));
+		Validacion.validarLongitud(tConfirmarContrasena,25);
 		pCContra.add(tConfirmarContrasena);
 		pPrincipal.add(pCContra, reglas);
 		
@@ -147,9 +156,7 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
 
 	if(e.getSource()==bCancelar) {
        System.exit(0);
-       
 	}
-		
 	}
 
 	
@@ -199,8 +206,6 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
 		// TODO Auto-generated method stub
 		return String.valueOf(tContrasenaActual.getPassword());
 	}
-
-
 	@Override
 	public String getNuevaContrasena() {
 		// TODO Auto-generated method stub
@@ -210,16 +215,17 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
 			return String.valueOf(tNuevaContrasena.getPassword());
 		} else return null;
 	}
-
-
 	@Override
 	public String cambiarContrasena() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
-
+	@Override
+	public void cancelar() {
+		tContrasenaActual.setText("");
+		tNuevaContrasena.setText("");
+		tConfirmarContrasena.setText("");
+	}
 
 	@Override
 	public String getUsuario() {
