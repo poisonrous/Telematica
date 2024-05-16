@@ -10,16 +10,27 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import controlador.CSolicitud;
 import modelo.BdConex;
 import modelo.Materia;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
+// Vista de solicitudes
 public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Printable {
 
     private JButton bEnviar, bImprimir, bRegresar;
@@ -30,28 +41,27 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
     private CSolicitud controlador;
     private JPanel pPrincipal, pResultado, pDatos;
     private JLabel lNombre, lTelefono, lCorreo, lTipoS, lDescripcion, lFecha, lInformacion;
+
+    // Constructor de VSolicitud
     public VSolicitud(){
     this.setPreferredSize(new Dimension(1085, 680));
 
+
+        // Panel principal
         pPrincipal = new JPanel(new GridBagLayout());
         pPrincipal.setPreferredSize(new Dimension(1085, 680));
         GridBagConstraints reglas = new GridBagConstraints();
         pPrincipal.setBackground(new Color(255, 255, 255));
 
-
-       
-        
 		reglas.gridx = 1;
 	    reglas.gridy = 1;
 	    reglas.insets = new Insets(10, 10, 10, 10);
-	    JLabel lTitulo = new JLabel("Sistema Telemática");
+        // Título del sistema
+        JLabel lTitulo = new JLabel("Sistema Telemática");
         lTitulo.setBackground(new Color(255, 255, 255));
         lTitulo.setFont(new Font("Open Sans", Font.BOLD, 16));
         lTitulo.setHorizontalAlignment(SwingConstants.CENTER);
        pPrincipal.add(lTitulo, reglas);
-        
-      
-       
 
        JPanel pIconS = new JPanel();
        pIconS.setBackground(new Color(255, 255, 255));
@@ -63,16 +73,18 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
        Icon iconoSo = new ImageIcon(iconS.getImage().getScaledInstance(lImagenSo.getWidth(), lImagenSo.getHeight(), Image.SCALE_DEFAULT));
        lImagenSo.setIcon(iconoSo);
       pIconS.add(lImagenSo);
-       JLabel lTipo = new JLabel("Tipo de Problemática");
+       JLabel lTipo = new JLabel("Envía tus Solicitudes");
        lTipo.setFont(new Font("Roboto", Font.BOLD, 16));
        pIconS.add(lTipo);
        pPrincipal.add(pIconS, reglas);
 
+        // Panel del tipo de problema
         JPanel pTipo = new JPanel(new GridBagLayout());
         GridBagConstraints reglasTipo = new GridBagConstraints();
         pTipo.setBackground(new Color(255, 255, 255));
         reglasTipo.anchor = GridBagConstraints.WEST;
-        
+
+        // RadioButtons para los tipos de problema
         rbAula = new JRadioButton("Aula no asignada");
         rbAula.addActionListener(this);
         rbAula.setBackground(new Color(255, 255, 255));
@@ -126,7 +138,7 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
         reglasTipo.gridy = 7;
         pTipo.add(rbOtro, reglasTipo);
 
-        
+        // Agrupación de los RadioButtons
         bgTipo = new ButtonGroup();
         bgTipo.add(rbAula);
         bgTipo.add(rbAcademico);
@@ -138,24 +150,26 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
         reglas.gridy = 3;
         pPrincipal.add(pTipo, reglas);
 
-        lInformacion= new JLabel("Aporta más información");
+        lInformacion= new JLabel("Aporta más información:");
         lInformacion.setFont(new Font("Open Sans", Font.BOLD, 16));
         reglas.gridy = 4;
         pPrincipal.add(lInformacion, reglas);
 
+        // Área de texto para la descripción del problema
         taDescripcion = new JTextArea(); 
         taDescripcion.setPreferredSize(new Dimension(220, 200));
         taDescripcion.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         taDescripcion.setLineWrap(true);
         taDescripcion.setWrapStyleWord(true);
-        Validacion.validarLongitud(taDescripcion, 450);
+        Validacion.validarLongitud(taDescripcion, 300);
         reglas.gridy = 5;
         pPrincipal.add(taDescripcion, reglas);
 
        /* cbMateria = new JComboBox();
         pPrincipal.add(cbMateria, reglas);
         cbMateria.setVisible(false);*/
-        
+
+        // Botón para enviar la solicitud
         bEnviar = new JButton("Enviar");
         bEnviar.setFont(new Font("Open Sans", Font.PLAIN, 15));
         bEnviar.setForeground(Color.WHITE);
@@ -179,34 +193,32 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
         reglas.gridheight = 5;
         
         reglas.anchor = GridBagConstraints.EAST;
-      
-        
-        
+
+        // Etiqueta para mostrar la imagen
         JLabel lImagen = new JLabel();  
         lImagen.setSize(500, 450);
         ImageIcon imagen = new ImageIcon("media/solucion.jpg");
         Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(lImagen.getWidth(), lImagen.getHeight(), Image.SCALE_DEFAULT));
         lImagen.setIcon(icono);
         pImagen.add(lImagen);
-        pPrincipal.add (pImagen, reglas);
+       // pPrincipal.add (pImagen, reglas);
         
         
        this.add(pPrincipal);
 
-        //AQUÍ CREARÁ LA PANTALLA DE RESULTADO
+        // Creación de los paneles principal y de resultado
         pResultado = new JPanel(new GridBagLayout());
         pResultado.setBackground(new Color(255, 255, 255));
         pResultado.setVisible(false);
         GridBagConstraints reglasResultado = new GridBagConstraints();
        
-        
+        // Asignación de elementos a pPrincipal y a pResultado
+
         reglasResultado.gridx = 1;
         reglasResultado.gridy = 1;
         reglasResultado.insets = new Insets(10, 10, 10, 10);
         pResultado.add(lTitulo, reglasResultado);
-        
-      
-        
+
         pDatos = new JPanel(new GridBagLayout());
         pDatos.setBackground(new Color(255, 255, 255));
         GridBagConstraints reglasDatos = new GridBagConstraints();
@@ -360,13 +372,10 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
             pDatos.add(lFecha, reglasDatos);
             
             
-            
-            
-        
-
+        //Botones inferiores post-creación
         reglasResultado.gridy = 3;
         pResultado.add(pDatos, reglasResultado);
-        bImprimir= new JButton("Imprimir");
+        bImprimir= new JButton("Generar reporte de solicitud");
         bImprimir.setFont(new Font("Open Sans", Font.PLAIN, 15));
         bImprimir.setForeground(Color.WHITE);
         bImprimir.setBackground(new Color(2, 152, 178));
@@ -387,6 +396,8 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
       //this.add(pResultado);
 
     }
+
+    // Obtiene el tipo de solicitud seleccionado por el usuario
     @Override
     public void arrancar (){
         this.setVisible(true);
@@ -416,6 +427,7 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
         }
     }
 
+        // Obtiene el nombre del tipo de solicitud seleccionado por el usuario
     @Override
     public String getTipoNombre() {
         //ESTO TIENE QUE CAMBIARSE PARA MANEJARLO COMO OBJETO TRAÍDO DESDE LA BASE DE DATOS
@@ -439,18 +451,25 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
         }
     }
 
+    // Obtiene la materia seleccionada por el usuario
     @Override
     public Object getMateria(){
         return cbMateria.getSelectedItem();
     }
+
+    // Obtiene la descripción del problema ingresada por el usuario
     @Override
     public String getDescripcion(){
         return taDescripcion.getText();
     }
+
+    // Obtiene la ruta de la imagen adjunta al problema
     @Override
     public String getImagen(){
         return null;
     }
+
+        // Obtiene el usuario
     @Override
     public String getUsuario(){
         return null;
@@ -462,10 +481,11 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
         rbAula.addActionListener(c);
     }
 
+    // Acciones de botones
     @Override
     public void actionPerformed(ActionEvent event) {
         // TODO Auto-generated method stub
-        if (rbAula.isSelected()){ //solo cuando se seleccione el radio button de aula no asignada se mostrarÃ¡ el combo box de materias y por tanto no es necesario el textfield
+        if (rbAula.isSelected()){ //solo cuando se seleccione el radio button de aula no asignada se mostrar¡ el combo box de materias y por tanto no es necesario el textfield
             cbMateria.setVisible(true);
             lInformacion.setVisible(false);
             taDescripcion.setVisible(false);
@@ -476,14 +496,62 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
             taDescripcion.setVisible(true);
             cbMateria.removeAllItems(); //para que no se mantenga la materia seleccionada en el combobox y por tanto no se envÃ­e a la base de datos si la solicitud es de otro tipo
         }
+
+        //Proceso de creación del PDF
         if(event.getSource()==bImprimir){
+            String a ="";
+
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            BdConex conn = new BdConex();
+            Connection con = conn.getConexion();
             try {
-                PrinterJob job = PrinterJob.getPrinterJob();
-                job.setPrintable(this);
-                job.printDialog();
-                job.print();
-            } catch (PrinterException ex) {
-                Logger.getLogger(VSolicitud.class.getName()).log(Level.SEVERE, null, ex);
+                ps = con.prepareStatement("SELECT IdSo FROM solicitud where DescripcionSo = '"+lDescripcion.getText().replace("'","''")+"' and IdTiSo =  '"+ this.getTipo()+"' ");
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    a=rs.getString("IdSo");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                ArrayList ALDescripcion = (ArrayList) Validacion.validarParrafo(lDescripcion.getText(), 20);
+                PDDocument doc = new PDDocument();
+                PDImageXObject plant = PDImageXObject.createFromFile("media/Plantilla.png", doc);
+                PDPage reporte = new PDPage();
+                doc.addPage(reporte);
+                PDPageContentStream contentStream = new PDPageContentStream(doc, reporte);
+                contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.TIMES_BOLD), 16);
+                contentStream.drawImage(plant, 0, 0, reporte.getCropBox().getWidth(), reporte.getCropBox().getHeight());
+                contentStream.beginText();
+                contentStream.setLeading(16.0f);
+                contentStream.newLineAtOffset(150, reporte.getCropBox().getHeight()-320);
+
+                contentStream.showText("Nombre:      "+lNombre.getText());
+                contentStream.newLine();
+                contentStream.showText("Teléfono:    "+lTelefono.getText());
+                contentStream.newLine();
+                contentStream.showText("Correo Electrónico:      "+lCorreo.getText());
+                contentStream.newLine();
+                contentStream.showText("Tipo:     "+lTipoS.getText());
+                contentStream.newLine();
+                contentStream.showText("Descripción:     ");
+                for (Object o : ALDescripcion) {
+                    contentStream.showText(Validacion.validarError(o.toString()));
+                    contentStream.newLine();
+                    contentStream.showText("                         ");
+                }
+                contentStream.newLine();
+                contentStream.showText("Fecha de creación: "+lFecha.getText());
+
+                contentStream.endText();
+                contentStream.close();
+                Files.createDirectories(Paths.get(System.getProperty("user.home")+"/Desktop/telecomunícate"));
+                doc.save(System.getProperty("user.home")+"/Desktop/telecomunícate/reporte" +a + ".pdf");
+                doc.close();
+                JOptionPane.showMessageDialog(null, "Su archivo se encuentra en el escritorio, carpeta telecomunícate");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
 
@@ -494,6 +562,8 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
 			pPrincipal.setVisible(true);
 		}
     }
+
+
     @Override
     public void cargarMaterias(String usuario) {
         // TODO Auto-generated method stub
@@ -514,6 +584,7 @@ public class VSolicitud extends JPanel implements ActionListener, ISolicitud, Pr
         }
     }
 
+    // Carga las materias disponibles en el ComboBox
     @Override
     public void mostrarResultado(String nombre, String apellido, String telefono, String correo, String tipo, String descripcion, String fecha) {
         // TODO Auto-generated method stub

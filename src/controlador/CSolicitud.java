@@ -1,5 +1,6 @@
 package controlador;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
@@ -17,20 +18,31 @@ import javax.swing.*;
 
 import static javax.swing.JOptionPane.PLAIN_MESSAGE;
 
-public class CSolicitud implements ActionListener{
-    private final ISolicitud vista;
-    private final OModelo usuario;
+// Controlador para la gestión de solicitudes.
 
+public class CSolicitud implements ActionListener{
+    private final ISolicitud vista;  // Vista de solicitud
+    private final OModelo usuario;  // Modelo de usuario
+
+    /**
+     * Constructor de la clase CSolicitud.
+     * @param vista Vista de usuario ISolicitud.
+     * @param usuario Modelo de usuario OModelo.
+     */
     public CSolicitud(ISolicitud vista, OModelo usuario) {
         this.vista = vista;
         this.usuario = usuario;
     }
 
+    /**
+     * Maneja los eventos de acción generados en la vista.
+     * @param e Evento de acción.
+     */
     public void actionPerformed(ActionEvent e) {
         String comando = e.getActionCommand();
        if(comando.equals(ISolicitud.MATERIA)) {
             vista.cargarMaterias(usuario.getUsuario());
-            //se cargará la lista de materias que en relación al usuario que haya iniciado sesión
+           // Carga la lista de materias relacionadas con el usuario que ha iniciado sesión.
         }
         if (comando.equals(ISolicitud.ENVIAR)) {
             if (Objects.equals(vista.getTipo(), "8")) {
@@ -39,18 +51,36 @@ public class CSolicitud implements ActionListener{
             else {
             MCrudSolicitud mCrudSolicitud = new MCrudSolicitud();
             Materia materia = (Materia) vista.getMateria();
+
+                UIManager UI=new UIManager();
+                UI.put("OptionPane.messageFont", new Font("Open Sans", Font.BOLD, 14));
+                UI.put("OptionPane.background", new Color (255,255,255));
+                UI.put("Panel.background", new Color (255,255,255));
+                UI.put("Button.background", new Color (3,150,177));
+                UIManager.put("Button.foreground", Color.white);
+
+                ImageIcon iconSO = new ImageIcon("media/advertencia.png");
+
             int n = JOptionPane.showOptionDialog(null, "¿Estás seguro que deseas enviar una solicitud de tipo "+vista.getTipoNombre()+"?", "Advertencia",
-                    JOptionPane.YES_NO_OPTION, PLAIN_MESSAGE, null,
+                    JOptionPane.YES_NO_OPTION, PLAIN_MESSAGE, iconSO,
                     new String[]{"Si", "No"}, "Si");
             if (n == JOptionPane.YES_OPTION) {
             if(materia == null) {
+
+                UIManager UISO=new UIManager();
+                UISO.put("OptionPane.messageFont", new Font("Open Sans", Font.BOLD, 14));
+                UISO.put("OptionPane.background", new Color (255,255,255));
+                UISO.put("Panel.background", new Color (255,255,255));
+                UISO.put("Button.background", new Color (3,150,177));
+                UIManager.put("Button.foreground", Color.white);
+
+
                 if (vista.getDescripcion().length()<30){JOptionPane.showMessageDialog(null, "¿Podrías darnos algo más de información?");}
                 else if (mCrudSolicitud.checkSolicitud(usuario.getUsuario(), vista.getDescripcion())) {
                     JOptionPane.showMessageDialog(null, "Ya has hecho una solicitud con esa descripción");
                 }
                 else {
-                if(mCrudSolicitud.crearSolicitud(vista.getTipo(), vista.getDescripcion(), usuario.getUsuario())>0);{
-                //aquí debería haber un método que busque el registro que se acaba de hacer y almacene los valores en algún lugar
+                if(mCrudSolicitud.crearSolicitud(vista.getTipo(), vista.getDescripcion(), usuario.getUsuario())>0);
                // mCrudSolicitud.buscarSolicitud(vista.getTipo(), vista.getDescripcion(), vistaIniciarSesion.getUsuario());
                 MSolicitud resultado = (MSolicitud) mCrudSolicitud.buscarSolicitud(vista.getTipo(), vista.getDescripcion(), usuario.getUsuario());
                 vista.mostrarResultado(resultado.getNombre(), resultado.getApellido(), resultado.getTelefono(), resultado.getCorreo(), resultado.getTipoS(), resultado.getDescripcion(), resultado.getFecha());
@@ -70,7 +100,9 @@ public class CSolicitud implements ActionListener{
                 }
             }
 }
- else JOptionPane.showMessageDialog(null, "Solicitud no enviada, puedes seguir editando.");
+
 
     }
-}}}
+        else JOptionPane.showMessageDialog(null, "Solicitud no enviada, puedes seguir editando.");
+}
+}

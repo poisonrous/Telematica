@@ -8,11 +8,21 @@ import java.util.Objects;
 import modelo.BdConex;
 import modelo.MSolicitud;
 
+// Clase MCrudSolicitud ofrece métodos para la gestión de solicitudes de servicio.
 public class MCrudSolicitud {
+    //Variables
   // public String nombre, apellido, telefono, correo, tipoS, descripcion, fecha;
     MSolicitud mSolicitud = new MSolicitud(); //esto es de prueba
     ResultSet rs=null;
     BdConex bd= new BdConex();
+
+    /**
+     * Crea una nueva solicitud de servicio.
+     * @param tipo El tipo de solicitud.
+     * @param descripcion La descripción de la solicitud.
+     * @param usuario El usuario que realiza la solicitud.
+     * @return Un entero que indica si la operación fue exitosa (1) o no (0).
+     */
     public int crearSolicitud(String tipo, String descripcion, String usuario) {
         int op=0;
         bd.abrirConexion();
@@ -41,9 +51,17 @@ public class MCrudSolicitud {
            }*/
          //   JOptionPane.showMessageDialog(null, "Solicitud enviada");
             //si no se selecciona materia, será por defecto nula
+
+        // Se puede agregar lógica adicional aquí, como mostrar mensajes de éxito o error.
         return op;
     }
 
+    /**
+     * Crea una nueva solicitud de servicio relacionada con una materia.
+     * @param tipo El tipo de solicitud.
+     * @param materia La materia relacionada con la solicitud.
+     * @param usuario El usuario que realiza la solicitud.
+     */
     public void crearSolicitudMateria(String tipo, String materia, String usuario) {
         bd.abrirConexion();
         String sql="INSERT INTO solicitud (CedulaEs, IdTiSo, MateriaSo, FechaSo) VALUES ('"+usuario+"', '"+tipo+"', '"+materia+"', CURDATE())";
@@ -51,6 +69,13 @@ public class MCrudSolicitud {
 
     }
 
+    /**
+     * Busca una solicitud de servicio en la base de datos.
+     * @param tipo El tipo de solicitud.
+     * @param descripcion La descripción de la solicitud.
+     * @param usuario El usuario que realiza la solicitud.
+     * @return Un objeto de tipo MSolicitud con la información de la solicitud encontrada, o un objeto vacío si no se encuentra.
+     */
     public Object buscarSolicitud(String tipo, String descripcion, String usuario){
         mSolicitud = new MSolicitud();
 
@@ -77,6 +102,13 @@ public class MCrudSolicitud {
         return mSolicitud;
     }
 
+    /**
+     * Busca una solicitud de servicio relacionada con una materia en la base de datos.
+     * @param tipo El tipo de solicitud.
+     * @param materia La materia relacionada con la solicitud.
+     * @param usuario El usuario que realiza la solicitud.
+     * @return Un objeto de tipo MSolicitud con la información de la solicitud encontrada, o un objeto vacío si no se encuentra.
+     */
     public Object buscarSolicitudMateria(String tipo, String materia, String usuario){
         mSolicitud = new MSolicitud();
 
@@ -105,6 +137,11 @@ public class MCrudSolicitud {
         return mSolicitud;
     }
 
+    /**
+     * Obtiene un conjunto de resultados que representa las solicitudes de servicio de un usuario.
+     * @param usuario El usuario para el que se obtienen las solicitudes.
+     * @return Un objeto ResultSet que contiene las solicitudes de servicio del usuario.
+     */
     public ResultSet getSolicitudes(String usuario){
         bd.abrirConexion();
         rs=bd.consultar("SELECT IdSo, tipoTiSo, DescripcionSo, EstadoSo, FechaSo FROM solicitud INNER JOIN tiposolicitud ON tiposolicitud.IdTiSo = solicitud.IdTiSo WHERE BorradoSo = 0 AND  solicitud.CedulaEs = "+usuario+" ORDER BY FechaSo ASC");
@@ -127,6 +164,13 @@ public class MCrudSolicitud {
         return op;
     }*/ //esto no se usa porque no se pueden eliminar solicitudes, pero lo dejo por si acaso PENDIENTE AGREGAR MODIFICACIÓN (corresponde a Neri) Y ELIMINACIÓN LÓGICA
 
+
+    /**
+     * Verifica si un estudiante tiene una solicitud de una materia específica.
+     * @param NombreMa El nombre de la materia.
+     * @param CedulaEs La cédula del estudiante.
+     * @return true si el estudiante tiene una solicitud de esa materia, false de lo contrario.
+     */
     public boolean checkMateria (String NombreMa, String CedulaEs){
         bd.abrirConexion();
         rs=bd.consultar("SELECT DISTINCT NombreAsignaturaAs, solicitud.CedulaEs FROM solicitud INNER JOIN materia ON solicitud.MateriaSo = materia.IdMa INNER JOIN asignatura ON asignatura.IdAs = materia.IdAs WHERE BorradoSo = '0' AND  solicitud.CedulaEs = '"+CedulaEs+"' AND asignatura.NombreAsignaturaAs = '"+NombreMa+"' AND EstadoSo = 'Pendiente'");
@@ -139,6 +183,12 @@ public class MCrudSolicitud {
         }
     }
 
+    /**
+     * Verifica si un estudiante tiene una solicitud específica.
+     * @param usuario La cédula del estudiante.
+     * @param descripcion La descripción de la solicitud.
+     * @return true si el estudiante tiene esa solicitud, false de lo contrario.
+     */
     public boolean checkSolicitud (String usuario, String descripcion){
          bd.abrirConexion();
          rs = bd.consultar("SELECT DISTINCT solicitud.DescripcionSo, solicitud.CedulaEs FROM solicitud WHERE BorradoSo = '0' AND  solicitud.CedulaEs = '"+usuario+"' AND solicitud.DescripcionSo = '"+descripcion.replace("'","''")+"' AND EstadoSo = 'Pendiente'");

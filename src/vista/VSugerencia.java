@@ -1,6 +1,13 @@
 package vista;
 import javax.swing.*;
 import controlador.CSugerencia;
+import modelo.BdConex;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import vista.ISugerencia;
 
 import java.awt.*;
@@ -10,9 +17,17 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+// Vista de sugerencias
 public class VSugerencia extends JPanel implements ActionListener, ISugerencia, Printable {
     private CSugerencia controlador;
     private JPanel pPrincipal, pResultado, pDatos;
@@ -21,18 +36,20 @@ public class VSugerencia extends JPanel implements ActionListener, ISugerencia, 
     private JTextArea taDescripcion;
     private JButton bEnviar, bImprimir, bRegresar;
 
+    // Constructor de la clase VSugerencias
     public VSugerencia() {
         this.setPreferredSize(new Dimension(1085, 680));
 
         this.setLayout(new BorderLayout());
 
+        // Configuración del panel principal
         JPanel pTitulo = new JPanel();
         pTitulo.setBackground(new Color(255, 255, 255));
         JLabel lTitulo = new JLabel("TELECOMUNÍCATE", JLabel.CENTER);
         lTitulo.setFont(new Font("Roboto", Font.BOLD, 16));
         lTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-        
-        
+
+        // Panel para el título
         pTitulo.add(lTitulo);
         this.add(pTitulo, BorderLayout.NORTH);
         
@@ -41,13 +58,13 @@ public class VSugerencia extends JPanel implements ActionListener, ISugerencia, 
       
       
         //CENTRO
-        
+        // Panel central para la interfaz de envío de sugerencias
         pPrincipal = new JPanel(new GridBagLayout());
         GridBagConstraints reglas = new GridBagConstraints();
         pPrincipal.setBackground(new Color(255, 255, 255));
         pPrincipal.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 2));
-        
-        
+
+        // Icono y título de la sección de sugerencias
         JPanel pIconSu = new JPanel();
         pIconSu.setBackground(new Color(255, 255, 255));
         reglas.gridy = 0;
@@ -63,9 +80,9 @@ public class VSugerencia extends JPanel implements ActionListener, ISugerencia, 
         lTipo.setFont(new Font("Roboto", Font.BOLD, 16));
         pIconSu.add(lTipo);
         pPrincipal.add(pIconSu, reglas);
-        
-        
-        
+
+
+        // Campos para ingresar título y descripción de la sugerencia
         reglas.gridy = 1;
         reglas.weighty= 1.0;
         reglas.anchor = GridBagConstraints.WEST;
@@ -81,12 +98,12 @@ public class VSugerencia extends JPanel implements ActionListener, ISugerencia, 
         Validacion.validarLongitud(tfTitulo,45);
         
         pPrincipal.add(tfTitulo, reglas);
-        
-      
+
+
         reglas.gridy = 3;
         reglas.weighty= 1.0;
         reglas.anchor = GridBagConstraints.WEST;
-        JLabel lInformacion = new JLabel("Descripción:");
+        JLabel lInformacion = new JLabel("Aporta más información:");
         lInformacion.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lInformacion, reglas);
 
@@ -131,11 +148,11 @@ public class VSugerencia extends JPanel implements ActionListener, ISugerencia, 
       Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(lImagen.getWidth(), lImagen.getHeight(), Image.SCALE_DEFAULT));
       lImagen.setIcon(icono);
       pImagen.add(lImagen);
-      pPrincipal.add (pImagen, reglas); 
+      //pPrincipal.add (pImagen, reglas);
 
       this.add(pPrincipal);
-      
-    //AQUÍ CREARÁ LA PANTALLA DE RESULTADO
+
+        // Panel para mostrar el resultado de la sugerencia enviada
       pResultado = new JPanel(new GridBagLayout());
       pResultado.setBackground(new Color(255, 255, 255));
       pResultado.setVisible(false);
@@ -300,15 +317,13 @@ public class VSugerencia extends JPanel implements ActionListener, ISugerencia, 
        lFechaUser.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
           reglasDatos.gridy = 7;
           pDatos.add(lFechaUser, reglasDatos);
-          
-          
-          
-          
-      
 
+
+
+      //Botones inferiores post-creación
       reglasResultado.gridy = 3;
       pResultado.add(pDatos, reglasResultado);
-      bImprimir= new JButton("Imprimir");
+      bImprimir= new JButton("Generar reporte de sugerencia");
       bImprimir.setFont(new Font("Open Sans", Font.PLAIN, 15));
       bImprimir.setForeground(Color.WHITE);
       bImprimir.setBackground(new Color(2, 152, 178));
@@ -330,21 +345,26 @@ public class VSugerencia extends JPanel implements ActionListener, ISugerencia, 
 
     public void arrancar() {
         this.setVisible(true);
-    }
+    } // Iniciar la vista
 
+    // Métodos para obtener el título y descripción de la sugerencia ingresada por el usuario
     public String getTitulo() {
         return this.tfTitulo.getText();
     }
 
+    // Métodos para obtener el detaller y descripción de la sugerencia ingresada por el usuario
     public String getDetalles() {
         return this.taDescripcion.getText();
     }
 
+    // Setter para el controlador
     public void setControlador(CSugerencia c) {
 
         controlador = c;
         bEnviar.addActionListener(c);
     }
+
+    // Método para mostrar el resultado de la sugerencia enviada
     @Override
     public void mostrarResultado(String nombre, String apellido, String telefono, String correo, String sugerencia, String descripcion, String fecha) {
         lNombreUser.setText(nombre + " " + apellido);
@@ -358,19 +378,67 @@ public class VSugerencia extends JPanel implements ActionListener, ISugerencia, 
         this.add(pResultado);
     }
 
+    // Método para mostrar el resultado de la sugerencia enviada
     @Override
     public void actionPerformed(ActionEvent event) {
         if(event.getSource()==bImprimir){
+            String a ="";
+
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            BdConex conn = new BdConex();
+            Connection con = conn.getConexion();
             try {
-                PrinterJob job = PrinterJob.getPrinterJob();
-                job.setPrintable(this);
-                job.printDialog();
-                job.print();
-            } catch (PrinterException ex) {
-                Logger.getLogger(VSolicitud.class.getName()).log(Level.SEVERE, null, ex);
+                ps = con.prepareStatement("SELECT IdSu FROM sugerencia where DescripcionSu = '"+lDescripcionUser.getText().replace("'","''")+"'");
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    a=rs.getString("IdSu");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                ArrayList ALDescripcion = (ArrayList) Validacion.validarParrafo(lDescripcionUser.getText(), 20);
+
+                PDDocument doc = new PDDocument();
+                PDImageXObject plant = PDImageXObject.createFromFile("media/Plantilla.png", doc);
+                PDPage reporte = new PDPage();
+                doc.addPage(reporte);
+                PDPageContentStream contentStream = new PDPageContentStream(doc, reporte);
+                contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.TIMES_BOLD), 16);
+                contentStream.drawImage(plant, 0, 0, reporte.getCropBox().getWidth(), reporte.getCropBox().getHeight());
+                contentStream.beginText();
+                contentStream.setLeading(16.0f);
+                contentStream.newLineAtOffset(150, reporte.getCropBox().getHeight()-320);
+
+                contentStream.showText("Nombre:      "+lNombreUser.getText());
+                contentStream.newLine();
+                contentStream.showText("Teléfono:    "+lTelefonoUser.getText());
+                contentStream.newLine();
+                contentStream.showText("Correo Electrónico:      "+lCorreoUser.getText());
+                contentStream.newLine();
+                contentStream.showText("Sugerencia:      "+lSugerenciaUser.getText());
+                contentStream.newLine();
+                contentStream.showText("Descripción:  ");
+                for (Object o : ALDescripcion) {
+                    contentStream.showText(Validacion.validarError(o.toString()));
+                    contentStream.newLine();
+                    contentStream.showText("                         ");
+                }
+                contentStream.newLine();
+                contentStream.showText("Fecha de creación: "+lFechaUser.getText());
+
+                contentStream.endText();
+                contentStream.close();
+                Files.createDirectories(Paths.get(System.getProperty("user.home")+"/Desktop/telecomunícate"));
+                doc.save(System.getProperty("user.home")+"/Desktop/telecomunícate/Sugerencia" +a + ".pdf");
+                doc.close();
+                JOptionPane.showMessageDialog(null, "Su archivo se encuentra en el escritorio, carpeta telecomunícate");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
-
+        // Acción para regresar a la pantalla principal de envío de sugerencias
 		if (event.getSource() == bRegresar) {
             tfTitulo.setText("");
             taDescripcion.setText("");
@@ -379,6 +447,7 @@ public class VSugerencia extends JPanel implements ActionListener, ISugerencia, 
 		}
     }
 
+    // Método para imprimir el contenido de la sugerencia
     @Override
     public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
         if (pageIndex > 0) {

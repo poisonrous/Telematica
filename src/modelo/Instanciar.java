@@ -5,12 +5,24 @@ import controlador.*;
 import javax.swing.*;
 import java.awt.*;
 
+// Clase Instanciar que crear instancias de las interfaces y controladores
 public class Instanciar {
 
+
+    // Variables de instancia
     private static IIniciarSesion vista;
     private static Modelo modelo;
     private static OModelo modelo2;
     private static CIniciarSesion controlador;
+
+
+    /**
+     * Constructor de la clase Instanciar.
+     * @param vista Vista de inicio de sesión.
+     * @param modelo Modelo general.
+     * @param modelo2 Modelo de usuario.
+     * @param controlador Controlador de inicio de sesión.
+     */
     public Instanciar(IIniciarSesion vista, Modelo modelo, OModelo modelo2, CIniciarSesion controlador) {
         this.vista = vista;
         this.modelo = modelo;
@@ -19,6 +31,10 @@ public class Instanciar {
 
     }
 
+    /**
+     * Crea y retorna una instancia de la vista ISolicitud.
+     * @return Instancia de ISolicitud.
+     */
     public ISolicitud llamarSolicitud() {
         ISolicitud solicitud = new VSolicitud();
         CSolicitud controladorSolicitud = new CSolicitud(solicitud, modelo2);
@@ -27,6 +43,10 @@ public class Instanciar {
         return solicitud;
     }
 
+    /**
+     * Crea y retorna una instancia de la interfaz ISolicitudes.
+     * @return Instancia de ISolicitudes.
+     */
     public ISolicitudes llamarSolicitudes() {
         ISolicitudes solicitudes = new VSolicitudes();
         MCrudSolicitud mCrudSolicitud = new MCrudSolicitud();
@@ -36,6 +56,10 @@ public class Instanciar {
         return solicitudes;
     }
 
+    /**
+     * Crea y retorna una instancia de la interfaz IServicio.
+     * @return Instancia de IServicio.
+     */
     public IServicio llamarServicio() {
         IServicio servicio = new VServicio();
         MCrudServicio mCrudServicio = new MCrudServicio();
@@ -45,6 +69,10 @@ public class Instanciar {
         return servicio;
     }
 
+    /**
+     * Crea y retorna una instancia de la interfaz IServicios.
+     * @return Instancia de IServicios.
+     */
     public IServicios llamarServicios() {
         IServicios servicios = new VServicios();
         MCrudServicio mCrudServicio = new MCrudServicio();
@@ -53,6 +81,10 @@ public class Instanciar {
         return servicios;
     }
 
+    /**
+     * Crea y retorna una instancia de la interfaz IEvento.
+     * @return Instancia de IEvento.
+     */
     public IEvento llamarEvento() {
         IEvento evento = new VEvento();
         CEvento controladorEvento = new CEvento(evento);
@@ -60,6 +92,10 @@ public class Instanciar {
         return evento;
     }
 
+    /**
+     * Crea y retorna una instancia de la interfaz IEventos.
+     * @return Instancia de IEventos.
+     */
     public IEventos llamarEventos() {
         IEventos eventos = new VEventos();
         MCrudEvento mCrudEvento = new MCrudEvento();
@@ -68,6 +104,10 @@ public class Instanciar {
         return eventos;
     }
 
+    /**
+     * Crea y retorna una instancia de la interfaz ISugerencia.
+     * @return Instancia de ISugerencia.
+     */
     public ISugerencia llamarSugerencia() {
         ISugerencia sugerencia = new VSugerencia();
         MCrudSugerencia mCrudSugerencia = new MCrudSugerencia();
@@ -76,6 +116,10 @@ public class Instanciar {
         return sugerencia;
     }
 
+    /**
+     * Crea y retorna una instancia de la interfaz ISugerencias.
+     * @return Instancia de ISugerencias.
+     */
     public ISugerencias llamarSugerencias() {
         ISugerencias sugerencias = new VSugerencias();
         MCrudSugerencia mCrudSugerencia = new MCrudSugerencia();
@@ -90,6 +134,10 @@ public class Instanciar {
 
     }
 
+    /**
+     * Crea y retorna una instancia de la interfaz IPublicacion.
+     * @return Instancia de IPublicacion.
+     */
     public IPublicacion llamarPublicacion() {
         IPublicacion publicacion = new VPublicacion();
         CPublicacion controladorPublicacion = new CPublicacion(publicacion, modelo2);
@@ -97,6 +145,10 @@ public class Instanciar {
         return publicacion;
     }
 
+    /**
+     * Crea y retorna una instancia de la interfaz ICartelera.
+     * @return Instancia de ICartelera.
+     */
     public ICartelera llamarCartelera() {
         ICartelera cartelera = new VCartelera();
         IPub pub = new VPub();
@@ -106,6 +158,10 @@ public class Instanciar {
         return cartelera;
     }
 
+    /**
+     * Crea y retorna una instancia de la interfaz IPubsPendientes.
+     * @return Instancia de IPubsPendientes.
+     */
     public IPubsPendientes llamarPubsPendientes() {
         IPubsPendientes pubsPendientes = new VPubsPendientes();
         MCartelera mCartelera = new MCartelera();
@@ -114,6 +170,10 @@ public class Instanciar {
         return pubsPendientes;
     }
 
+    /**
+     * Crea y retorna una instancia de la interfaz ISolicitudCurso.
+     * @return Instancia de ISolicitudCurso.
+     */
     public ISolicitudCurso llamarSolicitudCurso() {
         ISolicitudReporte solicitudReporte = new VSolicitudReporte();
         MSolicitudR modulo = new MSolicitudR();
@@ -135,6 +195,10 @@ public class Instanciar {
         return solicitudCurso;
     }
 
+    /**
+     * Crea y retorna una instancia de la interfaz ICambioContrasena.
+     * @return Instancia de ICambioContrasena.
+     */
     public ICambioContrasena llamarCambioContrasena() {
         ICambioContrasena cambioContrasena = new VCambioContrasena();
         CCambioContrasena controladorCambioContrasena = new CCambioContrasena(cambioContrasena, vista, modelo2);
@@ -142,6 +206,10 @@ public class Instanciar {
         return cambioContrasena;
     }
 
+    /**
+     * Crea y retorna una instancia de la interfaz IDatos.
+     * @return Instancia de IDatos.
+     */
     public IDatos llamarDatos() {
         IDatos datos = new VDatos();
         MDatos modulo = new MDatos();
@@ -151,6 +219,10 @@ public class Instanciar {
         return datos;
     }
 
+    /**
+     * Crea y retorna una instancia de la interfaz IListado.
+     * @return Instancia de IListado.
+     */
     public IListado llamarListado() {
         IListado listado = new VListado();
         MListado modelo = new MListado();
@@ -160,6 +232,10 @@ public class Instanciar {
         return listado;
     }
 
+    /**
+     * Crea y retorna una instancia de la interfaz IRegistro.
+     * @return Instancia de IRegistro.
+     */
     public IRegistro llamarRegistro() {
         IRegistro registro = new VRegistro();
         MRegistro modelo = new MRegistro();

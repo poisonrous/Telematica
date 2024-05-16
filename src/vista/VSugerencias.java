@@ -5,11 +5,15 @@ import controlador.CSugerencias;
 import javax.swing.*;
 import java.awt.*;
 
+// Vista de sugerencias
 public class VSugerencias extends JPanel implements ISugerencias {
     private final JPanel pPrincipal;
     private final GridBagConstraints reglas;
+
+    // Constructor de la clase VSugerencias
     public VSugerencias() {
 
+        //Panel principal
         pPrincipal = new JPanel(new GridBagLayout());
         pPrincipal.setBackground(new Color(255, 255, 255));
         reglas = new GridBagConstraints();
@@ -25,22 +29,26 @@ public class VSugerencias extends JPanel implements ISugerencias {
         reglas.anchor = GridBagConstraints.WEST;
     }
 
+    // Inicia la vista
     @Override
     public void arrancar() {
         this.setVisible(true);
     }
 
+    // Método para cargar las sugerencias en el panel
     @Override
     public void cargarSugest(JPanel sugerencia){
         reglas.gridy++;
         pPrincipal.add(sugerencia,reglas);
     }
 
+    // Método para establecer el controlador
     @Override
     public void setControlador(CSugerencias controlador){
 
     }
 
+    // Método para obtener un panel que muestra una sugerencia específica
     @Override
     public JPanel getSugest(String titulo, String estudiante, String cedula, String fecha, String descripcion){
         JPanel panel = new JPanel(new GridBagLayout());
@@ -49,6 +57,10 @@ public class VSugerencias extends JPanel implements ISugerencias {
         reglas.anchor = GridBagConstraints.WEST;
         reglas.gridx = 1;
         reglas.gridy = 1;
+        // Componentes para mostrar los detalles de la sugerencia
+        // Etiquetas para los campos de sugerencia, estudiante, cédula, fecha y descripción
+
+        // Etiquetas y componentes para mostrar los datos de sugerecias, y se añaden al panel
         JLabel lSugerenciaS = new JLabel("Sugerencia: ");
         lSugerenciaS.setFont(new Font("Open Sans", Font.BOLD, 14));
         lSugerenciaS.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
@@ -99,6 +111,8 @@ public class VSugerencias extends JPanel implements ISugerencias {
         lFechaS.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
         panel.add(lFechaS, reglas);
         reglas.gridy = 5;
+
+        // Area de texto
         JTextArea tDescripcion = new JTextArea(descripcion);
         tDescripcion.setFont(new Font("Open Sans", Font.BOLD, 14));
         tDescripcion.setPreferredSize(new Dimension(200, 100));

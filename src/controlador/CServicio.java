@@ -6,6 +6,7 @@ import modelo.Servicio;
 import vista.IServicio;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -13,20 +14,42 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class CServicio implements ActionListener {
-    private final IServicio vista;
-    private final MCrudServicio modelo;
 
+// Controlador para la gestión de servicios.
+
+public class CServicio implements ActionListener {
+    private final IServicio vista;  // Vista de serivicio
+    private final MCrudServicio modelo; // Modelo del CRUD de servicio
+
+    /**
+     * Constructor de CServicio.
+     *
+     * @param vista  Interfaz IServicio que interactúa con el usuario.
+     * @param modelo Objeto MCrudServicio para realizar operaciones CRUD en la base de datos.
+     */
     public CServicio(IServicio vista, MCrudServicio modelo){
         this.vista = vista;
         this.modelo = new MCrudServicio();
     }
 
+    /**
+     * Método para manejar los eventos de acciones en la vista.
+     * @param e Evento de acción.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String comando = e.getActionCommand();
         if(comando.equals(IServicio.ACTUALIZAR)){
-            int n = JOptionPane.showOptionDialog(null, "¿Está seguro de los datos ingresados?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Sí", "No"}, "Sí");
+            UIManager UI=new UIManager();
+            UI.put("OptionPane.messageFont", new Font("Open Sans", Font.BOLD, 14));
+            UI.put("OptionPane.background", new Color (255,255,255));
+            UI.put("Panel.background", new Color (255,255,255));
+            UI.put("Button.background", new Color (3,150,177));
+            UIManager.put("Button.foreground", Color.white);
+
+            ImageIcon iconS = new ImageIcon("media/pregunta.png");
+
+            int n = JOptionPane.showOptionDialog(null, "¿Está seguro de los datos ingresados?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, iconS, new Object[]{"Sí", "No"}, "Sí");
             if(n == JOptionPane.YES_OPTION)
             {if (vista.getCaso() == 1){
                PreparedStatement ps = null;
@@ -37,6 +60,16 @@ public class CServicio implements ActionListener {
                    ps = con.prepareStatement("SELECT TipoSS FROM ServiciosSociales WHERE ServiciosSociales.TipoSS = '"+vista.getNombreServicio()+"'");
                    rs = ps.executeQuery();
                    rs.next();
+
+                   UIManager UIS=new UIManager();
+                   UIS.put("OptionPane.messageFont", new Font("Open Sans", Font.BOLD, 14));
+                   UIS.put("OptionPane.background", new Color (255,255,255));
+                   UIS.put("Panel.background", new Color (255,255,255));
+                   UIS.put("Button.background", new Color (3,150,177));
+                   UIManager.put("Button.foreground", Color.white);
+
+
+
                    if (rs.getRow()>0) {JOptionPane.showMessageDialog(null, "Ya existe un servicio con ese nombre");}
                    else{
                    if (vista.getNombreServicio().isEmpty() || vista.getHorarioServicio().isEmpty() || vista.getUbicacionServicio().isEmpty()){
@@ -61,6 +94,11 @@ public class CServicio implements ActionListener {
 
         }
     }
+
+    /**
+     * Carga los servicios en la vista
+     * @param vista Interfaz IServicio donde se cargarán los servicios.
+     */
     public void cargarServicio(IServicio vista){
         Servicio modelo = new Servicio();
         DefaultComboBoxModel dcbm = new DefaultComboBoxModel<>(modelo.vectorServicio());

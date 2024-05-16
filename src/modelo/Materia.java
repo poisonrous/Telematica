@@ -5,6 +5,8 @@ import java.util.Vector;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import modelo.BdConex;
+
+
 public class Materia {
     private String idMateria, nombreMateria;
 
@@ -49,6 +51,10 @@ public class Materia {
 
         Vector<Materia> materias = new Vector<Materia>();
         Materia materia = null;
+        materia = new Materia(); //Está es la de relleno, si se termina usando este vector para otra cosa retirar.
+        materia.setIdMateria("0");
+        materia.setNombreMateria("Seleccionar una materia");
+        materias.add(materia);
         try {
             ps = con.prepareStatement("SELECT * FROM materia INNER JOIN asignatura ON materia.IdAs = asignatura.IdAs INNER JOIN periodo ON materia.IdPe = periodo.IdPe WHERE periodo.VigenciaPe = 1 AND CedulaPr = " + usuario);
             rs = ps.executeQuery();

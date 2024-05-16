@@ -6,25 +6,32 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+// Clase para la gestión de la conexión a la base de datos.
+
 public class BdConex {
 	
 	private static Connection con;
 	private static PreparedStatement ps;
 	private static ResultSet rs;
-	final String DRIVER = "com.mysql.jdbc.Driver";
+	final String DRIVER = "com.mysql.cj.jdbc.Driver";
 	final String URL = "jdbc:mysql://localhost:3306/sistema";
 	final String USUARIO = "root";
 	final String CLAVE = "767254632";
 
+	/**
+	 * Constructor de la clase BdConex.
+	 * Se encarga de establecer la conexión con la base de datos al instanciar la clase.
+	 */
 	public BdConex() {
 		con = null;
 		try {
-			// SE hace la conexio ODBC
+			// SE hace la conexion JDBC
 			Class.forName(DRIVER).newInstance();
 
 			// Se abre una conexion de nombre con
 			con = DriverManager.getConnection(URL, USUARIO, CLAVE);
 
+			// Verifica si la conexión fue exitosa
 			if (con != null)
 				System.out.println("Conexion exitosa a la BD!");
 		} catch (ClassNotFoundException e) {

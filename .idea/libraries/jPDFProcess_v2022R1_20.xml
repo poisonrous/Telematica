@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jPDFProcess.v2022R1.20">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/jPDFProcess.v2022R1.20.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

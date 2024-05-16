@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import controlador.CCambioContrasena;
-
+// Vista para el cambio de contraseña
 public class VCambioContrasena extends JPanel implements ActionListener, ICambioContrasena {
 
 	
@@ -26,12 +26,14 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
     private JTextField tUsuario;
 	private final JButton bAceptar;
     private final JButton bCancelar;
-	
-	
-	
+
+
+	// Constructor de la clase VCambioContrasena.
 	public VCambioContrasena(){
 		this.setPreferredSize(new Dimension(1085, 680));
 		this.setLayout(new BorderLayout());
+
+		// Panel para el título
 		JPanel pTitulo = new JPanel();
 		pTitulo.setLayout(new BorderLayout());
 		JLabel lTitulo = new JLabel("CAMBIO DE CONTRASEÑA");
@@ -49,7 +51,7 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
 		
 		
 		//sur
-		
+		// Panel para los botones
 		JPanel pBotones = new JPanel();
 		pBotones.setBackground(new Color(255, 255, 255));
 		bCancelar = new JButton("Cancelar");
@@ -71,12 +73,14 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
 		
 		
 		this.add(pBotones, BorderLayout.SOUTH);
-	
+
+		// Panel principal con los campos de contraseña
 		JPanel pPrincipal = new JPanel(new GridBagLayout());
 		GridBagConstraints reglas = new GridBagConstraints();
 		pPrincipal.setBackground(new Color(255, 255, 255));
         pPrincipal.setBorder(BorderFactory.createEmptyBorder(5, 10, 15, 2));
-        
+
+		// Panel con la imagen
         JPanel pImagen = new JPanel(); 
 		pImagen.setBackground(new Color(255, 255, 255));
 		reglas.gridy = 0;
@@ -89,8 +93,9 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
 	    Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(lImagen.getWidth(), lImagen.getHeight(), Image.SCALE_DEFAULT));
 	    lImagen.setIcon(icono);
 	    pImagen.add(lImagen);
-	    pPrincipal.add (pImagen);
-	    
+	   // pPrincipal.add (pImagen);
+
+		// Campo de contraseña actual
 	    reglas.gridy = 1;
         reglas.weighty= 1.0;
         JPanel pCActual = new JPanel();
@@ -110,7 +115,8 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
 		
 		tCodigo = new JTextField();
 		tCodigo.setVisible(false);
-	
+
+		// Campo de contraseña nueva
 		reglas.gridy = 2;
         reglas.weighty= 1.0;
         JPanel pCNueva = new JPanel();
@@ -126,7 +132,8 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
 		reglas.anchor = GridBagConstraints.EAST;
 		pCNueva.add(tNuevaContrasena);
 		pPrincipal.add(pCNueva, reglas);
-		
+
+		// Campo para confirmar la contraseña
 		reglas.gridy = 3;
         reglas.weighty= 1.0;
         
@@ -147,9 +154,11 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
 		this.add(pPrincipal, BorderLayout.CENTER);
 		
 	}
-	
-	
-	
+
+
+	/**
+	 * Acción realizada al presionar un botón.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -160,7 +169,7 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
 	}
 
 	
-
+  // Establece el controlador para esta vista.
 	@Override
 	public void setControlador(CCambioContrasena c) {
 		// TODO Auto-generated method stub
@@ -168,7 +177,7 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
 		bCancelar.addActionListener(c);
 	}
 
-
+	// Muestra la ventana de cambio de contraseña.
 	@Override
 	public void arrancar() {
 		// TODO Auto-generated method stub
@@ -176,7 +185,7 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
 		this.setVisible(true);
 	}
 
-
+	// Obtiene el ID de la contraseña.
 	@Override
 	public int getIdContrasena() {
 		// TODO Auto-generated method stub
@@ -192,7 +201,7 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
 	}
 
 
-
+// Verifica la contraseña actual.
 	@Override
 	public String verificarContrasena(String contrasena) {
 		// TODO Auto-generated method stub
@@ -200,12 +209,14 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
 		}
 
 
-
+	// Obtiene la contraseña actual.
 	@Override
 	public String getContrasenaActual() {
 		// TODO Auto-generated method stub
 		return String.valueOf(tContrasenaActual.getPassword());
 	}
+
+	// Obtiene la nueva contraseña.
 	@Override
 	public String getNuevaContrasena() {
 		// TODO Auto-generated method stub
@@ -215,11 +226,15 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
 			return String.valueOf(tNuevaContrasena.getPassword());
 		} else return null;
 	}
+
+	// Realiza el cambio de contraseña.
 	@Override
 	public String cambiarContrasena() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	// Cancela la acción de cambio de contraseña.
 	@Override
 	public void cancelar() {
 		tContrasenaActual.setText("");
@@ -227,6 +242,7 @@ public class VCambioContrasena extends JPanel implements ActionListener, ICambio
 		tConfirmarContrasena.setText("");
 	}
 
+	// Obtiene el nombre de usuario.
 	@Override
 	public String getUsuario() {
 		// TODO Auto-generated method stub

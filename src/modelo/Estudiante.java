@@ -1,11 +1,29 @@
 package modelo;
 
 import javax.swing.*;
-
+ // Clase Estudiante encargada de modelar la información de un estudiante en el sistema.
 public class Estudiante {
     private String cedula, nombre, apellido, sexo, fechaNacimiento, correo, telefono, direccion, condicionesMedicas, capacidadEspecial, carrera, idCarrera;
     private boolean trabaja, foraneo, fuera;
 
+     /**
+      * Constructor de la clase Estudiante.
+      * @param cedula Cédula del estudiante.
+      * @param nombre Nombre del estudiante.
+      * @param apellido Apellido del estudiante.
+      * @param sexo Sexo del estudiante.
+      * @param fechaNacimiento Fecha de nacimiento del estudiante.
+      * @param correo Correo electrónico del estudiante.
+      * @param telefono Número de teléfono del estudiante.
+      * @param direccion Dirección del estudiante.
+      * @param condicionesMedicas Condiciones médicas del estudiante.
+      * @param capacidadEspecial Capacidad especial del estudiante.
+      * @param trabaja Indica si el estudiante trabaja (true) o no (false).
+      * @param foraneo Indica si el estudiante es foráneo (true) o no (false).
+      * @param fuera Indica si el estudiante está fuera de la institución (true) o no (false).
+      * @param carrera Carrera del estudiante.
+      * @param idCarrera ID de la carrera del estudiante.
+      */
     public Estudiante(String cedula, String nombre, String apellido, String sexo, String fechaNacimiento, String correo, String telefono, String direccion, String condicionesMedicas, String capacidadEspecial, boolean trabaja, boolean foraneo, boolean fuera, String carrera, String idCarrera) {
         this.cedula = cedula;
         this.nombre = nombre;
@@ -24,10 +42,12 @@ public class Estudiante {
         this.idCarrera = idCarrera;
     }
 
+     // Constructor vacío de la clase Estudiante.
     public Estudiante() {
 
     }
 
+     // Getters y setters para los atributos de la clase Estudiante
     public String getCedula() {
         return cedula;
     }

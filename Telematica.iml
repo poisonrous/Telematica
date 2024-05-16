@@ -35,5 +35,19 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" exported="" name="pdfbox-3.0.2" level="project" />
+    <orderEntry type="library" exported="" name="jPDFProcess.v2022R1.20" level="project" />
+    <orderEntry type="library" exported="" name="jPDFWriter.v2021R1.00" level="project" />
+    <orderEntry type="library" exported="" name="poi-bin-5.2" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/log4j-core-2.18.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" exported="" name="flatlaf-3.4.1" level="project" />
   </component>
 </module>

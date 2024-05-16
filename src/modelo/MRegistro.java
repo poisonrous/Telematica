@@ -4,9 +4,14 @@ import javax.swing.*;
 import java.awt.print.PrinterException;
 import java.sql.ResultSet;
 
+// Clase MRegistro ofrece métodos para buscar, registrar y actualizar información de estudiantes en la bd
 public class MRegistro {
 
-
+    /**
+     * Busca un estudiante en la bd por su número de cédula.
+     * @param cedula El número de cédula del estudiante a buscar.
+     * @return Un objeto de tipo Estudiante con la información encontrada, o null si no se encuentra.
+     */
     public Estudiante buscarEstudiante(String cedula) {
         ResultSet rs;
         BdConex bd = new BdConex();
@@ -38,6 +43,11 @@ public class MRegistro {
         return est;
     }
 
+    /**
+     * Registra un nuevo estudiante en la base de datos.
+     * @param est El objeto Estudiante que se va a registrar.
+     * @return Un mensaje indicando el resultado del registro.
+     */
     public String registrarEstudiante(Estudiante est) {
         ResultSet rs;
         BdConex bd = new BdConex();
@@ -66,6 +76,11 @@ public class MRegistro {
         return mensaje;
     }
 
+    /**
+     * Actualiza la información de un estudiante en la base de datos.
+     * @param est El objeto Estudiante con la información actualizada.
+     * @return Un mensaje indicando el resultado de la actualización.
+     */
     public String actualizarEstudiante(Estudiante est) {
         ResultSet rs;
         BdConex bd = new BdConex();

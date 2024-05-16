@@ -17,6 +17,7 @@ import java.sql.SQLException;
 
 import static java.awt.GridBagConstraints.REMAINDER;
 
+// Vista de solicitud de reporte
 public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
 
     private final JLabel  lNombre;
@@ -35,6 +36,8 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
     private CSolicitudReporte controlador;
 
     private final JComboBox cEstado;
+
+    // Constructor de la clase VSolicitudReporte
     public VSolicitudReporte(){
 
         super("reporte seleccionado");
@@ -51,6 +54,8 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
         reglas.gridx = 1;
         reglas.gridy = 1;
         reglas.insets = new Insets(10, 10, 10, 10);
+
+        // Etiquetas para mostrar la información de la solicitud
         JLabel lNombre2 = new JLabel("Estudiante:");
         lNombre2.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lNombre2,reglas);
@@ -132,6 +137,7 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
         lMateria.setFont(new Font("Open Sans", Font.BOLD, 14));
         pPrincipal.add(lMateria,reglas);
 
+        // Añadir los componentes al panel principal
         this.add(pPrincipal, BorderLayout.CENTER);
 
 
@@ -146,6 +152,7 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
         pBuscar.add(bBuscar);
         this.add(pBuscar, BorderLayout.NORTH);*/
 
+        // Configuración del panel inferior
         JPanel pSur = new JPanel(new GridBagLayout());
         GridBagConstraints reglasSur = new GridBagConstraints();
         reglasSur.gridx = 1;
@@ -154,7 +161,7 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
         JPanel pboton= new JPanel();
         bCambiar = new JButton("Actualizar");
        // if (!CHANGE){
-        bCambiar.setActionCommand(ISolicitudReporte.CAMBIAR);
+        bCambiar.setActionCommand(ISolicitudReporte.CAMBIAR); // Asigna un comando al botón
         bCambiar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -166,6 +173,7 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
             pboton.add(bCambiar, BorderLayout.WEST);
             pSur.add(pboton, reglasSur);
 
+        // ComboBox para seleccionar el estado de la solicitud
         cEstado = new JComboBox();
         cEstado.setPreferredSize(dimcombo);
         cEstado.addItem("Resuelta");
@@ -181,7 +189,7 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
 
     }
 
-
+    // Método para manejar la selección de estado en el ComboBox
     public void estadoSeleccion(ItemEvent e) {
         // TODO Auto-generated method stub
         /*if(e.getStateChange()==ItemEvent.SELECTED)
@@ -193,23 +201,30 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
             }*/
     }
 
+
+    // Setter para el resultado de la consulta a la base de datos
     @Override
     public void setConsulta(ResultSet rs) {
         this.rs2=rs;
     }
 
 
+    // Setter del controlador
     @Override
     public void setControlador(CSolicitudReporte a) {
         this.controlador= a;
     }
 
+
+    // Método para mostrar la información de la solicitud en la vista
     @Override
     public void llamar(String idSo) {
         BdConex bd= new BdConex();
         this.rs2= bd.consultar("SELECT estudiante.NombresEs, solicitud.IdSo, solicitud.cedulaEs, NombreCa, tiposolicitud.TipoTiSo, solicitud.DescripcionSo, solicitud.EstadoSo, asignatura.NombreAsignaturaAs FROM solicitud LEFT JOIN tiposolicitud ON solicitud.IdTiSo = tiposolicitud.IdTiSo LEFT JOIN materia ON solicitud.MateriaSo = materia.IdMa LEFT JOIN asignatura ON materia.IdAs = asignatura.IdAs LEFT JOIN estudiante ON solicitud.CedulaEs = estudiante.CedulaEs LEFT JOIN carrera ON estudiante.IdCa = carrera.IdCa WHERE IdSo= '"+idSo+ "';");
     }
     //, asignatura.idAs, NombreAs,  asignatura, materia, and asignatura.idAs = materia.idAs and materia.idMa = solicitud.materia
+
+    // Método para activar la vista y mostrar la información de la solicitud
     @Override
     public void activar() {
         /*{while (rs.next())*/
@@ -231,11 +246,14 @@ public class VSolicitudReporte extends JFrame implements ISolicitudReporte {
             throw new RuntimeException(e);
         }
     }
+
+    // Getter para el estado seleccionado
     @Override
     public String getEstado() {
        return (String) cEstado.getSelectedItem();
     }
 
+    // Getter para el ID de la solicitud
     @Override
     public String getIdSo() {
         String idSo = "";
